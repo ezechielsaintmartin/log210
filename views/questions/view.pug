@@ -1,0 +1,25 @@
+html
+    head
+        title= title
+        link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css')
+        link(rel='stylesheet' href='/css/style.css')
+        script()
+    body
+
+    div.container
+        h1 Consultation de la question : #{question['nom']}
+
+        dl
+            h1 Nom : #{question['nom']}
+            h3 Type de question : #{question['type']}
+            h3 Categorie : #{question['categorie']}
+            h3 Enonce : #{question['enonce']}
+            h3 Bonne reponse : #{question['verite']}
+            h3 Message bonne reponse : #{question['texteBonneReponse']}
+            h3 Message mausaise reponse : #{question['texteMauvaiseReponse']}
+
+            a(href="/questions/supprimer?questionID="+question['id']+ "&coursID="+coursID) Supprimer Question
+            br
+            a(href="/questions/edit?id=" + question['id']) modifier
+            br
+            a(href="/questions") retour a la liste

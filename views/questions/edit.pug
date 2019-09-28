@@ -1,0 +1,36 @@
+html
+    head
+        title= title
+        link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css')
+        link(rel='stylesheet' href='/css/style.css')
+        script()
+    body
+        div.container
+            h1 Ajouter une Question
+            form(action="/questions/edit" method="POST")
+                input(type="hidden" name="questionId" id="coursid" value=question.id)
+
+                label(for="tags" style="display:block") Tags(séparés par des virgules):
+                input(type="text" name="tags" id="tags" style="display:block" value=question.tags)
+
+                label(for="nom" style="display:block") Nom:
+                input(type="text" name="nom" id="nom" style="display:block" value=question.nom)
+
+                label(for="enonce" style="display:block") enonce:
+                textarea( name="enonce" id="enonce" style="display:block" )=question.enonce
+
+                label(for="verite" style="display:block") Verite:
+                input(type="text" name="verite" id="verite" style="display:block" value=question.verite)
+
+                label(for="texteBonneReponse" style="display:block") TexteBonneReponse:
+                textarea( name="texteBonneReponse" id="texteBonneReponse" style="display:block" )= question.texteBonneReponse
+
+                label(for="texteMauvaiseReponse" style="display:block") TexteMauvaiseReponse:
+                textarea( name="texteMauvaiseReponse" id="texteMauvaiseReponse" style="display:block" )=question.texteMauvaiseReponse
+
+                button(type="submit") Enregistrer
+
+
+    <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/lib/main.js"></script>

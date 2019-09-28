@@ -1,4 +1,5 @@
 import {Question} from "../models/Question"
+import {Strings} from "../strings";
 
 export class QuestionController {
     // GRASP controller class
@@ -16,7 +17,11 @@ export class QuestionController {
      */
 
     public deleteQuestion(questionId: number) {
-        this.questions.delete(questionId);
+        if (this.questions.has(questionId)){
+            this.questions.delete(questionId);
+        } else {
+            throw Error(Strings.NO_SUCH_QUESTION_ID);
+        }
     }
 
 }

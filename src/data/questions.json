@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "type": "Vrai/Faux",
+    "categorie": "Theorie",
+    "nom": "Question 1",
+    "enonce": "Qu'est ce qu'un MDD ?",
+    "verite": "loremipsum",
+    "texteBonneReponse": "Super ! ",
+    "texteMauvaiseReponse": "Incorrect ! "
+  },
+  {
+    "id": 2,
+    "type": "Vrai/Faux",
+    "categorie": "Pratique",
+    "nom": "Question 2",
+    "enonce": "Qu'est ce qu'un DSS ?",
+    "verite": "loremipsum",
+    "texteBonneReponse": "Super ! ",
+    "texteMauvaiseReponse": "Incorrect ! "
+  }
+]
