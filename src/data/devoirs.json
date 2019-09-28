@@ -1,0 +1,81 @@
+[
+  {
+    "id": 1,
+    "nom": "Devoir 1",
+    "description": "Description du devoir 1",
+    "note_max": 36,
+    "date_debut": "2019-09-03",
+    "date_fin": "2019-10-03",
+    "visible": true,
+    "id_cours": 1,
+    "remises": [
+      3,
+      6,
+      8
+    ]
+  },
+  {
+    "id": 2,
+    "nom": "Devoir 2",
+    "description": "Description du devoir 2",
+    "note_max": 20,
+    "date_debut": "2019-10-03",
+    "date_fin": "2019-10-17",
+    "visible": true,
+    "id_cours": 1,
+    "remises":  [
+    ]
+  },
+  {
+    "id": 3,
+    "nom": "Devoir 3",
+    "description": "Description du devoir 3",
+    "note_max": 10,
+    "date_debut": "2019-11-03",
+    "date_fin": "2019-11-17",
+    "visible": false,
+    "id_cours": 1,
+    "remises":  [
+      3,
+      6
+    ]
+  },
+  {
+    "id": 4,
+    "nom": "Devoir 4",
+    "description": "Description du devoir 4",
+    "note_max": 10,
+    "date_debut": "2019-11-03",
+    "date_fin": "2019-11-17",
+    "visible": false,
+    "id_cours": 2,
+    "remises":  [
+      6
+    ]
+  },
+  {
+    "id": 5,
+    "nom": "Devoir 5",
+    "description": "Description du devoir 5",
+    "note_max": 10,
+    "date_debut": "2019-11-03",
+    "date_fin": "2019-11-17",
+    "visible": false,
+    "id_cours": 4,
+    "remises":  []
+  },
+  {
+    "id": 6,
+    "nom": "Devoir 6",
+    "description": "Description du devoir 6",
+    "note_max": 10,
+    "date_debut": "2019-11-03",
+    "date_fin": "2019-11-17",
+    "visible": false,
+    "id_cours": 4,
+    "remises":  [
+      3,
+      6
+    ]
+  }
+]

@@ -1,0 +1,21 @@
+html
+    head
+        title= title
+        link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css')
+        link(rel='stylesheet' href='/css/style.css')
+        script()
+    body
+
+    div.container
+        h1 Consultation du cours
+
+        dl
+            h3 Sigle du cours : #{cours['sigle']}
+            h3 Nombre maximum d'etudiant : #{cours['nb_max_student']}
+            h3 Groupe : #{cours['groupe']}
+            h3 titre : #{cours['titre']}
+            h3 Date_debut : #{cours['date_debut']}
+            h3 Date_fin : #{cours['date_fin']}
+            a(href="/questions?id="+cours['id']) Questions
+            br
+            a(href="/courses") retour a la liste

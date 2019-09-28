@@ -15,22 +15,38 @@ export class QuestionRouter {
   }
 
   public deleteQuestion(req: Request, res: Response, next: NextFunction) {
-    console.log("Delete");
     try{
       let id: number = parseInt(req.params.id);
       this.controller.deleteQuestion(id);
-      res.sendStatus(204);
+      res.sendStatus(204); // HTTP 204 No content
     } catch(error){
-
+      res.sendStatus(404); // We send a 404 status because the questionId is invalid or does not exist
     }
   }
 
+  public createQuestion(req: Request, res: Response, next: NextFunction) {
+
+  }
+
+  public updateQuestion(req: Request, res: Response, next: NextFunction) {
+
+  }
+
+  public getQuestion(req: Request, res: Response, next: NextFunction) {
+
+  }
+
   /**
-     * Take each handler, and attach to one of the Express.Router's
-     * endpoints.
-     */
+   * Take each handler, and attach to one of the Express.Router's
+   * endpoints.
+   *
+   * For .bind see https://stackoverflow.com/a/15605064/1168342
+   */
   init() {
-      this.router.delete('/:id', this.deleteQuestion.bind(this)); // for .bind see https://stackoverflow.com/a/15605064/1168342
+      this.router.delete('/:id', this.deleteQuestion.bind(this));
+      this.router.post('/', this.createQuestion.bind(this));
+      this.router.put('/:id', this.updateQuestion.bind(this));
+      this.router.get('/:id', this.getQuestion.bind(this));
   }
 
 }
