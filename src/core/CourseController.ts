@@ -1,5 +1,4 @@
 import {Course} from "../models/Course"
-import {Strings} from "../strings";
 
 export class CourseController {
     // GRASP controller class

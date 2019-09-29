@@ -45,49 +45,34 @@ class App {
     });
 
     router.get('/addQuestion', courseRoutes.getCourses.bind(courseRoutes), (req, res, next) => {
-    	res.render('createQuestionCourseList', {title: 'Itération 1', courses: req['courses']});
-	});
+        res.render('createQuestionCourseList', {title: 'Itération 1', courses: req['courses']});
+    });
 
     router.get('/course/:id/question', questionRoutes.getQuestionsByCourse.bind(questionRoutes), courseRoutes.getCourse.bind(courseRoutes), (req, res, next) => {
         res.render('questionsByCourse', {title: 'Itération 1', questions: req['questions'], course: req['course']});
-	});
+    });
 
       //GET de la vue ajouter de l'objet question
       router.get('/course/:id/question/add', courseRoutes.getCourse.bind(courseRoutes), (req, res, next) => {
           res.render('questions/add', {title: 'Ajouter question', course: req['course']})
       });
 
-    /*router.get('/questions', this.checkLogin, (req, res, next) => {
-        res.render('questions', { title: 'Itération 1'});
+    //GET de la vue view de l'objet question
+    router.get('/question/:id', questionRoutes.getQuestion.bind(questionRoutes), (req, res, next) => {
+        let question: Question = req['question'];
+        res.render('questions/view', {
+            title: 'Consultation de la question' + question.name,
+            question: question
+        })
     });
 
-    router.get('/login', (req, res, next) => {
-        res.render('login', { title: 'Itération 1'});
-    });*/
-
-		//=================================================================
-		//Questions
-		//=================================================================
-		//GET de l'index donc la liste des questions disponibles
-		router.get('/course/:id/questions', questionRoutes.getQuestionsByCourse.bind(questionRoutes), (req, res, next) => {
-		    console.log(req['questions']);
-			res.render('questions/index', {
-				title: 'Liste des questions',
-				questions: req['questions'],
-				courseId: req.query.id
-			})
-		});
-
-		//GET de la vue view de l'objet question
-		router.get('/question/:id', questionRoutes.getQuestion.bind(questionRoutes), (req, res, next) => {
-			let question: Question = req['question'];
-			res.render('questions/view', {
-				title: 'Consultation du cours' + question.name,
-				question: question
-			})
-		});
-
-
+      router.get('/question', questionRoutes.getQuestionsByTeacher.bind(questionRoutes), (req, res, next) => {
+          let questions: Question[] = req['questions'];
+          res.render('questions/index', {
+              title: 'Consultation des questions',
+              questions: questions
+          })
+      });
 
     this.expressApp.use('/', router);  // base routing
 

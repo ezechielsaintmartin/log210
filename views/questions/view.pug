@@ -18,8 +18,8 @@ html
             h3 Message bonne reponse : #{question._successText}
             h3 Message mausaise reponse : #{question._failureText}
 
-            a(href="/questions/supprimer?questionID="+question['id']+ "&coursID="+coursID) Supprimer Question
+            a(href="/question/supprimer?questionID="+question['id']+ "&coursID="+coursID) Supprimer Question
             br
-            a(href="/questions/edit?id=" + question['id']) modifier
+            a(href="/question/edit?id=" + question['id']) modifier
             br
-            a(href="/questions") retour a la liste
+            a(href="/question") retour a la liste

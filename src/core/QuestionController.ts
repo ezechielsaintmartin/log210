@@ -20,7 +20,6 @@ export class QuestionController {
             obj.successText,
             obj.failureText
         ));
-        console.log(questionArray);
         this.questions = questionArray.reduce((map, obj) => {
             if (obj.id > this.maxId) {
                 this.maxId = obj.id;
@@ -70,7 +69,7 @@ export class QuestionController {
     public getQuestionsByTeacher(teacherId: number): Question[] {
         let questions = [];
         for (let key in this.questions){
-            if (this.questions[key].teacherId == teacherId)
+            //if (this.questions[key].teacherId == teacherId) Pour l'instant, on ignore l'id de l'enseignant
                 questions.push(this.questions[key]);
         }
         return questions;
