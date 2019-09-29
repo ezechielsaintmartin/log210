@@ -1,22 +1,30 @@
 [
   {
     "id": 1,
-    "type": "Vrai/Faux",
-    "categorie": "Theorie",
-    "nom": "Question 1",
-    "enonce": "Qu'est ce qu'un MDD ?",
-    "verite": "loremipsum",
-    "texteBonneReponse": "Super ! ",
-    "texteMauvaiseReponse": "Incorrect ! "
+    "teacherId": 1,
+    "courseId": 1,
+    "categories": [
+      "Théorie",
+      "Facile"
+    ],
+    "name": "Question 1",
+    "statement": "Qu'est ce qu'un MDD ?",
+    "truth": false,
+    "successText": "Super ! ",
+    "failureText": "Incorrect ! "
   },
   {
     "id": 2,
-    "type": "Vrai/Faux",
-    "categorie": "Pratique",
-    "nom": "Question 2",
-    "enonce": "Qu'est ce qu'un DSS ?",
-    "verite": "loremipsum",
-    "texteBonneReponse": "Super ! ",
-    "texteMauvaiseReponse": "Incorrect ! "
+    "teacherId": 1,
+    "courseId": 1,
+    "categories": [
+      "Pratique",
+      "Facile"
+    ],
+    "name": "Question 2",
+    "statement": "Qu'est ce qu'un DSS ?",
+    "truth": true,
+    "successText": "Super ! ",
+    "failureText": "Incorrect ! "
   }
 ]

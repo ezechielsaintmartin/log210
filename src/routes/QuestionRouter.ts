@@ -1,6 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
 
 import { QuestionController } from '../core/QuestionController';
+import {Question} from "../models/Question";
 export class QuestionRouter {
   router: Router;
   controller: QuestionController;  // GRASP controller
@@ -15,7 +16,7 @@ export class QuestionRouter {
   }
 
   public deleteQuestion(req: Request, res: Response, next: NextFunction) {
-    try{
+    try {
       let id: number = parseInt(req.params.id);
       this.controller.deleteQuestion(id);
       res.sendStatus(204); // HTTP 204 No content
@@ -25,7 +26,24 @@ export class QuestionRouter {
   }
 
   public createQuestion(req: Request, res: Response, next: NextFunction) {
+    try {
+      let teacherId: number = parseInt(req.body.teacherId);
+      let courseId: number = parseInt(req.body.courseId);
+      let name: string = req.body.name;
+      let tags: string[] = req.body.tags.split(',').map(str => str.trim());
+      let statement: string = req.body.statement;
+      let truth: boolean = !!req.body.truth;
+      let successText: string = req.body.successText;
+      let failureText: string = req.body.failureText;
 
+      let question = new Question(-1, teacherId, courseId, name, tags, statement, truth, successText, failureText);
+
+      this.controller.createQuestion(question);
+
+      res.redirect('/course/' + question.courseId + '/questions');
+    } catch (error) {
+      res.sendStatus(400);
+    }
   }
 
   public updateQuestion(req: Request, res: Response, next: NextFunction) {
@@ -33,7 +51,18 @@ export class QuestionRouter {
   }
 
   public getQuestion(req: Request, res: Response, next: NextFunction) {
+      req['question'] = this.controller.getQuestion(req.query.id);
+      next();
+  }
 
+  public getQuestionsByTeacher(req: Request, res: Response, next: NextFunction) {
+      req['questions'] = this.controller.getQuestionsByTeacher(req.query.id);
+      next();
+  }
+
+  public getQuestionsByCourse(req: Request, res: Response, next: NextFunction) {
+      req['questions'] = this.controller.getQuestionsByCourse(req.query.id);
+      next();
   }
 
   /**

@@ -7,16 +7,16 @@ html
     body
 
     div.container
-        h1 Consultation de la question : #{question['nom']}
+        h1 Consultation de la question : #{question.name}
 
         dl
-            h1 Nom : #{question['nom']}
-            h3 Type de question : #{question['type']}
-            h3 Categorie : #{question['categorie']}
-            h3 Enonce : #{question['enonce']}
-            h3 Bonne reponse : #{question['verite']}
-            h3 Message bonne reponse : #{question['texteBonneReponse']}
-            h3 Message mausaise reponse : #{question['texteMauvaiseReponse']}
+            h1 Nom : #{question.name}
+            h3 Type de question : Vrai/Faux
+            h3 Catégories : #{question.tags.join(',')}
+            h3 Enonce : #{question.statement}
+            h3 Bonne reponse : #{question.truth}
+            h3 Message bonne reponse : #{question.successText}
+            h3 Message mausaise reponse : #{question.failureText}
 
             a(href="/questions/supprimer?questionID="+question['id']+ "&coursID="+coursID) Supprimer Question
             br

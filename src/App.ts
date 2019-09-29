@@ -4,6 +4,7 @@ import * as bodyParser from 'body-parser';
 import * as fetch from 'node-fetch';
 
 import { questionRoutes } from './routes/QuestionRouter';
+import {Question} from "./models/Question";
 
 // Creates and configures an ExpressJS web server.
 class App {
@@ -34,7 +35,6 @@ class App {
     let router = express.Router();
 
     const listeCours = require("./data/courses.json");
-    const listeQuestions = require("./data/questions.json");
     const listeEtudiants = require("./data/students.json");
 
     // placeholder route handler
@@ -113,91 +113,32 @@ class App {
 		//Questions
 		//=================================================================
 		//GET de l'index donc la liste des questions disponibles
-		router.get('/Questions', (req, res, next) => {
-			let messages = [];
-			var coursID = req.query.id;
-			var questions = [];
-			if (coursID == undefined) {
-				questions = listeQuestions;
-			}else {
-				var cour = {};
-				for (var item in listeCours) {
-					console.log('For ' + item);
-					if (listeCours[item]['id'] == coursID) {
-						cour = listeCours[item];
-						break;
-					}
-				}
-				for (var item in listeQuestions) {
-					for (var questionid in cour['questions']) {
-						if (listeQuestions[item]['id'] == cour['questions'][questionid]) {
-							questions.push(listeQuestions[item]);
-						}
-					}
-				}
-			}
+		router.get('/course/:id/questions', questionRoutes.getQuestionsByCourse, (req, res, next) => {
 			res.render('questions/index', {
 				title: 'Liste des questions',
-				flashedMessages: messages,
-				questions: questions,
-				coursid: coursID
+				questions: req['questions'],
+				courseId: req.query.id
 			})
 		});
 
 		//GET de la vue view de l'objet question
-		router.get('/Questions/View', (req, res, next) => {
-
-			//Id du cours recu en parametres
-			var idQuestionRecherche = req.query.questionID;
-			var coursID = req.query.coursID;
-
-			let messages = [];
-
-			//Recherche de la question dans la liste
-			var question = {};
-			for (var item in listeQuestions) {
-				if (listeQuestions[item]['id'] == idQuestionRecherche) {
-					question = listeQuestions[item];
-					break;
-				}
-			}
+		router.get('/question/:id', questionRoutes.getQuestion, (req, res, next) => {
+			let question: Question = req['question'];
 			res.render('questions/view', {
-				title: 'Consultation du cours' + question['nom'],
-				flashedMessages: messages,
-				question: question,
-				coursID: coursID
+				title: 'Consultation du cours' + question.name,
+				question: question
 			})
 		});
 
 		//GET de la vue ajouter de l'objet question
-		router.get('/Questions/ajouter', (req, res, next) => {
+		router.get('/course/:id/question/add', (req, res, next) => {
 
 			//Id du cours recu en parametres
 			var coursID = req.query.id;
 
-			res.render('questions/ajouter', {title: 'Ajouter question', coursid: coursID})
+			res.render('questions/add', {title: 'Ajouter question', coursid: coursID})
 		});
-		router.post('/Questions/ajouter', (req, res, next) => {
 
-			//Id du cours recu en parametres
-			var coursID = req.body.coursid;
-			var questionID = listeQuestions.length + 1;
-			listeQuestions.push({
-				"id": questionID,
-				"type": "Vrai/Faux",
-				"categorie": req.body.tags,
-				"nom": req.body.nom,
-				"enonce": req.body.enonce,
-				"verite": req.body.verite,
-				"texteBonneReponse": req.body.texteBonneReponse,
-				"texteMauvaiseReponse": req.body.texteMauvaiseReponse
-			});
-			const test = listeCours.filter(cours => cours.id == coursID)[0].questions.push(questionID);
-
-			//res.render('questions/index', {title: 'Questions'})
-			res.redirect('/questions?id=' + coursID);
-        });
-        
         //GET de la vue ajouter de l'objet question
 		router.get('/Questions/edit', (req, res, next) => {
 
@@ -231,7 +172,7 @@ class App {
 			//Rediriger vers la liste des questions
 			res.redirect('/questions');
         });
-        
+
 		//GET de l'index donc la liste des questions disponibles
 		router.get('/Questions/supprimer', (req, res, next) => {
 			var coursID = req.query.coursID;

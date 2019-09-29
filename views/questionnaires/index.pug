@@ -6,16 +6,14 @@ html
         script()
     body
         div.container
-            h1 Liste des Questions
+            h1 Listes des questionnaires
 
-            each question in questions
+            each questionnaire in questionnaires
 
-                a(href="/question/" + question.id) #{question.name}
+                a(href=view+"?id=" + questionnaire['id']) #{cour['sigle']} , Groupe #{cour['groupe']}
                 br
-
-            a(href="/course/"+courseId+"/questions/add") ajouter question
             br
-            a(href="/courses/"+courseId) retour au cours
+            a(href="/") retour à l'index
 
 
     <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
