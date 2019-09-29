@@ -7,28 +7,30 @@ html
     body
         div.container
             h1 Ajouter une Question
-            form(action="/questions/edit" method="POST")
-                input(type="hidden" name="questionId" id="coursid" value=question.id)
+            form(action="/api/v1/question/"+question.id+"" method="POST")
+                input(type="hidden" name="questionId" id="questionId" value=question.id)
+                input(type="hidden" name="courseId" id="courseId" value=question.courseId)
+                input(type="hidden" name="teacherId" id="teacherId" value=question.teacherId)
 
                 label(for="tags" style="display:block") Tags(séparés par des virgules):
-                input(type="text" name="tags" id="tags" style="display:block" value=question.tags)
+                input(type="text" name="tags" id="tags" style="display:block" value=question.tags.join(','))
 
-                label(for="nom" style="display:block") Nom:
-                input(type="text" name="nom" id="nom" style="display:block" value=question.nom)
+                label(for="name" style="display:block") Nom:
+                input(type="text" name="name" id="name" style="display:block" value=question.name)
 
-                label(for="enonce" style="display:block") enonce:
-                textarea( name="enonce" id="enonce" style="display:block" )=question.enonce
+                label(for="statement" style="display:block") enonce:
+                textarea( name="statement" id="statement" style="display:block")=question.statement
 
-                label(for="verite" style="display:block") Verite:
-                input(type="text" name="verite" id="verite" style="display:block" value=question.verite)
+                label(for="truth" style="display:block") Verite:
+                input(type="checkbox" name="truth" id="truth" style="display:block" checked=question.truth)
 
-                label(for="texteBonneReponse" style="display:block") TexteBonneReponse:
-                textarea( name="texteBonneReponse" id="texteBonneReponse" style="display:block" )= question.texteBonneReponse
+                label(for="successText" style="display:block") TexteBonneReponse:
+                textarea( name="successText" id="successText" style="display:block")=question.successText
 
-                label(for="texteMauvaiseReponse" style="display:block") TexteMauvaiseReponse:
-                textarea( name="texteMauvaiseReponse" id="texteMauvaiseReponse" style="display:block" )=question.texteMauvaiseReponse
+                label(for="failureText" style="display:block") TexteMauvaiseReponse:
+                textarea( name="failureText" id="failureText" style="display:block")=question.failureText
 
-                button(type="submit") Enregistrer
+                button(type="submit") Enregistre
 
 
     <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>

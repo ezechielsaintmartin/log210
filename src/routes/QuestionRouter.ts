@@ -47,7 +47,27 @@ export class QuestionRouter {
   }
 
   public updateQuestion(req: Request, res: Response, next: NextFunction) {
+      try {
+        console.log(req.body);
+          let teacherId: number = parseInt(req.body.teacherId);
+          let courseId: number = parseInt(req.body.courseId);
+          let id: number = parseInt(req.body.questionId);
+          let name: string = req.body.name;
+          let tags: string[] = req.body.tags.split(',').map(str => str.trim());
+          let statement: string = req.body.statement;
+          let truth: boolean = !!req.body.truth;
+          let successText: string = req.body.successText;
+          let failureText: string = req.body.failureText;
 
+          let question = new Question(id, teacherId, courseId, name, tags, statement, truth, successText, failureText);
+
+          this.controller.updateQuestion(question);
+
+          res.redirect('/question/'+question.id);
+      } catch (error) {
+        console.log(error);
+          res.sendStatus(400);
+      }
   }
 
   public getQuestion(req: Request, res: Response, next: NextFunction) {
@@ -74,7 +94,7 @@ export class QuestionRouter {
   init() {
       this.router.delete('/:id', this.deleteQuestion.bind(this));
       this.router.post('/', this.createQuestion.bind(this));
-      this.router.put('/:id', this.updateQuestion.bind(this));
+      this.router.post('/:id', this.updateQuestion.bind(this));
       this.router.get('/:id', this.getQuestion.bind(this));
   }
 

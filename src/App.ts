@@ -66,6 +66,15 @@ class App {
         })
     });
 
+      //GET de la vue view de l'objet question
+      router.get('/question/:id/edit', questionRoutes.getQuestion.bind(questionRoutes), (req, res, next) => {
+          let question: Question = req['question'];
+          res.render('questions/edit', {
+              title: 'Modification de la question' + question.name,
+              question: question
+          })
+      });
+
       router.get('/question', questionRoutes.getQuestionsByTeacher.bind(questionRoutes), (req, res, next) => {
           let questions: Question[] = req['questions'];
           res.render('questions/index', {
