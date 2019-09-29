@@ -71,7 +71,8 @@ class App {
           let question: Question = req['question'];
           res.render('questions/edit', {
               title: 'Modification de la question' + question.name,
-              question: question
+              question: question,
+              error: !!req.query.error
           })
       });
 

@@ -7,6 +7,8 @@ html
     body
         div.container
             h1 Ajouter une Question
+            if(error)
+                h2(style={color:"red"}) This name already exists
             form(action="/api/v1/question/"+question.id+"" method="POST")
                 input(type="hidden" name="questionId" id="questionId" value=question.id)
                 input(type="hidden" name="courseId" id="courseId" value=question.courseId)
