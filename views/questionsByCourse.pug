@@ -6,14 +6,16 @@ html
         script()
     body
         div.container
-         h1 Listes des cours
+            h1 #{course.sigle} , Groupe #{course.group}
 
-         each course in courses
+            each question in questions
 
-             a(href="/course/"+cours.id+"/questions") #{course.sigle} , Groupe #{course.group}
-             br
-         br
-         a(href="/") retour à l'index
+                a(href="/question/" + question._id) #{question._name}
+                br
+
+            a(href="/course/" + course.id + "/question/add") ajouter question
+            br
+            a(href="/") retour à l'index
 
 
     <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>

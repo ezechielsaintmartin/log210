@@ -3,7 +3,7 @@
     "id": 1,
     "teacherId": 1,
     "courseId": 1,
-    "categories": [
+    "tags": [
       "Théorie",
       "Facile"
     ],
@@ -17,7 +17,7 @@
     "id": 2,
     "teacherId": 1,
     "courseId": 1,
-    "categories": [
+    "tags": [
       "Pratique",
       "Facile"
     ],

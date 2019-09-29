@@ -40,7 +40,7 @@ export class QuestionRouter {
 
       this.controller.createQuestion(question);
 
-      res.redirect('/course/' + question.courseId + '/questions');
+      res.redirect('/course/' + question.courseId + '/question');
     } catch (error) {
       res.sendStatus(400);
     }
@@ -51,17 +51,17 @@ export class QuestionRouter {
   }
 
   public getQuestion(req: Request, res: Response, next: NextFunction) {
-      req['question'] = this.controller.getQuestion(req.query.id);
+      req['question'] = this.controller.getQuestion(parseInt(req.params.id));
       next();
   }
 
   public getQuestionsByTeacher(req: Request, res: Response, next: NextFunction) {
-      req['questions'] = this.controller.getQuestionsByTeacher(req.query.id);
+      req['questions'] = this.controller.getQuestionsByTeacher(parseInt(req.params.id));
       next();
   }
 
   public getQuestionsByCourse(req: Request, res: Response, next: NextFunction) {
-      req['questions'] = this.controller.getQuestionsByCourse(req.query.id);
+      req['questions'] = this.controller.getQuestionsByCourse(parseInt(req.params.id));
       next();
   }
 

@@ -8,8 +8,8 @@ html
         div.container
             h1 Ajouter une Question
             form(action="/api/v1/question" method="POST")
-                input(type="hidden" name="courseId" id="courseId" value=courseId)
-                input(type="hidden" name="teacherId" id="teacherId" value=teacherId)
+                input(type="hidden" name="courseId" id="courseId" value=course.id)
+                input(type="hidden" name="teacherId" id="teacherId" value=1)
 
                 label(for="tags" style="display:block") Tags(séparés par des virgules):
                 input(type="text" name="tags" id="tags" style="display:block")
