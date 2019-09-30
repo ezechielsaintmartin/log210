@@ -7,7 +7,7 @@ html
     body
 
     div.container
-        h1 Consultation de la question : #{question._name}
+        h1 Supprimer la question : #{question._name}
 
         dl
             h1 Nom : #{question._name}
@@ -18,8 +18,4 @@ html
             h3 Message bonne reponse : #{question._successText}
             h3 Message mausaise reponse : #{question._failureText}
 
-            a(href="/question/" + question['id'] + "/delete") Supprimer Question
-            br
-            a(href="/question/" + question['id'] + "/edit") modifier
-            br
-            a(href="/question") retour a la liste
+            a(href="/api/v1/question/"+question.id+"/delete") Confirmer la suppression

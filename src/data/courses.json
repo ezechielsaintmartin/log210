@@ -2,89 +2,73 @@
   {
     "id":1,
     "sigle":"LOG210",
-    "nb_max_student": 5,
-    "groupe":"01",
-    "titre":"Analyse et conception de logiciels",
-    "date_debut":"2019-09-03",
-    "date_fin":"2019-09-03",
-    "questions": [2],
-    "statut": "actif"
+    "maxNumberOfStudents": 5,
+    "group":"01",
+    "title":"Analyse et conception de logiciels",
+    "startDate":"2019-09-03",
+    "endDate":"2019-09-03"
   },
   {
     "id":2,
     "sigle":"LOG210",
-    "nb_max_student": 5,
-    "groupe":"02",
-    "titre":"Analyse et conception de logiciels",
-    "date_debut":"2019-09-03",
-    "date_fin":"2019-10-03",
-    "questions": [1,2],
-    "statut": "actif"
+    "maxNumberOfStudents": 5,
+    "group":"02",
+    "title":"Analyse et conception de logiciels",
+    "startDate":"2019-09-03",
+    "endDate":"2019-10-03"
   },
   {
     "id":3,
     "sigle":"LOG210",
-    "nb_max_student": 5,
-    "groupe":"03",
-    "titre":"Analyse et conception de logiciels",
-    "date_debut":"2019-09-03",
-    "date_fin":"2019-11-03",
-    "questions": [1,2],
-    "statut": "non actif"
+    "maxNumberOfStudents": 5,
+    "group":"03",
+    "title":"Analyse et conception de logiciels",
+    "startDate":"2019-09-03",
+    "endDate":"2019-11-03"
   },
   {
     "id":4,
     "sigle":"LOG210",
-    "nb_max_student": 5,
-    "groupe":"04",
-    "titre":"Analyse et conception de logiciels",
-    "date_debut":"2019-09-03",
-    "date_fin":"2019-12-03",
-    "questions": [1,2],
-    "statut": "non actif"
+    "maxNumberOfStudents": 5,
+    "group":"04",
+    "title":"Analyse et conception de logiciels",
+    "startDate":"2019-09-03",
+    "endDate":"2019-12-03"
   },
   {
     "id":5,
     "sigle":"LOG430",
-    "nb_max_student": 5,
-    "groupe":"01",
-    "titre":"Architecture logicielle",
-    "date_debut":"2019-09-03",
-    "date_fin":"2019-09-03",
-    "questions": [1,2],
-    "statut": "actif"
+    "maxNumberOfStudents": 5,
+    "group":"01",
+    "title":"Architecture logicielle",
+    "startDate":"2019-09-03",
+    "endDate":"2019-09-03"
   },
   {
     "id":6,
     "sigle":"LOG430",
-    "nb_max_student": 5,
-    "groupe":"02",
-    "titre":"Architecture logicielle",
-    "date_debut":"2019-09-03",
-    "date_fin":"2019-10-03",
-    "questions": [1,2],
-    "statut": "actif"
+    "maxNumberOfStudents": 5,
+    "group":"02",
+    "title":"Architecture logicielle",
+    "startDate":"2019-09-03",
+    "endDate":"2019-10-03"
   },
   {
     "id":7,
     "sigle":"LOG430",
-    "nb_max_student": 5,
-    "groupe":"03",
-    "titre":"Architecture logicielle",
-    "date_debut":"2019-09-03",
-    "date_fin":"2019-11-03",
-    "questions": [1,2],
-    "statut": "actif"
+    "maxNumberOfStudents": 5,
+    "group":"03",
+    "title":"Architecture logicielle",
+    "startDate":"2019-09-03",
+    "endDate":"2019-11-03"
   },
   {
     "id":8,
     "sigle":"LOG430",
-    "nb_max_student": 5,
-    "groupe":"04",
-    "titre":"Architecture logicielle",
-    "date_debut":"2019-09-03",
-    "date_fin":"2019-12-03",
-    "questions": [1,2],
-    "statut": "actif"
+    "maxNumberOfStudents": 5,
+    "group":"04",
+    "title":"Architecture logicielle",
+    "startDate":"2019-09-03",
+    "endDate":"2019-12-03"
   }
 ]

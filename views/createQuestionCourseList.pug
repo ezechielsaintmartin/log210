@@ -6,14 +6,14 @@ html
         script()
     body
         div.container
-         h1 Listes des cours
+            h1 Listes des cours
 
-         each cour in cours
+            each course in courses
 
-             a(href=view+"?id=" + cour['id']) #{cour['sigle']} , Groupe #{cour['groupe']}
-             br
-         br
-         a(href="/") retour à l'index
+                a(href="/course/"+course.id+"/question") #{course.sigle} , Groupe #{course.group}
+                br
+            br
+            a(href="/") retour à l'index
 
 
     <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>

@@ -4,12 +4,29 @@ import {Strings} from "../strings";
 export class QuestionController {
     // GRASP controller class
 
-    questions: Map<number, Question>;
+    maxId: number;
+    questions: {[id:number]: Question};
 
     constructor() {
-        this.questions = new Map();
-        this.questions.set(1, new Question(1, "Question 1"));
-        this.questions.set(2, new Question(2, "Question 2"));
+        this.maxId = 0;
+        let questionArray: Question[] = require("../data/questions.json").map(obj => new Question(
+            obj.id,
+            obj.teacherId,
+            obj.courseId,
+            obj.name,
+            obj.tags,
+            obj.statement,
+            obj.truth,
+            obj.successText,
+            obj.failureText
+        ));
+        this.questions = questionArray.reduce((map, obj) => {
+            if (obj.id > this.maxId) {
+                this.maxId = obj.id;
+            }
+            map[obj.id] = obj;
+            return map;
+        },{});
     }
 
     /**
@@ -17,11 +34,70 @@ export class QuestionController {
      */
 
     public deleteQuestion(questionId: number) {
-        if (this.questions.has(questionId)){
-            this.questions.delete(questionId);
+        if (this.questions[questionId]){
+            delete this.questions[questionId];
         } else {
             throw Error(Strings.NO_SUCH_QUESTION_ID);
         }
+    }
+
+    public createQuestion(question: Question) {
+        if (this.getQuestionByName(question.name) != null){
+            throw Error(Strings.QUESTION_ALREADY_EXISTS);
+        } else {
+            ++this.maxId;
+            question.id = this.maxId;
+            this.questions[question.id] = question;
+        }
+
+        console.log(this.questions);
+    }
+
+    public updateQuestion(question: Question) {
+        let questionWithName: Question = this.getQuestionByName(question.name);
+        if (this.questions[question.id]){
+            if (questionWithName == null || questionWithName.id == question.id){
+                this.questions[question.id] = question;
+            } else {
+                throw Error(Strings.QUESTION_ALREADY_EXISTS);
+            }
+        } else {
+            throw Error(Strings.NO_SUCH_QUESTION_ID);
+        }
+    }
+
+    public getQuestionsByTeacher(teacherId: number): Question[] {
+        let questions = [];
+        for (let key in this.questions){
+            //if (this.questions[key].teacherId == teacherId) Pour l'instant, on ignore l'id de l'enseignant
+                questions.push(this.questions[key]);
+        }
+        return questions;
+    }
+
+    public getQuestionsByCourse(courseId: number): Question[] {
+        let questions = [];
+        for (let key in this.questions){
+            if (this.questions[key].courseId == courseId)
+                questions.push(this.questions[key]);
+        }
+        return questions;
+    }
+
+    public getQuestion(questionId: number): Question {
+        if (this.questions[questionId]){
+            return this.questions[questionId];
+        } else {
+            throw Error(Strings.NO_SUCH_QUESTION_ID);
+        }
+    }
+
+    private getQuestionByName(name: string): Question {
+        for (let key in this.questions){
+            if (this.questions[key].name == name)
+                return this.questions[key];
+        }
+        return null;
     }
 
 }

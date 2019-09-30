@@ -6,18 +6,12 @@ html
         script()
     body
         div.container
-            h1 Listes des Questions
+            h1 Liste des Questions
 
             each question in questions
 
-                a(href="/questions/View?questionID=" + question['id']+"&coursID="+coursid) #{question['nom']}
+                a(href="/question/" + question.id) #{question.name}
                 br
-            unless coursid === undefined
-                a(href="/questions/ajouter?id="+coursid) ajouter question
-                br
-                a(href="/courses/view?id="+coursid) retour au cours
-            if coursid === undefined
-                a(href="/") retour à l'index
 
 
     <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
