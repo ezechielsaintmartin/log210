@@ -29,6 +29,21 @@ export class QuizController {
         return quizCountByCourse;
     }
 
+    public getQuizCountByQuestion(): {[courseId: number]: number} {
+        let quizCountByQuestion: {[courseId: number]: number} = {};
+        for(let key in this.quizzes){
+            let quiz = this.quizzes[key];
+            quiz.questions.forEach(question => {
+                if (quizCountByQuestion[question]){
+                    ++quizCountByQuestion[question];
+                } else {
+                    quizCountByQuestion[question] = 1;
+                }
+            });
+        }
+        return quizCountByQuestion;
+    }
+
     public getQuizzesByCourse(courseId: number): Quiz[] {
         let quizzes: Quiz[] = [];
         for(let key in this.quizzes){
@@ -44,5 +59,22 @@ export class QuizController {
         ++this.maxId;
         quiz.id = this.maxId;
         this.quizzes[quiz.id] = quiz;
+    }
+
+    public getQuizzesByQuestion(questionId: number): Quiz[] {
+        let quizzes: Quiz[] = [];
+        for(let key in this.quizzes){
+            let quiz = this.quizzes[key];
+            quiz.questions.forEach((id) => {
+                if (id == questionId)
+                    quizzes.push(quiz);
+            });
+        }
+        return quizzes;
+    }
+
+    public addQuestions(quizId: number, questions: number[]){
+        this.quizzes[quizId].questions.push(...questions);
+        return this.quizzes[quizId];
     }
 }

@@ -37,10 +37,26 @@ export class QuizRouter {
         next();
     }
 
+    public getQuizCountByQuestion(req: Request, res: Response, next: NextFunction) {
+        req['quizCountByQuestion'] = this.controller.getQuizCountByQuestion();
+        next();
+    }
+
     public getQuizzesByCourse(req: Request, res: Response, next: NextFunction) {
         let courseId: number = parseInt(req.params.id);
         req['quizzes'] = this.controller.getQuizzesByCourse(courseId);
         next();
+    }
+
+    public getQuizzesByQuestion(req: Request, res: Response, next: NextFunction) {
+        let questionId: number = parseInt(req.params.id);
+        req['quizzes'] = this.controller.getQuizzesByQuestion(questionId);
+        next();
+    }
+
+    public addQuestions(req: Request, res: Response, next: NextFunction) {
+        let quiz: Quiz = this.controller.addQuestions(parseInt(req.params.id), Object.keys(req.body).map(key => parseInt(key)));
+        res.redirect('/course/' + quiz.courseId + '/quiz/' + quiz.id + '/tags');
     }
 
     /**
@@ -51,6 +67,7 @@ export class QuizRouter {
      */
     init() {
         this.router.post('/', this.createQuiz.bind(this));
+        this.router.post('/:id/questions', this.addQuestions.bind(this));
     }
 
 }

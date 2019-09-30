@@ -81,12 +81,12 @@ class App {
       });
 
       //GET de la vue view de l'objet question
-      router.get('/question/:id/delete', questionRoutes.getQuestion.bind(questionRoutes), (req, res, next) => {
+      router.get('/question/:id/delete', questionRoutes.getQuestion.bind(questionRoutes), quizRoutes.getQuizzesByQuestion.bind(quizRoutes), (req, res, next) => {
           let question: Question = req['question'];
           res.render('questions/delete', {
               title: 'Modification de la question' + question.name,
               question: question,
-              questionnaires: []
+              quizzes: req['quizzes']
           })
       });
 
@@ -118,8 +118,9 @@ class App {
           res.render('quizzes/tags', {title: 'Choisir une catégorie', course: req['course'], tags: req['tags'], quizId: req.params.quizId});
       });
 
-      router.get('/course/:courseId/quiz/:quizId/:tag', questionRoutes.getQuestionsByTag.bind(questionRoutes), (req, res, next) => {
-          res.render('quizzes/questions', {title: 'Ajouter des questions', courseId: req.params.courseId, questions: req['questions'], quizId: req.params.quizId});
+      router.get('/course/:courseId/quiz/:quizId/:tag', questionRoutes.getQuestionsByTag.bind(questionRoutes), quizRoutes.getQuizCountByQuestion.bind(quizRoutes), (req, res, next) => {
+          console.log(req['quizCountByQuestion']);
+          res.render('quizzes/questions', {title: 'Ajouter des questions', courseId: req.params.courseId, questions: req['questions'], quizId: req.params.quizId, quizCountByQuestion: req['quizCountByQuestion']});
       });
 
     this.expressApp.use('/', router);  // base routing

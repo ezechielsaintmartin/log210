@@ -18,4 +18,14 @@ html
             h3 Message bonne reponse : #{question._successText}
             h3 Message mausaise reponse : #{question._failureText}
 
-            a(href="/api/v1/question/"+question.id+"/delete") Confirmer la suppression
+            each quiz in quizzes
+
+                h3 Description : #{quiz._description}
+                br
+                h3 Actif : #{quiz._active}
+                br
+
+            if quizzes.length
+                h3 Impossible de supprimer
+            else
+                a(href="/api/v1/question/"+question.id+"/delete") Confirmer la suppression
