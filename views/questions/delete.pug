@@ -1,0 +1,21 @@
+html
+    head
+        title= title
+        link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css')
+        link(rel='stylesheet' href='/css/style.css')
+        script()
+    body
+
+    div.container
+        h1 Supprimer la question : #{question._name}
+
+        dl
+            h1 Nom : #{question._name}
+            h3 Type de question : Vrai/Faux
+            h3 Catégories : #{question._tags.join(',')}
+            h3 Enonce : #{question._statement}
+            h3 Bonne reponse : #{question._truth}
+            h3 Message bonne reponse : #{question._successText}
+            h3 Message mausaise reponse : #{question._failureText}
+
+            a(href="/api/v1/question/"+question.id+"/delete") Confirmer la suppression
