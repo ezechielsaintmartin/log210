@@ -81,4 +81,9 @@ export class QuizController {
     public getQuiz(quizId: number): Quiz {
         return this.quizzes[quizId];
     }
+
+    public updateQuiz(quizId: number, description: string, active: boolean){
+        this.quizzes[quizId].description = description;
+        this.quizzes[quizId].active = active;
+    }
 }

@@ -131,8 +131,14 @@ class App {
           res.render('quizzes/viewQuizzesForCourse', {title: 'Liste des questionnaires', quizzes: req['quizzes']});
       });
 
-      router.get('/quiz/:id', quizRoutes.getQuiz.bind(quizRoutes), (req, res, next) => {
-          res.render('quizzes/view', {title: 'Questionnaire', quiz: req['quiz']});
+      router.get('/quiz/:id', quizRoutes.getQuiz.bind(quizRoutes), questionRoutes.getQuestionsByQuiz.bind(questionRoutes),(req, res, next) => {
+          console.log(req);
+          res.render('quizzes/view', {title: 'Questionnaire', quiz: req['quiz'], selectedQuestions: req['selectedQuestions']});
+          console.log(req);
+      });
+
+      router.get('/quiz/:id/edit', quizRoutes.getQuiz.bind(quizRoutes), questionRoutes.getQuestionsByQuiz.bind(questionRoutes), (req, res, next) => {
+          res.render('quizzes/edit', {title: 'Questionnaire', quiz: req['quiz'], selectedQuestions: req['selectedQuestions']});
       });
 
     this.expressApp.use('/', router);  // base routing

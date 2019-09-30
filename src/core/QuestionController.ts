@@ -116,4 +116,13 @@ export class QuestionController {
         return questions;
     }
 
+    public getQuestions(questionIds: number[]): Question[]{
+        let questions = [];
+        questionIds.forEach(questionId => {
+            if (isFinite(questionId))
+                questions.push(this.questions[questionId]);
+        });
+        return questions;
+    }
+
 }

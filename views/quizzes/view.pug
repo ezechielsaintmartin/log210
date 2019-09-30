@@ -10,9 +10,16 @@ html
             br
             h3 Actif: #{quiz._active}
             br
+            each question in selectedQuestions
+                h3 #{question.name}
+                br
             a(href="/course/"+quiz._courseId+"/quizList") Retour à la liste de questionnaires
             br
             a(href="/") retour à l'index
+            br
+            a(href="/quiz/"+quiz._id+"/edit") Modifier
+            br
+            a(href="/quiz/"+quiz._id+"/delete") Supprimer
 
 
     <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>

@@ -1,0 +1,31 @@
+html
+    head
+        title= title
+        link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css')
+        link(rel='stylesheet' href='/css/style.css')
+        script()
+    body
+        div.container
+            h1 Listes des questions
+
+            form(action="/api/v1/quiz/" + quiz.id + "/update" method="POST")
+                input(type="hidden" name="quizId" id="quizId" value=quiz.id)
+
+                label(for="description" style="display:block") Description
+                input(type="text" name="description" id="description" style="display:block" value=quiz.description)
+
+                label(for="active" style="display:block") Actif:
+                input(type="checkbox" name="active" id="active" style="display:block" checked=quiz.active)
+
+                each question in selectedQuestions
+                    h3 #{question.name}
+                    br
+                    input(type="checkbox" name=question.id id=question.id style="display:block" checked=true)
+                    br
+                br
+                button(type="submit") Enregistre
+
+
+    <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/lib/main.js"></script>
