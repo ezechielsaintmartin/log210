@@ -84,6 +84,21 @@ export class QuestionRouter {
       next();
   }
 
+  public getTags(req: Request, res: Response, next: NextFunction) {
+      req['tags'] = this.controller.getTags();
+      next();
+  }
+
+  public getQuestionsByTag(req: Request, res: Response, next: NextFunction) {
+      req['questions'] = this.controller.getQuestionsByTag(parseInt(req.params.courseId), req.params.tag);
+      next();
+  }
+
+  public getQuestionsByQuiz(req: Request, res: Response, next: NextFunction){
+      req['selectedQuestions'] = this.controller.getQuestions(req['quiz'].questions);
+      next();
+  }
+
   /**
    * Take each handler, and attach to one of the Express.Router's
    * endpoints.

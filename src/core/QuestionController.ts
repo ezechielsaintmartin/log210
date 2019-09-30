@@ -49,8 +49,6 @@ export class QuestionController {
             question.id = this.maxId;
             this.questions[question.id] = question;
         }
-
-        console.log(this.questions);
     }
 
     public updateQuestion(question: Question) {
@@ -98,6 +96,33 @@ export class QuestionController {
                 return this.questions[key];
         }
         return null;
+    }
+
+    public getTags(): string[] {
+        let tags = [];
+        for (let key in this.questions){
+            tags.push(...this.questions[key].tags);
+        }
+        return [...new Set(tags)];
+    }
+
+    public getQuestionsByTag(courseId: number, tag: string): Question[]{
+        let questions: Question[] = [];
+        for (let key in this.questions){
+            let question = this.questions[key];
+            if (question.courseId == courseId && question.tags.filter(value => value == tag).length)
+                questions.push(question);
+        }
+        return questions;
+    }
+
+    public getQuestions(questionIds: number[]): Question[]{
+        let questions = [];
+        questionIds.forEach(questionId => {
+            if (isFinite(questionId))
+                questions.push(this.questions[questionId]);
+        });
+        return questions;
     }
 
 }
