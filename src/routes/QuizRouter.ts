@@ -73,6 +73,12 @@ export class QuizRouter {
         res.redirect('/quiz/' + id);
     }
 
+    public deleteQuiz(req: Request, res: Response, next: NextFunction) {
+        let id = parseInt(req.params.id);
+        let courseId = this.controller.deleteQuiz(id);
+        res.redirect('/course/' + courseId + '/quizList');
+    }
+
     /**
      * Take each handler, and attach to one of the Express.Router's
      * endpoints.
@@ -83,6 +89,7 @@ export class QuizRouter {
         this.router.post('/', this.createQuiz.bind(this));
         this.router.post('/:id/questions', this.addQuestions.bind(this));
         this.router.post('/:id/update', this.updateQuiz.bind(this));
+        this.router.get('/:id/delete', this.deleteQuiz.bind(this));
     }
 
 }

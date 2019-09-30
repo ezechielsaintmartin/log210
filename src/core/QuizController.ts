@@ -86,4 +86,10 @@ export class QuizController {
         this.quizzes[quizId].description = description;
         this.quizzes[quizId].active = active;
     }
+
+    public deleteQuiz(quizId: number){
+        let courseId = this.quizzes[quizId].courseId;
+        delete this.quizzes[quizId];
+        return courseId;
+    }
 }
