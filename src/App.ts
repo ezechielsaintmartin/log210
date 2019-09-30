@@ -6,6 +6,7 @@ import * as fetch from 'node-fetch';
 import { questionRoutes } from './routes/QuestionRouter';
 import {Question} from "./models/Question";
 import {courseRoutes} from "./routes/CourseRouter";
+import {quizRoutes} from "./routes/QuizRouter";
 
 // Creates and configures an ExpressJS web server.
 class App {
@@ -44,12 +45,15 @@ class App {
         res.render('index', { title: 'Itération 1'});
     });
 
+      /**
+       * QUESTIONS
+       */
     router.get('/addQuestion', courseRoutes.getCourses.bind(courseRoutes), (req, res, next) => {
-        res.render('createQuestionCourseList', {title: 'Itération 1', courses: req['courses']});
+        res.render('questions/createQuestionCourseList', {title: 'Itération 1', courses: req['courses']});
     });
 
     router.get('/course/:id/question', questionRoutes.getQuestionsByCourse.bind(questionRoutes), courseRoutes.getCourse.bind(courseRoutes), (req, res, next) => {
-        res.render('questionsByCourse', {title: 'Itération 1', questions: req['questions'], course: req['course']});
+        res.render('questions/questionsByCourse', {title: 'Itération 1', questions: req['questions'], course: req['course']});
     });
 
       //GET de la vue ajouter de l'objet question
@@ -94,9 +98,34 @@ class App {
           })
       });
 
+      /**
+       * QUIZZES
+       */
+
+      router.get('/course/quiz', courseRoutes.getCourses.bind(courseRoutes), quizRoutes.getQuizCountByCourse.bind(quizRoutes), (req, res, next) => {
+          res.render('quizzes/courses', {title: 'Liste des cours pour les questionnaires', courses: req['courses'], quizCountByCourse: req['quizCountByCourse']});
+      });
+
+      router.get('/course/:id/quiz', courseRoutes.getCourse.bind(courseRoutes), quizRoutes.getQuizzesByCourse.bind(quizRoutes), (req, res, next) => {
+          res.render('quizzes/quizzesForCourse', {title: 'Liste des questionnaires du cours', course: req['course'], quizzes: req['quizzes']});
+      });
+
+      router.get('/course/:id/quiz/add', courseRoutes.getCourse.bind(courseRoutes), (req, res, next) => {
+          res.render('quizzes/add', {title: 'Créer un questionnaire', course: req['course']});
+      });
+
+      router.get('/course/:id/quiz/:quizId/tags', courseRoutes.getCourse.bind(courseRoutes), questionRoutes.getTags.bind(questionRoutes), (req, res, next) => {
+          res.render('quizzes/tags', {title: 'Choisir une catégorie', course: req['course'], tags: req['tags'], quizId: req.params.quizId});
+      });
+
+      router.get('/course/:courseId/quiz/:quizId/:tag', questionRoutes.getQuestionsByTag.bind(questionRoutes), (req, res, next) => {
+          res.render('quizzes/questions', {title: 'Ajouter des questions', courseId: req.params.courseId, questions: req['questions'], quizId: req.params.quizId});
+      });
+
     this.expressApp.use('/', router);  // base routing
 
     this.expressApp.use('/api/v1/question', questionRoutes.router);
+    this.expressApp.use('/api/v1/quiz', quizRoutes.router);
   }
 
   private checkLogin(req, res, next) {

@@ -1,0 +1,24 @@
+html
+    head
+        title= title
+        link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css')
+        link(rel='stylesheet' href='/css/style.css')
+        script()
+    body
+        div.container
+            h1 Ajouter un questionnaire
+            form(action="/api/v1/quiz/" method="POST")
+                input(type="hidden" name="courseId" id="courseId" value=course.id)
+
+                label(for="description" style="display:block") Description
+                input(type="text" name="description" id="description" style="display:block")
+
+                label(for="active" style="display:block") Actif:
+                input(type="checkbox" name="active" id="active" style="display:block")
+
+                button(type="submit") Ajouter
+
+
+    <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/lib/main.js"></script>
