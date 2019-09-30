@@ -69,7 +69,7 @@ export class QuizRouter {
         let description = req.body.description;
         let active = !!req.body.active;
         let id = parseInt(req.body.quizId);
-        this.controller.updateQuiz(id, description, active);
+        this.controller.updateQuiz(id, description, active, req.body);
         res.redirect('/quiz/' + id);
     }
 

@@ -17,10 +17,10 @@ html
                 label(for="active" style="display:block") Actif:
                 input(type="checkbox" name="active" id="active" style="display:block" checked=quiz.active)
 
-                each question in selectedQuestions
-                    h3 #{question.name}
+                each question in result.questions
+                    h3 #{question._name}
                     br
-                    input(type="checkbox" name=question.id id=question.id style="display:block" checked=true)
+                    input(type="checkbox" name=question._id id=question._id style="display:block" checked=result.selected[question._id])
                     br
                 br
                 button(type="submit") Enregistre
