@@ -95,7 +95,7 @@ export class QuestionRouter {
   }
 
   public getQuestionsByQuiz(req: Request, res: Response, next: NextFunction){
-      req['selectedQuestions'] = this.controller.getQuestions(req['quiz'].questions);
+      req['result'] = this.controller.getQuestions(req['quiz'].questions);
       next();
   }
 

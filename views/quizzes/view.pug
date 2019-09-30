@@ -10,9 +10,10 @@ html
             br
             h3 Actif: #{quiz._active}
             br
-            each question in selectedQuestions
-                h3 #{question.name}
-                br
+            each question in result.questions
+                if result.selected[question._id]
+                    h3 #{question._name}
+                    br
             a(href="/course/"+quiz._courseId+"/quizList") Retour à la liste de questionnaires
             br
             a(href="/") retour à l'index

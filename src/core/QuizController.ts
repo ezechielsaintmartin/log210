@@ -82,9 +82,16 @@ export class QuizController {
         return this.quizzes[quizId];
     }
 
-    public updateQuiz(quizId: number, description: string, active: boolean){
+    public updateQuiz(quizId: number, description: string, active: boolean, body: any){
         this.quizzes[quizId].description = description;
         this.quizzes[quizId].active = active;
+        let questions = [];
+        for(let key in body){
+            if (isFinite(Number(key)) && body[key] == 'on'){
+                questions.push(parseInt(key));
+            }
+        }
+        this.quizzes[quizId].questions = questions;
     }
 
     public deleteQuiz(quizId: number){

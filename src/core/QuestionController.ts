@@ -116,13 +116,19 @@ export class QuestionController {
         return questions;
     }
 
-    public getQuestions(questionIds: number[]): Question[]{
-        let questions = [];
+    public getQuestions(questionIds: number[]): {questions: Question[], selected: {[id: number]: boolean}}{
+        let result = {
+            questions: [],
+            selected: {}
+        };
+        for(let key in this.questions){
+            result.questions.push(this.questions[key]);
+        }
         questionIds.forEach(questionId => {
             if (isFinite(questionId))
-                questions.push(this.questions[questionId]);
+                result.selected[questionId] = true;
         });
-        return questions;
+        return result;
     }
 
 }
