@@ -123,6 +123,18 @@ class App {
           res.render('quizzes/questions', {title: 'Ajouter des questions', courseId: req.params.courseId, questions: req['questions'], quizId: req.params.quizId, quizCountByQuestion: req['quizCountByQuestion']});
       });
 
+      router.get('/quizzes', courseRoutes.getCourses.bind(courseRoutes), quizRoutes.getQuizCountByCourse.bind(quizRoutes), (req, res, next) => {
+          res.render('quizzes/courseList', {title: 'Liste des cours pour les questionnaires', courses: req['courses'], quizCountByCourse: req['quizCountByCourse']});
+      });
+
+      router.get('/course/:id/quizList', quizRoutes.getQuizzesByCourse.bind(quizRoutes), (req, res, next) => {
+          res.render('quizzes/viewQuizzesForCourse', {title: 'Liste des questionnaires', quizzes: req['quizzes']});
+      });
+
+      router.get('/quiz/:id', quizRoutes.getQuiz.bind(quizRoutes), (req, res, next) => {
+          res.render('quizzes/view', {title: 'Questionnaire', quiz: req['quiz']});
+      });
+
     this.expressApp.use('/', router);  // base routing
 
     this.expressApp.use('/api/v1/question', questionRoutes.router);

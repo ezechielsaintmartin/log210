@@ -10,10 +10,9 @@ html
 
             each quiz in quizzes
 
-                h3 Description: #{quiz._description} Actif: #{quiz._active}
+                a(href="/quiz/"+quiz.id) #{quiz._description}
             br
-            a(href="/course/"+course.id+"/quiz/add") Ajouter un questionnaire
-            a(href="/") retour à l'index
+            a(href="/quizzes") retour à la liste de cours
 
 
     <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>

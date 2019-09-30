@@ -6,13 +6,13 @@ html
         script()
     body
         div.container
-            h1 Listes des questionnaires
+            h1 Listes des cours
 
-            each quiz in quizzes
+            each course in courses
 
-                h3 Description: #{quiz._description} Actif: #{quiz._active}
+                a(href="/course/"+course.id+"/quizList") #{course.sigle} , Groupe #{course.group} , #{(quizCountByCourse[course.id] || 0)} questionnaires
+                br
             br
-            a(href="/course/"+course.id+"/quiz/add") Ajouter un questionnaire
             a(href="/") retour à l'index
 
 

@@ -48,6 +48,12 @@ export class QuizRouter {
         next();
     }
 
+    public getQuiz(req: Request, res: Response, next: NextFunction) {
+        let quizId: number = parseInt(req.params.id);
+        req['quiz'] = this.controller.getQuiz(quizId);
+        next();
+    }
+
     public getQuizzesByQuestion(req: Request, res: Response, next: NextFunction) {
         let questionId: number = parseInt(req.params.id);
         req['quizzes'] = this.controller.getQuizzesByQuestion(questionId);

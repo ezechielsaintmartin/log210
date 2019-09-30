@@ -77,4 +77,8 @@ export class QuizController {
         this.quizzes[quizId].questions.push(...questions);
         return this.quizzes[quizId];
     }
+
+    public getQuiz(quizId: number): Quiz {
+        return this.quizzes[quizId];
+    }
 }
