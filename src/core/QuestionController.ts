@@ -30,7 +30,7 @@ export class QuestionController {
     }
 
     /**
-     *  system operatiosn
+     *  system operations
      */
 
     public deleteQuestion(questionId: number) {

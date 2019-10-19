@@ -6,10 +6,18 @@ import {Course} from "../../src/models/Course";
 
 const expect = chai.expect;
 
-let sgbMock: SGB = mock<SGB>();
-let controller: CourseController = new CourseController(instance(sgbMock));
+let sgbMock: SGB;
+let controller: CourseController;
+
+function setup(){
+    sgbMock = mock<SGB>();
+    controller = new CourseController(instance(sgbMock));
+}
 
 describe('CourseController', () => {
+    beforeEach(() => {
+        setup();
+    });
     describe('getCourses()', async () => {
         it('returns all courses returned from the SGB', async () => {
             const courses = [
