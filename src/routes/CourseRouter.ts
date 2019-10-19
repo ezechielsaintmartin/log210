@@ -28,6 +28,20 @@ export class CourseRouter {
         next();
     }
 
+    public async getStudentsForCourse(req: Request, res: Response, next: NextFunction) : Promise<void>{
+        req['students'] = await this.controller.getStudentsFromCourse(parseInt(req.params.id));
+        next();
+    }
+
+    public async addCourse(req: Request, res: Response, next: NextFunction) : Promise<void>{
+        try{
+            await this.controller.addCourse(parseInt(req.params.id));
+            res.redirect('/course/' + req.params.id + '/students');
+        } catch(error) {
+
+        }
+    }
+
     /**
      * Take each handler, and attach to one of the Express.Router's
      * endpoints.
@@ -35,7 +49,7 @@ export class CourseRouter {
      * For .bind see https://stackoverflow.com/a/15605064/1168342
      */
     init() {
-
+        this.router.get('/:id', this.addCourse.bind(this));
     }
 
 }
