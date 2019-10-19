@@ -45,4 +45,45 @@ describe('QuestionController', () => {
             expect(controller.getQuestionsByCourse.bind(controller, 1)).to.not.throw();
         });
     });
+    describe('updateQuestion()', () => {
+        it("updates question", async () => {
+            const initialQuestion = controller.getQuestion(1);
+            const updatedQuestion = new Question(1, 1, 1, 'Question 1',
+                [], 'statement', true, 'success', 'success');
+            controller.updateQuestion(updatedQuestion);
+            const actualQuestion = controller.getQuestion(1);
+            expect(actualQuestion).to.eql(updatedQuestion);
+            expect(actualQuestion).to.not.eql(initialQuestion);
+        });
+        it("doesn't create question if id doesn't exist", async () => {
+            const updatedQuestion = new Question(3, 1, 1, 'Questionnnn',
+                [], 'statement', true, 'success', 'success');
+            expect(controller.updateQuestion.bind(controller, updatedQuestion)).to.throw();
+        });
+        it("doesn't create question if name already exists", async () => {
+            const updatedQuestion = new Question(2, 1, 1, 'Question 1',
+                [], 'statement', true, 'success', 'success');
+            expect(controller.updateQuestion.bind(controller, updatedQuestion)).to.throw();
+        });
+    });
+    describe('getTags()', () => {
+        it("returns the question's tags", () => {
+            const question = controller.getQuestion(1);
+            expect(controller.getTags()).contain(question.tags[0]);
+        });
+    });
+    describe('getQuestionsByTag()', () => {
+        it("returns questions with the tag", () => {
+            const tags = controller.getTags();
+            const questions = controller.getQuestionsByTag(1, tags[0]);
+            expect(questions.length).to.be.greaterThan(0);
+        });
+    });
+    describe('getQuestions()', () => {
+        it("returns questions with the ids passed as parameters", () => {
+            const ids = [1,2];
+            const questions = controller.getQuestions(ids);
+            expect(questions.questions.length).to.eql(ids.length);
+        });
+    });
 });
