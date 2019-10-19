@@ -1,27 +1,29 @@
 import { Router, Request, Response, NextFunction } from 'express';
 
 import { CourseController } from '../core/CourseController';
-import {Course} from "../models/Course";
+import {SGB} from "../third-party/SGB";
 export class CourseRouter {
     router: Router;
     controller: CourseController;  // GRASP controller
+    sgb: SGB;
 
     /**
      * Initialize the Router
      */
-    constructor() {
-        this.controller = new CourseController();  // init GRASP controller
+    constructor(sgb: SGB) {
+        this.sgb = sgb;
+        this.controller = new CourseController(sgb);  // init GRASP controller
         this.router = Router();
         this.init();
     }
 
-    public getCourses(req: Request, res: Response, next: NextFunction) {
-        req['courses'] = this.controller.getCourses();
+    public async getCourses(req: Request, res: Response, next: NextFunction) : Promise<void>{
+        req['courses'] = await this.controller.getCourses();
         next();
     }
 
-    public getCourse(req: Request, res: Response, next: NextFunction) {
-        req['course'] = this.controller.getCourse(parseInt(req.params['id']));
+    public async getCourse(req: Request, res: Response, next: NextFunction) : Promise<void>{
+        req['course'] = await this.controller.getCourse(parseInt(req.params['id']));
         console.log(req['course']);
         next();
     }
@@ -37,7 +39,3 @@ export class CourseRouter {
     }
 
 }
-
-// exporter its configured Express.Router
-export const courseRoutes = new CourseRouter();
-courseRoutes.init();

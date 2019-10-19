@@ -1,36 +1,38 @@
 import {Course} from "../models/Course"
+import {SGB} from "../third-party/SGB";
 
 export class CourseController {
     // GRASP controller class
+    sgb: SGB;
 
-    courses: {[id: number]: Course};
-
-    constructor() {
-        let data = require("../data/courses.json");
-        this.courses = data.reduce((map, obj) => {
-            map[obj.id] = obj;
-            return map;
-        },{});
+    constructor(sgb: SGB) {
+        this.sgb = sgb;
     }
 
     /**
      *  system operatiosn
      */
 
-    public getCourses(): Course[] {
+    public async getCourses(): Promise<Course[]> {
+        const sourceCourses = await this.getCoursesFromSource();
         let courses = [];
-        for(let key in this.courses){
-            courses.push(this.courses[key]);
+        for(let key in sourceCourses){
+            courses.push(sourceCourses[key]);
         }
         return courses;
     }
 
-    public getCourse(courseId: number): Course {
-        for(let key in this.courses){
-            if (this.courses[key].id == courseId)
-                return this.courses[key];
+    public async getCourse(courseId: number): Promise<Course> {
+        const sourceCourses = await this.getCoursesFromSource();
+        for(let key in sourceCourses){
+            if (sourceCourses[key].id == courseId)
+                return sourceCourses[key];
         }
         return null;
+    }
+
+    private async getCoursesFromSource(): Promise<Course[]>{
+        return await this.sgb.getCourses();
     }
 
 }
