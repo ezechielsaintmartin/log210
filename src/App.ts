@@ -7,6 +7,7 @@ import {Question} from "./models/Question";
 import {CourseRouter} from "./routes/CourseRouter";
 import {quizRoutes} from "./routes/QuizRouter";
 import {ProxySGB} from "./third-party/ProxySGB";
+var methodOverride = require('method-override')
 
 // Creates and configures an ExpressJS web server.
 class App {
@@ -34,6 +35,7 @@ class App {
     this.expressApp.use(logger('dev'));
     this.expressApp.use(bodyParser.json());
     this.expressApp.use(bodyParser.urlencoded({ extended: false }));
+    this.expressApp.use(methodOverride('_method'));
   }
 
   // Configure API endpoints.

@@ -28,4 +28,6 @@ html
             if quizzes.length
                 h3 Impossible de supprimer
             else
-                a.btn.btn-danger(href="/api/v1/question/"+question.id+"/delete") Confirmer la suppression
+                form(action="/api/v1/question/"+question.id+"?_method=DELETE" method="POST")
+                    input(type="hidden" name="_method" value="DELETE")
+                    button.btn.btn-danger(type='submit') Confirmer la suppression

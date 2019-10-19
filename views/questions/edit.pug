@@ -9,10 +9,11 @@ html
             h1 Modifier une Question
             if(error)
                 h2(style={color:"red"}) This name already exists
-            form(action="/api/v1/question/"+question.id+"" method="POST")
+            form(action="/api/v1/question/"+question.id+"?_method=PUT" method="POST")
                 input(type="hidden" name="questionId" id="questionId" value=question.id)
                 input(type="hidden" name="courseId" id="courseId" value=question.courseId)
                 input(type="hidden" name="teacherId" id="teacherId" value=question.teacherId)
+                input(type="hidden" name="_method" value="PUT")
 
                 .form-group
                     label(for="tags" style="display:block") Tags(séparés par des virgules):
@@ -36,9 +37,10 @@ html
                 .form-group
                     label(for="failureText" style="display:block") TexteMauvaiseReponse:
                     textarea.form-control( name="failureText" id="failureText" style="display:block")=question.failureText
-                button.btn.btn-primary(type="submit") Enregistre
+                button.btn.btn-primary(type='submit') Enregistre
 
 
     <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
     <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/lib/main.js"></script>
+

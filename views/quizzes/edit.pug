@@ -8,8 +8,10 @@ html
         div.container
             h1 Listes des questions
 
-            form(action="/api/v1/quiz/" + quiz.id + "/update" method="POST")
+            form(action="/api/v1/quiz/" + quiz.id + "?_method=PUT" method="POST")
                 input(type="hidden" name="quizId" id="quizId" value=quiz.id)
+                input(type="hidden" name="_method" value="PUT")
+
 
                 .form-group
                     label(for="description" style="display:block") Description
