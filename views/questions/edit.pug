@@ -6,7 +6,7 @@ html
         script()
     body
         div.container
-            h1 Ajouter une Question
+            h1 Modifier une Question
             if(error)
                 h2(style={color:"red"}) This name already exists
             form(action="/api/v1/question/"+question.id+"" method="POST")
@@ -14,25 +14,29 @@ html
                 input(type="hidden" name="courseId" id="courseId" value=question.courseId)
                 input(type="hidden" name="teacherId" id="teacherId" value=question.teacherId)
 
-                label(for="tags" style="display:block") Tags(séparés par des virgules):
-                input(type="text" name="tags" id="tags" style="display:block" value=question.tags.join(','))
+                .form-group
+                    label(for="tags" style="display:block") Tags(séparés par des virgules):
+                    input.form-control(type="text" name="tags" id="tags" placeholder="Tags" style="display:block" value=question.tags.join(','))
 
-                label(for="name" style="display:block") Nom:
-                input(type="text" name="name" id="name" style="display:block" value=question.name)
+                .form-group
+                    label(for="name" style="display:block") Nom:
+                    input.form-control(type="text" name="name" id="name" placeholder="Name" style="display:block" value=question.name)
 
-                label(for="statement" style="display:block") enonce:
-                textarea( name="statement" id="statement" style="display:block")=question.statement
+                .form-group
+                    label(for="statement" style="display:block") enonce:
+                    textarea.form-control( name="statement" id="statement" style="display:block")=question.statement
 
                 label(for="truth" style="display:block") Verite:
                 input(type="checkbox" name="truth" id="truth" style="display:block" checked=question.truth)
 
-                label(for="successText" style="display:block") TexteBonneReponse:
-                textarea( name="successText" id="successText" style="display:block")=question.successText
+                .form-group
+                    label(for="successText" style="display:block") TexteBonneReponse:
+                    textarea.form-control( name="successText" id="successText" style="display:block")=question.successText
 
-                label(for="failureText" style="display:block") TexteMauvaiseReponse:
-                textarea( name="failureText" id="failureText" style="display:block")=question.failureText
-
-                button(type="submit") Enregistre
+                .form-group
+                    label(for="failureText" style="display:block") TexteMauvaiseReponse:
+                    textarea.form-control( name="failureText" id="failureText" style="display:block")=question.failureText
+                button.btn.btn-primary(type="submit") Enregistre
 
 
     <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>

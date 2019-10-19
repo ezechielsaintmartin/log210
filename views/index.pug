@@ -5,18 +5,35 @@ html
     link(rel='stylesheet' href='/css/style.css')
     script()
   body
-
     div.container
-      h1 Itération 1
-      d1
-          a(href="/addQuestion") Ajouter question
-          br
-          a(href="/question") Liste des questions
-          br
-          a(href="/course/quiz") Ajouter un questionnaire
-          br
-          a(href="/quizzes") Afficher les questionnaires
-
+      h1 Itération 
+      .bs-component
+        ul.nav.nav-tabs
+          li.nav-item
+            a.nav-link.active(data-toggle='tab', href='#question') Question
+          li.nav-item
+            a.nav-link(data-toggle='tab', href='#quiz') Questionnaire
+          li.nav-item
+            a.nav-link(data-toggle='tab', href='#cours') Cours
+        #myTabContent.tab-content
+          #question.tab-pane.fade.active.show
+            br
+            a.btn.btn-outline-primary(href="/addQuestion") Ajouter question
+            br
+            br
+            a.btn.btn-outline-primary(href="/question") Liste des questions
+          #quiz.tab-pane.fade
+            br
+            a.btn.btn-outline-primary(href="/course/quiz") Ajouter un questionnaire
+            br
+            br
+            a.btn.btn-outline-primary(href="/quizzes") Afficher les questionnaires
+          #cours.tab-pane.fade
+            br
+            a.btn.btn-outline-primary(href="/course/quiz") Liste Cours TEMPORAIRE
+            br
+            br
+            a.btn.btn-outline-primary(href="/quizzes") Quiz Cours
 
   <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
   <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>

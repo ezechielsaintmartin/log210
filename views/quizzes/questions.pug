@@ -12,10 +12,10 @@ html
                 input(type="hidden" name="quizId" id="quizId" value=quizId)
                 each question in questions
                     h3 #{question.name} ajoutée dans #{quizCountByQuestion[question.id] || 0} questionnaires
-                    input(type="checkbox" name=question.id id=question.id style="display:block")
+                    input.form-control(type="checkbox" name=question.id id=question.id style="display:block")
                     br
                 br
-                button(type="submit") Enregistre
+                button.btn.btn-success(type="submit") Enregistre
 
 
     <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>

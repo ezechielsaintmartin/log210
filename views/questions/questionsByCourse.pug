@@ -7,17 +7,26 @@ html
     body
         div.container
             h1 #{course.sigle} , Groupe #{course.group}
-
-            each question in questions
-
-                a(href="/question/" + question._id) #{question._name}
-                br
-
-            a(href="/course/" + course.id + "/question/add") ajouter question
+            if (questions)
+                table.table.table-hover.table-striped#dataTables(width='100%')
+                    thead
+                    tr
+                        th Titre
+                        th Actions
+                    tbody
+                    each question, i in questions
+                        tr
+                        td= question.name
+                        td 
+                            a.btn.btn-info(href="/question/"+question.id, style='margin-bottom: 10px; margin-right: 10px') Voir
+                            a.btn.btn-warning(href="/question/"+question.id+"/edit", style='margin-bottom: 10px; margin-right: 10px') Modifier
+                            a.btn.btn-danger(href="/question/"+question.id+"/delete", style='margin-bottom: 10px; margin-right: 10px') Supprimer
+            else
+             p
+              | Aucune question associée au cours
+            a.btn.btn-outline-primary(href="/course/" + course.id + "/question/add") Ajouter question
             br
-            a(href="/") retour à l'index
-
-
+            a(href="/") Retour à l'index
     <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
     <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/lib/main.js"></script>

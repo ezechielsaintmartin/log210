@@ -7,12 +7,25 @@ html
     body
         div.container
             h1 Listes des questionnaires
+            if(quizzes.length > 0)
+                table.table.table-hover.table-striped#dataTables(width='100%')
+                    thead
+                    tr
+                        th Description
+                        th Actions
+                    tbody
+                    each quiz, i in quizzes
+                        tr
+                        td= quiz.description
+                        td 
+                            a.btn.btn-info(href="/quiz/"+quiz.id, style='margin-bottom: 10px; margin-right: 10px') Voir
+                            a.btn.btn-warning(href="/quiz/"+quiz.id+"/edit", style='margin-bottom: 10px; margin-right: 10px') Modifier
+                            a.btn.btn-danger(href="/api/v1/quiz/"+quiz.id+"/delete", style='margin-bottom: 10px; margin-right: 10px') Supprimer
+                br
+            else
+             p  Aucun questionnaire disponible pour ce cours
 
-            each quiz in quizzes
-
-                a(href="/quiz/"+quiz.id) #{quiz._description}
-            br
-            a(href="/quizzes") retour à la liste de cours
+            a.btn.btn-outline-primary(href="/quizzes") Retour à la liste de cours
 
 
     <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>

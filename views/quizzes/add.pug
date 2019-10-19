@@ -10,13 +10,15 @@ html
             form(action="/api/v1/quiz/" method="POST")
                 input(type="hidden" name="courseId" id="courseId" value=course.id)
 
-                label(for="description" style="display:block") Description
-                input(type="text" name="description" id="description" style="display:block")
+                .form-group
+                    label(for="description" style="display:block") Description
+                    input.form-control(type="text" name="description" id="description" style="display:block")
 
-                label(for="active" style="display:block") Actif:
-                input(type="checkbox" name="active" id="active" style="display:block")
+                .form-group
+                    label(for="active" style="display:block") Actif:
+                    input.form-control(type="checkbox" name="active" id="active" style="display:block")
 
-                button(type="submit") Ajouter
+                button.btn.btn-success(type="submit") Ajouter
 
 
     <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
