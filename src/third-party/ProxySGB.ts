@@ -6,23 +6,20 @@ const fetch = require('node-fetch');
 
 export class ProxySGB implements SGB {
     private courses: Course[];
-    private studentsByCourse: {[id: number]: Student[]};
+    private readonly studentsByCourse: {[id: number]: Student[]};
     private token: string;
-    private readonly tokenPromise: Promise<void>;
+    private tokenPromise: Promise<string>;
 
     constructor(){
         this.courses = [];
         this.studentsByCourse = {};
-        this.tokenPromise = this.getToken().then((token) => {
-            this.token = token;
-        });
+        this.tokenPromise = this.refreshToken();
     }
 
     async getCourses(): Promise<Course[]> {
         try {
-            await this.tokenPromise;
-            if (!this.token)
-                return [];
+            if (!await this.validateToken())
+                return this.courses;
             const host = this.getHost();
             const url = host + '/api/v1/courses';
             const response = await fetch(url, {headers: {token: this.token}});
@@ -38,9 +35,8 @@ export class ProxySGB implements SGB {
 
     async getStudentsByCourse(courseId: number): Promise<Student[]>{
         try {
-            await this.tokenPromise;
-            if (!this.token)
-                return [];
+            if (!await this.validateToken())
+                return this.studentsByCourse[courseId];
             const host = this.getHost();
             const url = host + '/api/v1/course/' + courseId + '/students';
             const response = await fetch(url, {headers: {token: this.token}});
@@ -51,20 +47,30 @@ export class ProxySGB implements SGB {
         } catch (error) {
             console.error('Error while reading from SGB : ' + error);
         }
-        return [];
+        return this.studentsByCourse[courseId];
     }
 
-    public async getToken(): Promise<string>{
+    private async refreshToken(): Promise<string>{
         try {
             const host = this.getHost();
             const url = host + '/api/v1/login?email=' + SGBConfig.TEACHER_EMAIL + '&password=' + SGBConfig.TEACHER_PASSWORD;
             const response = await fetch(url);
             const json = await response.json();
+            this.token = json.token;
             return json.token;
         } catch(error) {
             console.error('Error while reading from SGB : ' + error);
         }
         return null;
+    }
+
+    private async validateToken() : Promise<boolean>{
+        await this.tokenPromise;
+        if (this.token)
+            return true;
+        this.tokenPromise = this.refreshToken();
+        await this.tokenPromise;
+        return !!this.token;
     }
 
     private getHost(): string {
