@@ -7,6 +7,7 @@ import { questionRoutes } from './routes/QuestionRouter';
 import {Question} from "./models/Question";
 import {courseRoutes} from "./routes/CourseRouter";
 import {quizRoutes} from "./routes/QuizRouter";
+import {ProxySGB} from "./third-party/ProxySGB";
 
 // Creates and configures an ExpressJS web server.
 class App {
@@ -22,7 +23,9 @@ class App {
     this.expressApp.set('view engine', 'pug');
     this.expressApp.use(express.static(__dirname + '/public')); // https://expressjs.com/en/starter/static-files.html
 
-
+    new ProxySGB().getCoursesByTeacher().then((courses) => {
+        console.log(courses);
+    });
   }
 
   // Configure Express middleware.
