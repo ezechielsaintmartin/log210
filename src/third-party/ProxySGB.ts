@@ -1,21 +1,24 @@
 import {SGB} from "./SGB";
 import {Course} from "../models/Course";
 import {SGBConfig} from "./SGB.config";
+import {Student} from "../models/Student";
 const fetch = require('node-fetch');
 
 export class ProxySGB implements SGB {
     private courses: Course[];
+    private studentsByCourse: {[id: number]: Student[]};
     private token: string;
     private readonly tokenPromise: Promise<void>;
 
     constructor(){
         this.courses = [];
+        this.studentsByCourse = {};
         this.tokenPromise = this.getToken().then((token) => {
             this.token = token;
         });
     }
 
-    async getCoursesByTeacher(): Promise<Course[]> {
+    async getCourses(): Promise<Course[]> {
         try {
             await this.tokenPromise;
             if (!this.token)
@@ -31,6 +34,24 @@ export class ProxySGB implements SGB {
             console.error('Error while reading from SGB : ' + error);
         }
         return this.courses;
+    }
+
+    async getStudentsByCourse(courseId: number): Promise<Student[]>{
+        try {
+            await this.tokenPromise;
+            if (!this.token)
+                return [];
+            const host = this.getHost();
+            const url = host + '/api/v1/course/' + courseId + '/students';
+            const response = await fetch(url, {headers: {token: this.token}});
+            const json = await response.json();
+            this.studentsByCourse[courseId] = json.data.map((student) => new Student(student.id, student.first_name,
+                student.last_name, student.email, student.permanent_code));
+            return this.studentsByCourse[courseId];
+        } catch (error) {
+            console.error('Error while reading from SGB : ' + error);
+        }
+        return [];
     }
 
     public async getToken(): Promise<string>{

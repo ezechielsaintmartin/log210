@@ -23,7 +23,7 @@ class App {
     this.expressApp.set('view engine', 'pug');
     this.expressApp.use(express.static(__dirname + '/public')); // https://expressjs.com/en/starter/static-files.html
 
-    new ProxySGB().getCoursesByTeacher().then((courses) => {
+    new ProxySGB().getStudentsByCourse(1).then((courses) => {
         console.log(courses);
     });
   }
