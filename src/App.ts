@@ -47,6 +47,15 @@ class App {
         res.render('index', { title: 'Itération 1'});
     });
 
+    router.get('/course/add', this.courseRoutes.getCourses.bind(this.courseRoutes), (req, res, next) => {
+        res.render('courses/listToAdd', {title: 'Itération 1', courses: req['courses']});
+    });
+
+      router.get('/course/:id/students', this.courseRoutes.getStudentsForCourse.bind(this.courseRoutes), (req, res, next) => {
+          res.render('courses/studentsForCourse', {title: 'Itération 1', students: req['students']});
+      });
+
+
       /**
        * QUESTIONS
        */
@@ -147,6 +156,7 @@ class App {
 
     this.expressApp.use('/api/v1/question', questionRoutes.router);
     this.expressApp.use('/api/v1/quiz', quizRoutes.router);
+    this.expressApp.use('/api/v1/course', this.courseRoutes.router);
   }
 }
 
