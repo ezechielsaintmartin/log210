@@ -42,8 +42,6 @@ class App {
      * API endpoints */
     let router = express.Router();
 
-    const listeEtudiants = require("./data/students.json");
-
     // placeholder route handler
     router.get('/', (req, res, next) => {
         res.render('index', { title: 'Itération 1'});
@@ -149,13 +147,6 @@ class App {
 
     this.expressApp.use('/api/v1/question', questionRoutes.router);
     this.expressApp.use('/api/v1/quiz', quizRoutes.router);
-  }
-
-  private checkLogin(req, res, next) {
-      if (req.header.teacherId)
-          next();
-      else
-          res.redirect("/login");
   }
 }
 

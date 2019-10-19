@@ -4,13 +4,14 @@ import {SGBConfig} from "./SGB.config";
 import {Student} from "../models/Student";
 const fetch = require('node-fetch');
 
-export class ProxySGB implements SGB {
+export class ProxySGB extends SGB {
     private courses: Course[];
     private readonly studentsByCourse: {[id: number]: Student[]};
     private token: string;
     private tokenPromise: Promise<string>;
 
     constructor(){
+        super();
         this.courses = [];
         this.studentsByCourse = {};
         this.tokenPromise = this.refreshToken();

@@ -88,8 +88,8 @@ export class QuizRouter {
     init() {
         this.router.post('/', this.createQuiz.bind(this));
         this.router.post('/:id/questions', this.addQuestions.bind(this));
-        this.router.post('/:id/update', this.updateQuiz.bind(this));
-        this.router.get('/:id/delete', this.deleteQuiz.bind(this));
+        this.router.put('/:id', this.updateQuiz.bind(this));
+        this.router.delete('/:id', this.deleteQuiz.bind(this));
     }
 
 }
