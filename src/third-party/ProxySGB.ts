@@ -35,8 +35,12 @@ export class ProxySGB implements SGB {
 
     async getStudentsByCourse(courseId: number): Promise<Student[]>{
         try {
-            if (!await this.validateToken())
-                return this.studentsByCourse[courseId];
+            if (!await this.validateToken()){
+                if (this.studentsByCourse[courseId])
+                    return this.studentsByCourse[courseId];
+                else
+                    return [];
+            }
             const host = this.getHost();
             const url = host + '/api/v1/course/' + courseId + '/students';
             const response = await fetch(url, {headers: {token: this.token}});
@@ -47,7 +51,10 @@ export class ProxySGB implements SGB {
         } catch (error) {
             console.error('Error while reading from SGB : ' + error);
         }
-        return this.studentsByCourse[courseId];
+        if (this.studentsByCourse[courseId])
+            return this.studentsByCourse[courseId];
+        else
+            return [];
     }
 
     private async refreshToken(): Promise<string>{
