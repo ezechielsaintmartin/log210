@@ -106,9 +106,9 @@ export class QuestionRouter {
    * For .bind see https://stackoverflow.com/a/15605064/1168342
    */
   init() {
-      this.router.get('/:id/delete', this.deleteQuestion.bind(this));
+      this.router.delete('/:id', this.deleteQuestion.bind(this));
       this.router.post('/', this.createQuestion.bind(this));
-      this.router.post('/:id', this.updateQuestion.bind(this));
+      this.router.put('/:id', this.updateQuestion.bind(this));
       this.router.get('/:id', this.getQuestion.bind(this));
   }
 
