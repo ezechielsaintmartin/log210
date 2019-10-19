@@ -14,13 +14,14 @@ html
                 if result.selected[question._id]
                     h3 #{question._name}
                     br
-            a(href="/course/"+quiz._courseId+"/quizList") Retour à la liste de questionnaires
+
+            a.btn.btn-warning(href="/quiz/"+quiz.id+"/edit", style='margin-bottom: 10px; margin-right: 10px') Modifier
+            a.btn.btn-danger(href="/api/v1/quiz/"+quiz.id+"/delete", style='margin-bottom: 10px; margin-right: 10px') Supprimer
             br
-            a(href="/") retour à l'index
+            a.btn.btn-outline-primary(href="/course/"+quiz._courseId+"/quizList", style='margin-bottom: 10px; margin-right: 10px') Retour à la liste de questionnaires
             br
-            a(href="/quiz/"+quiz._id+"/edit") Modifier
-            br
-            a(href="/api/v1/quiz/"+quiz._id+"/delete") Supprimer
+            a.btn.btn-outline-primary(href="/", style='margin-bottom: 10px; margin-right: 10px') Retour à l'index
+
 
 
     <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>

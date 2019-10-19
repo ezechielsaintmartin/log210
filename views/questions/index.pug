@@ -8,10 +8,20 @@ html
         div.container
             h1 Liste des Questions
 
-            each question in questions
-
-                a(href="/question/" + question.id) #{question.name}
-                br
+            if (questions)
+                table.table.table-hover.table-striped#dataTables(width='100%')
+                    thead
+                    tr
+                        th Nom
+                        th Actions
+                    tbody
+                    each question, i in questions
+                        tr
+                        td= course.name
+                        td 
+                            a.btn.btn-info(href="/question/"+question.id, style='margin-bottom: 10px; margin-right: 10px') Voir
+                            a.btn.btn-warning(href='question/' + question.id +"/edit", style='margin-bottom: 10px; margin-right: 10px') Modifier
+                            a.btn.btn-danger(href='/question/' + question.id + "/delete", style='margin-bottom: 10px; margin-right: 10px') Supprimer
 
 
     <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>

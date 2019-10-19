@@ -12,8 +12,9 @@ html
 
                 h3 Description: #{quiz._description} Actif: #{quiz._active}
             br
-            a(href="/course/"+course.id+"/quiz/add") Ajouter un questionnaire
-            a(href="/") retour à l'index
+
+            a.btn.btn-primary(href="/course/"+course.id+"/quiz/add") Ajouter un questionnaire
+            a.btn.btn-outline-primary(href="/") retour à l'index
 
 
     <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
