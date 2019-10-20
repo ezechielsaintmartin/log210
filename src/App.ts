@@ -7,6 +7,7 @@ import {Question} from "./models/Question";
 import {CourseRouter} from "./routes/CourseRouter";
 import {quizRoutes} from "./routes/QuizRouter";
 import {ProxySGB} from "./third-party/ProxySGB";
+import {homeworkRoutes} from "./routes/HomeworkRouter";
 var methodOverride = require('method-override')
 
 // Creates and configures an ExpressJS web server.
@@ -49,6 +50,17 @@ class App {
         res.render('index', { title: 'Itération 1'});
     });
 
+      router.get('/course/homework', this.courseRoutes.getCourses.bind(this.courseRoutes), homeworkRoutes.getHomeworkCountByCourse.bind(homeworkRoutes), (req, res, next) => {
+          res.render('homeworks/listToAdd', {title: 'Liste des cours pour les devoirs', courses: req['courses'], homeworkCountByCourse: req['homeworkCountByCourse']});
+      });
+
+      router.get('/course/:id/homeworks', this.courseRoutes.getCourse.bind(this.courseRoutes), homeworkRoutes.getHomeworksByCourseId.bind(homeworkRoutes), (req, res, next) => {
+          res.render('homeworks/homeworkListForCourse', {title: 'Liste des devoirs du cours', homeworks: req['homeworks'], course: req['course']});
+      });
+
+      router.get('/course/:id/homeworks/add', this.courseRoutes.getCourse.bind(this.courseRoutes), (req, res, next) => {
+          res.render('homeworks/add', {title: 'Liste des devoirs du cours', course: req['course'], error: req.query.error});
+      });
 
     /**
      * COURSES
@@ -184,6 +196,7 @@ class App {
     this.expressApp.use('/api/v1/question', questionRoutes.router);
     this.expressApp.use('/api/v1/quiz', quizRoutes.router);
     this.expressApp.use('/api/v1/course', this.courseRoutes.router);
+    this.expressApp.use('/api/v1/homework', homeworkRoutes.router);
   }
 }
 

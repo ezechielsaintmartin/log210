@@ -1,0 +1,40 @@
+html
+    head
+        title= title
+        link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css')
+        link(rel='stylesheet' href='/css/style.css')
+        script()
+    body
+        div.container
+            h1 Ajouter un devoir
+            if (error)
+                h3(style='color:red') Erreur: La date de début ne peut pas être après la date de fin
+            form(action="/api/v1/homework/" method="POST")
+                input(type="hidden" name="courseId" id="courseId" value=course.id)
+
+                .form-group
+                    label(for="description" style="display:block") Description
+                    input.form-control(type="text" name="description" id="description" style="display:block")
+
+                .form-group
+                    label(for="maxGrade" style="display:block") Note maximale
+                    input.form-control(type="text" name="maxGrade" id="maxGrade" style="display:block")
+
+                .form-group
+                    label(for="startDate" style="display:block") Date de début
+                    input.form-control(type="text" name="startDate" id="startDate" style="display:block")
+
+                .form-group
+                    label(for="endDate" style="display:block") Date de fin
+                    input.form-control(type="text" name="endDate" id="endDate" style="display:block")
+
+                .form-group
+                    label(for="state" style="display:block") Visible:
+                    input.form-control(type="checkbox" name="state" id="state" style="display:block")
+
+                button.btn.btn-success(type="submit") Ajouter
+
+
+    <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/lib/main.js"></script>
