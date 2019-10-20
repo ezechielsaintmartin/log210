@@ -49,13 +49,17 @@ class App {
         res.render('index', { title: 'Itération 1'});
     });
 
+
+    /**
+     * COURSES
+     */
     router.get('/course/add', this.courseRoutes.getCourses.bind(this.courseRoutes), (req, res, next) => {
         res.render('courses/listToAdd', {title: 'Itération 1', courses: req['courses']});
     });
 
-      router.get('/course/:id/students', this.courseRoutes.getStudentsForCourse.bind(this.courseRoutes), (req, res, next) => {
-          res.render('courses/studentsForCourse', {title: 'Itération 1', students: req['students']});
-      });
+    router.get('/course/:id/students', this.courseRoutes.getStudentsForCourse.bind(this.courseRoutes), (req, res, next) => {
+        res.render('courses/studentsForCourse', {title: 'Itération 1', students: req['students']});
+    });
 
 
       /**
@@ -153,6 +157,8 @@ class App {
       router.get('/quiz/:id/edit', quizRoutes.getQuiz.bind(quizRoutes), questionRoutes.getQuestionsByQuiz.bind(questionRoutes), (req, res, next) => {
           res.render('quizzes/edit', {title: 'Questionnaire', quiz: req['quiz'], result: req['result']});
       });
+
+
 
     this.expressApp.use('/', router);  // base routing
 

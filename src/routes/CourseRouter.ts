@@ -49,7 +49,8 @@ export class CourseRouter {
      * For .bind see https://stackoverflow.com/a/15605064/1168342
      */
     init() {
-        this.router.get('/:id', this.addCourse.bind(this));
+        this.router.post('/:id', this.addCourse.bind(this));
+        this.router.get('/', this.getCourses.bind(this));
     }
 
 }
