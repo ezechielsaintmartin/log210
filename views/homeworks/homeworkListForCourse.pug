@@ -10,7 +10,10 @@ html
 
             each homework in homeworks
 
-                h3 Description: #{homework._description} Actif: #{homework._active}
+                h3 Nom du du devoir: #{homework._description} Nombre de devoir Actif: #{homeworks.length}
+                a.btn.btn-primary(href="/course/"+course.id+"/homework/"+homework.id) Selectionner ce devoir
+            br
+            br
             br
 
             a.btn.btn-primary(href="/course/"+course.id+"/homeworks/add") Ajouter un devoir

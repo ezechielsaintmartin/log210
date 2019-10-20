@@ -24,6 +24,8 @@ export class HomeworkRouter {
     public getHomeworksByCourseId(req: Request, res: Response, next: NextFunction) {
         req['homeworks'] = this.controller.getHomeworksByCourseId(parseInt(req.params.id));
         next();
+        console.log("Where are here");
+
     }
 
     public getHomeworkById(req:Request, res:Response, next: NextFunction){
@@ -63,6 +65,13 @@ export class HomeworkRouter {
      */
     init() {
         this.router.post('/', this.addHomework.bind(this));
+       // this.router.post('/:id', this.addCourse.bind(this));
+       // this.router.get('/:id', this.getCourses.bind(this));
+       // this.router.delete('/:id', this.deleteCourse.bind(this));
+        //this.router.get('/:id/infos', this.getCourseInfos.bind(this));
+        //this.router.get('/course/:id/homeworks', this.getHomeworksByCourseId.bind(this));
+        this.router.get('/homeworks/:id/homeworkdetails', this.getHomeworksByCourseId.bind(this));
+
     }
 
 }

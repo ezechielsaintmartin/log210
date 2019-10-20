@@ -1,0 +1,45 @@
+html
+    head
+        title= title
+        link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css')
+        link(rel='stylesheet' href='/css/style.css')
+        script()
+    body
+        div.container
+            h1 Informations du devoir et liste d'étudiants
+
+            //this._id = id;
+                //        this._courseId = courseId;
+                //        this._description = description;
+                //        this._maxGrade = maxGrade;
+                //        this._startDate = startDate;
+                //        this._endDate = endDate;
+                //        this._state = state;
+
+            h3 Nom du devoir : #{homework._description}
+            h3 Note maximale : #{homework._maxGrade}
+            h3 Date début du devoir : #{homework._startDate}
+            h3 Date de fin du devoir : #{homework._endDate}
+            h3 État du devoir : #{homework._state}
+
+            if (students)
+                table.table.table-hover.table-striped#dataTables(width='100%')
+                    thead
+                    tr
+                        th Student
+                    tbody
+                    each student, i in students
+                        tr
+                        td #{student.firstName}
+                        td
+            else
+                p Aucun étudiant
+            a.btn.btn-danger(href='/course/' + course._id + "/delete", style='margin-bottom: 10px; margin-right: 10px') Supprimer
+            br
+            a.btn.btn-outline-primary(href="/") Retour à l'index
+
+
+    <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/lib/main.js"></script>
+
