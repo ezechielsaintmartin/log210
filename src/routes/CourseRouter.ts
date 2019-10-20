@@ -33,6 +33,18 @@ export class CourseRouter {
         next();
     }
 
+    public getCoursesByTeacher(req: Request, res: Response, next: NextFunction) {
+        req['courses'] = this.controller.getCoursesByTeacher(parseInt(req.params.id));
+        next();
+    }
+
+    
+    public async getCourseInfos(req: Request, res: Response, next: NextFunction) {
+        req['course'] = await this.controller.getCourse(parseInt(req.params.id));
+        req['students'] = await this.controller.getStudentsFromCourse(parseInt(req.params.id));
+        next();
+    }
+
     public async addCourse(req: Request, res: Response, next: NextFunction) : Promise<void>{
         try{
             await this.controller.addCourse(parseInt(req.params.id));
@@ -42,6 +54,17 @@ export class CourseRouter {
         }
     }
 
+    public deleteCourse(req: Request, res: Response, next: NextFunction) {
+        try {
+          console.log("deleting course");
+          let id: number = parseInt(req.params.id);
+          this.controller.deleteCourse(id);
+          res.redirect('/course/');
+        } catch(error){
+          res.sendStatus(404); // We send a 404 status because the questionId is invalid or does not exist
+        }
+      }
+
     /**
      * Take each handler, and attach to one of the Express.Router's
      * endpoints.
@@ -50,7 +73,9 @@ export class CourseRouter {
      */
     init() {
         this.router.post('/:id', this.addCourse.bind(this));
-        this.router.get('/', this.getCourses.bind(this));
+        this.router.get('/:id', this.getCourses.bind(this));
+        this.router.delete('/:id', this.deleteCourse.bind(this));
+        this.router.get('/:id/infos', this.getCourseInfos.bind(this));
     }
 
 }

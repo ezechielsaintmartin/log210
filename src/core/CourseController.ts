@@ -6,6 +6,8 @@ export class CourseController {
     // GRASP controller class
     sgb: SGB;
     courses: Course[];
+    //courses: {[id:number]: Course};
+
 
     constructor(sgb: SGB) {
         this.sgb = sgb;
@@ -44,6 +46,24 @@ export class CourseController {
             }
         }
         return course;
+    }
+    
+
+    public getCoursesByTeacher(teacherId: number): Course[] {
+        let courses = [];
+        for (let key in this.courses){
+            //if (this.questions[key].teacherId == teacherId) Pour l'instant, on ignore l'id de l'enseignant
+            courses.push(this.courses[key]);
+        }
+        return courses;
+    }
+
+    public deleteCourse(courseId: number) {
+        for (var i = 0; i < this.courses.length; i++ ) {
+            if (this.courses[i].id == courseId) {
+                delete this.courses[i];
+            }
+        }
     }
 
     public async getStudentsFromCourse(courseId: number): Promise<Student[]>{

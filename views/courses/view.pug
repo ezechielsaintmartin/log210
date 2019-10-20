@@ -1,0 +1,38 @@
+html
+    head
+        title= title
+        link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css')
+        link(rel='stylesheet' href='/css/style.css')
+        script()
+    body
+        div.container
+            h1 Informations du cours et liste d'étudiants
+
+            h3 Sigle : #{course._sigle}
+            h3 Nombre maximum d'étudiant : #{course._maxNumberOfStudents}
+            h3 Groupe : #{course._group}
+            h3 Titre : #{course._title}
+            h3 Date de début : #{course._startDate}
+            h3 Date de fin : #{course._endDate}
+
+            if (students)
+                table.table.table-hover.table-striped#dataTables(width='100%')
+                    thead
+                    tr
+                        th Student
+                    tbody
+                    each student, i in students
+                        tr
+                        td #{student.firstName}
+                        td
+            else
+             p Aucun étudiant
+            a.btn.btn-danger(href='/course/' + course._id + "/delete", style='margin-bottom: 10px; margin-right: 10px') Supprimer
+            br
+            a.btn.btn-outline-primary(href="/") Retour à l'index
+
+
+    <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/lib/main.js"></script>
+

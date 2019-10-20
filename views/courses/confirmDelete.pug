@@ -1,0 +1,23 @@
+html
+    head
+        title= title
+        link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css')
+        link(rel='stylesheet' href='/css/style.css')
+        script()
+    body
+        div.container
+            h1 Êtes-vous sûr de vouloir supprimer ce cours de votre liste?
+
+            h3 Sigle : #{course._sigle}
+
+            form(action="/api/v1/course/"+course._id+"?_method=DELETE" method="POST")
+                input(type="hidden" name="_method" value="DELETE")
+                button.btn.btn-danger(type='submit') Confirmer la suppression
+            br
+            a.btn.btn-outline-primary(href="/") Retour à l'index
+
+
+    <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/lib/main.js"></script>
+
