@@ -26,6 +26,10 @@ export class HomeworkRouter {
         next();
     }
 
+    public getHomeworkById(req:Request, res:Response, next: NextFunction){
+        req['homework'] = this.controller.getHomeworkById(parseInt(req.params.id));
+    }
+
     public addHomework(req: Request, res: Response, next: NextFunction) {
         let courseId: number = parseInt(req.body.courseId);
         try {
@@ -47,6 +51,7 @@ export class HomeworkRouter {
             res.redirect('/course/' + courseId + '/homeworks/add?error=true');
         }
     }
+
 
     /**
      * Take each handler, and attach to one of the Express.Router's

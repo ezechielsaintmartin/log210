@@ -1,5 +1,6 @@
 import {Homework} from "../models/Homework";
 import {Quiz} from "../models/Quiz";
+import {Course} from "../models/Course";
 
 export class HomeworkController {
     // GRASP controller class
@@ -40,9 +41,22 @@ export class HomeworkController {
         return homeworks;
     }
 
+    public async getHomeworkById(homeworkId:number):Promise<Homework>{
+
+        let listHomeworks:Homework[] = this.getHomeworksByCourseId(9);
+        for(let key in listHomeworks){
+            let homework = this.homeworks[key];
+            if(homework.id == homeworkId) {
+                return homework;
+            }
+        }
+    }
+
     public addHomework(homework: Homework){
         ++this.maxId;
         homework.id = this.maxId;
         this.homeworks[homework.id] = homework;
     }
+
+
 }
