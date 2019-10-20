@@ -18,7 +18,9 @@ html
                         tr
                         td #{course.sigle} , Groupe #{course.group}
                         td
-                            a.btn.btn-info(href="/api/v1/course/"+course.id, style='margin-bottom: 10px; margin-right: 10px') Choisir
+                            form(action="/api/v1/course/"+course.id method="POST")
+                                button.btn.btn-info(type='submit') Choisir
+                
             a.btn.btn-outline-primary(href="/") Retour à l'index
 
 

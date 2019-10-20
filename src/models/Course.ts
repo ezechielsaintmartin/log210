@@ -1,4 +1,5 @@
 export class Course {
+    private readonly _teacherId: number;
     private _id: number;
     private _sigle: string;
     private _maxNumberOfStudents: number;
@@ -13,6 +14,10 @@ export class Course {
 
     set id(value: number) {
         this._id = value;
+    }
+
+    get teacherId(): number {
+        return this._teacherId;
     }
 
     get sigle(): string {
@@ -64,8 +69,9 @@ export class Course {
     }
 
 
-    constructor(id: number, sigle: string, maxNumberOfStudents: number, group: string, title: string, startDate: string, endDate: string) {
+    constructor(id: number, teacherId: number, sigle: string, maxNumberOfStudents: number, group: string, title: string, startDate: string, endDate: string) {
         this._id = id;
+        this._teacherId = teacherId;
         this._sigle = sigle;
         this._maxNumberOfStudents = maxNumberOfStudents;
         this._group = group;

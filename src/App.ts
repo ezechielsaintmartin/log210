@@ -62,17 +62,35 @@ class App {
           res.render('homeworks/add', {title: 'Liste des devoirs du cours', course: req['course'], error: req.query.error});
       });
 
-      /**
-       * COURSES
-       */
+    /**
+     * COURSES
+     */
+
+    router.get('/course', this.courseRoutes.getCoursesByTeacher.bind(this.courseRoutes), (req, res, next) => {
+        res.render('courses/courseListForTeacher', {title: 'Consultation des cours de l\'enseignant', courses: req['courses']});
+    });
+
+    router.get('/course/:id/infos', this.courseRoutes.getCourseInfos.bind(this.courseRoutes), (req, res, next) => {
+        res.render('courses/view', {title: 'Consultation d\'un cours', course: req['course'], students: req['students']});
+    });
 
     router.get('/course/add', this.courseRoutes.getCourses.bind(this.courseRoutes), (req, res, next) => {
         res.render('courses/listToAdd', {title: 'Itération 1', courses: req['courses']});
     });
 
-      router.get('/course/:id/students', this.courseRoutes.getStudentsForCourse.bind(this.courseRoutes), (req, res, next) => {
-          res.render('courses/studentsForCourse', {title: 'Itération 1', students: req['students']});
-      });
+    router.get('/course/:id/students', this.courseRoutes.getStudentsForCourse.bind(this.courseRoutes), (req, res, next) => {
+        res.render('courses/studentsForCourse', {title: 'Itération 1', students: req['students']});
+    });
+
+    router.get('/course/:id/delete', this.courseRoutes.getCourseInfos.bind(this.courseRoutes), (req, res, next) => {
+        let course: Question = req['course'];
+        res.render('courses/confirmDelete', {
+            title: 'Supprimation du cours' + course.name,
+            course: course
+        })
+    });
+
+
 
 
       /**
@@ -170,6 +188,8 @@ class App {
       router.get('/quiz/:id/edit', quizRoutes.getQuiz.bind(quizRoutes), questionRoutes.getQuestionsByQuiz.bind(questionRoutes), (req, res, next) => {
           res.render('quizzes/edit', {title: 'Questionnaire', quiz: req['quiz'], result: req['result']});
       });
+
+
 
     this.expressApp.use('/', router);  // base routing
 
