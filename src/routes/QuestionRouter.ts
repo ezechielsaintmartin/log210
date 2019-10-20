@@ -73,6 +73,7 @@ export class QuestionRouter {
   }
 
   public getQuestion(req: Request, res: Response, next: NextFunction) {
+      console.log("getQuestions");
       req['question'] = this.controller.getQuestion(parseInt(req.params.id));
       next();
   }

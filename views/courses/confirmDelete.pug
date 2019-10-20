@@ -6,22 +6,18 @@ html
         script()
     body
         div.container
-            h1 Listes des étudiants
-            if (students.length > 0)
-                table.table.table-hover.table-striped#dataTables(width='100%')
-                    thead
-                    tr
-                        th Student
-                    tbody
-                    each student, i in students
-                        tr
-                        td #{student.firstName}
-                        td
-            else
-             p | Aucun étudiant
+            h1 Êtes-vous sûr de vouloir supprimer ce cours de votre liste?
+
+            h3 Sigle : #{course._sigle}
+
+            form(action="/api/v1/course/"+course._id+"?_method=DELETE" method="POST")
+                input(type="hidden" name="_method" value="DELETE")
+                button.btn.btn-danger(type='submit') Confirmer la suppression
+            br
             a.btn.btn-outline-primary(href="/") Retour à l'index
 
 
     <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
     <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/lib/main.js"></script>
+
