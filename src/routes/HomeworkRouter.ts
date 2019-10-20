@@ -27,8 +27,10 @@ export class HomeworkRouter {
     }
 
     public getHomeworkById(req:Request, res:Response, next: NextFunction){
-        req['homework'] = this.controller.getHomeworkById(parseInt(req.params.id));
+        req['homework'] = this.controller.getHomeworkById(parseInt(req.params.homeWorkID));
     }
+
+
 
     public addHomework(req: Request, res: Response, next: NextFunction) {
         let courseId: number = parseInt(req.body.courseId);

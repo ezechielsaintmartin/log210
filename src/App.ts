@@ -65,9 +65,12 @@ class App {
           res.render('homeworks/add', {title: 'Liste des devoirs du cours', course: req['course'], error: req.query.error});
       });
 
-      router.get('/course/:id/homework/:id', this.courseRoutes.getCourse.bind(this.courseRoutes), homeworkRoutes.getHomeworkById.bind(homeworkRoutes), (req, res, next) => {
+      router.get('/course/:id/homework/:homeWorkID', this.courseRoutes.getCourse.bind(this.courseRoutes), homeworkRoutes.getHomeworkById.bind(homeworkRoutes), (req, res, next) => {
           res.render('homework', {title: 'Le devoir du cours', homework: req['homework'], course: req['course']});
       });
+
+
+
 
 
     /**

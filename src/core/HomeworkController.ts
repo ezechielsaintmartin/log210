@@ -43,8 +43,7 @@ export class HomeworkController {
 
     public async getHomeworkById(homeworkId:number):Promise<Homework>{
 
-        let listHomeworks:Homework[] = this.getHomeworksByCourseId(9);
-        for(let key in listHomeworks){
+        for(let key in this.homeworks){
             let homework = this.homeworks[key];
             if(homework.id == homeworkId) {
                 return homework;

@@ -1,0 +1,24 @@
+html
+    head
+        title= title
+        link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css')
+        link(rel='stylesheet' href='/css/style.css')
+        script()
+    body
+        div.container
+            h1 Informations du devoir
+
+            h3 ID : #{homework._id}
+            h3 Description: #{homework._description}
+            h3 MaxGrade : #{homework._maxGrade}
+            h3 StartDate : #{homework._startDate}
+            h3 EndDate : #{homework._endDate}
+            h3 State : #{homework._state}
+
+            a.btn.btn-danger(href='/question/' + homework.id + "/delete", style='margin-bottom: 10px; margin-right: 10px') Supprimer Question
+            br
+            a.btn.btn-warning(href="/question/" + question.id + "/edit") Modifier
+            br
+            a(href="/question") Retour a la liste
+
+
