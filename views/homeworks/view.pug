@@ -15,10 +15,14 @@ html
             h3 EndDate : #{homework._endDate}
             h3 State : #{homework._state}
 
-            a.btn.btn-danger(href='/question/' + homework.id + "/delete", style='margin-bottom: 10px; margin-right: 10px') Supprimer Question
+            a.btn.btn-danger(href='/homework/' + homework.id + "/delete", style='margin-bottom: 10px; margin-right: 10px') Supprimer Question
             br
-            a.btn.btn-warning(href="/question/" + question.id + "/edit") Modifier
+            a.btn.btn-warning(href="/homework/" + question.id + "/edit") Modifier
             br
-            a(href="/question") Retour a la liste
+            a(href="/homework") Retour a la liste
+
+
+            //Aucun etudiant.
+
 
 

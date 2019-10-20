@@ -1,12 +1,14 @@
 import {Homework} from "../models/Homework";
 import {Quiz} from "../models/Quiz";
 import {Course} from "../models/Course";
+import {Student} from "../models/Student";
 
 export class HomeworkController {
     // GRASP controller class
 
     maxId: number;
     homeworks: { [id: number]: Homework };
+    students : {[id:number]:Student};
 
     constructor() {
         this.maxId = 0;
