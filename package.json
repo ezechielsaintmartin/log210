@@ -8,7 +8,8 @@
         "test": "mocha --reporter spec --require ts-node/register 'tests/**/*.ts' --exit",
         "build": "gulp build",
         "coverage": "nyc npm run test",
-        "coverage:coveralls": "nyc --reporter=lcov --reporter=text-lcov npm run test | coveralls"
+        "coverage:coveralls": "nyc --reporter=lcov --reporter=text-lcov npm run test | coveralls",
+        "quickstart": "npm run build && npm run start"
     },
     "keywords": [],
     "author": "",

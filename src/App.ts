@@ -49,7 +49,7 @@ class App {
 
     // placeholder route handler
     router.get('/', (req, res, next) => {
-        res.render('index', { title: 'Itération 1'});
+        res.render('index', { title: 'Itération 2'});
     });
 
       /**
@@ -131,7 +131,7 @@ class App {
       /**
        * QUESTIONS
        */
-    router.get('/addQuestion', this.courseRoutes.getCourses.bind(this.courseRoutes), (req, res, next) => {
+    router.get('/addQuestion', this.courseRoutes.getCoursesByTeacher.bind(this.courseRoutes), (req, res, next) => {
         res.render('questions/createQuestionCourseList', {title: 'Itération 1', courses: req['courses']});
     });
 
@@ -206,7 +206,7 @@ class App {
           res.render('quizzes/questions', {title: 'Ajouter des questions', courseId: req.params.courseId, questions: req['questions'], quizId: req.params.quizId, quizCountByQuestion: req['quizCountByQuestion']});
       });
 
-      router.get('/quizzes', this.courseRoutes.getCourses.bind(this.courseRoutes), quizRoutes.getQuizCountByCourse.bind(quizRoutes), (req, res, next) => {
+      router.get('/quizzes', this.courseRoutes.getCoursesByTeacher.bind(this.courseRoutes), quizRoutes.getQuizCountByCourse.bind(quizRoutes), (req, res, next) => {
           res.render('quizzes/courseList', {title: 'Liste des cours pour les questionnaires', courses: req['courses'], quizCountByCourse: req['quizCountByCourse']});
       });
 
