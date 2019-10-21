@@ -21,7 +21,9 @@ html
                             td= homework._description 
                             td= homeworks.length
                             td
-                                a.btn.btn-info(href="/course/"+course.id+"/homework/"+homework.id, style='margin-bottom: 10px; margin-right: 10px') Sélectionner
+                                a.btn.btn-info(href="/course/"+course.id+"/homework/"+homework.id, style='margin-bottom: 10px; margin-right: 10px') Sélectionner               
+                                a.btn.btn-warning(href="/homework/"+homework.id+"/edit", style='margin-bottom: 10px; margin-right: 10px') Modifier
+                                a.btn.btn-danger(href="/homework/"+homework.id+"/delete", style='margin-bottom: 10px; margin-right: 10px') Supprimer devoir
             else
                 p
                 | Aucun devoir associé à ce cours
