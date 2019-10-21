@@ -6,24 +6,20 @@ html
         script()
     body
         div.container
-            h1 Listes des cours
+            h1 Listes des cours de l'enseignant
             if (courses)
-            table.table.table-hover.table-striped#dataTables(width='100%')
+                table.table.table-hover.table-striped#dataTables(width='100%')
                     thead
                     tr
-                        th Sigle
-                        th Groupe
-                        th Nombre de questionnaire(s)
+                        th Cours
                         th Actions
                     tbody
                     each course, i in courses
                         tr
-                        td= course.sigle
-                        td= course.group
-                        td #{(quizCountByCourse[course.id] || 0)} questionnaires
-                        td 
-                            a.btn.btn-info(href="/course/"+course.id+"/quiz/add", style='margin-bottom: 10px; margin-right: 10px') Ajouter un questionnaire
-
+                        td #{course.sigle} , Groupe #{course.group}
+                        td
+                            a.btn.btn-info(href="/course/"+course.id+"/infos", style='margin-bottom: 10px; margin-right: 10px') Consulter
+                
             a.btn.btn-outline-primary(href="/") Retour à l'index
 
 

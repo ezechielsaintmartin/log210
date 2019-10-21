@@ -16,7 +16,9 @@ html
                     br
 
             a.btn.btn-warning(href="/quiz/"+quiz.id+"/edit", style='margin-bottom: 10px; margin-right: 10px') Modifier
-            a.btn.btn-danger(href="/api/v1/quiz/"+quiz.id+"/delete", style='margin-bottom: 10px; margin-right: 10px') Supprimer
+            form(action="/api/v1/quiz/" + quiz.id + "?_method=DELETE" method="POST")
+                input(type="hidden" name="_method" value="DELETE")
+                button.btn.btn-danger(type='submit') Supprimer
             br
             a.btn.btn-outline-primary(href="/course/"+quiz._courseId+"/quizList", style='margin-bottom: 10px; margin-right: 10px') Retour à la liste de questionnaires
             br

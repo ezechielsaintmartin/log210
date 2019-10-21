@@ -25,7 +25,8 @@ export class ProxySGB extends SGB {
             const url = host + '/api/v1/courses';
             const response = await fetch(url, {headers: {token: this.token}});
             const json = await response.json();
-            this.courses = json.data.map((course) => new Course(course.id, course.sigle,
+            // Pour l'instant j'ai (Minh) mis le teacher id à 1
+            this.courses = json.data.map((course) => new Course(course.id, 1, course.sigle,
                 course.nb_max_students, course.groupe,
                 course.titre, course.date_debut, course.date_fin));
         } catch (error) {

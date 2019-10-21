@@ -19,6 +19,7 @@ export class QuestionRouter {
     try {
       let id: number = parseInt(req.params.id);
       this.controller.deleteQuestion(id);
+      //res.send(204);
       res.redirect('/question/');
     } catch(error){
       res.sendStatus(404); // We send a 404 status because the questionId is invalid or does not exist
@@ -62,14 +63,17 @@ export class QuestionRouter {
           let question = new Question(id, teacherId, courseId, name, tags, statement, truth, successText, failureText);
 
           this.controller.updateQuestion(question);
+          //res.send(200);
 
           res.redirect('/question/'+question.id);
       } catch (error) {
-          res.redirect('/question/'+req.body.questionId+'/edit?error=true');
+          console.log("ERROE catch")
+          //res.redirect('/question/'+req.body.questionId+'/edit?error=true');
       }
   }
 
   public getQuestion(req: Request, res: Response, next: NextFunction) {
+      console.log("getQuestions");
       req['question'] = this.controller.getQuestion(parseInt(req.params.id));
       next();
   }

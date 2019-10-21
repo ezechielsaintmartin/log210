@@ -17,7 +17,7 @@ html
                     tbody
                     each question, i in questions
                         tr
-                        td= course.name
+                        td= question.name
                         td 
                             a.btn.btn-info(href="/question/"+question.id, style='margin-bottom: 10px; margin-right: 10px') Voir
                             a.btn.btn-warning(href='question/' + question.id +"/edit", style='margin-bottom: 10px; margin-right: 10px') Modifier
