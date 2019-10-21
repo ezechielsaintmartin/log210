@@ -1,0 +1,28 @@
+html
+    head
+        title= title
+        link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css')
+        link(rel='stylesheet' href='/css/style.css')
+        script()
+    body
+        div.container
+            h1 Informations du devoir
+
+            h3 ID : #{homework._id}
+            h3 Description: #{homework._description}
+            h3 MaxGrade : #{homework._maxGrade}
+            h3 StartDate : #{homework._startDate}
+            h3 EndDate : #{homework._endDate}
+            h3 State : #{homework._state}
+
+            a.btn.btn-danger(href="/course/"+course._id+"/homework/"+homework._id + "/delete", style='margin-bottom: 10px; margin-right: 10px') Supprimer devoir
+            br
+            a.btn.btn-warning(href="/course/"+course._id+"/homework/"+homework._id + "/edit", style='margin-bottom: 10px; margin-right: 10px') Modifier
+            br
+            a(href="/homework") Retour a la liste
+
+
+            //Aucun etudiant.
+
+
+

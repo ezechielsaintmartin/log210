@@ -26,6 +26,16 @@ export class HomeworkRouter {
         next();
     }
 
+    public deleteHomework(req: Request, res: Response, next: NextFunction) {
+        let id = parseInt(req.params.id);
+        let courseId = this.controller.deleteHomework(id);
+        res.redirect('/course/' + courseId + '/homeworks');
+    }
+    public async getHomeworkById(req:Request, res:Response, next: NextFunction){
+        req['homework'] = await this.controller.getHomeworkById(parseInt(req.params.homeWorkID));
+        next();
+    }
+
     public addHomework(req: Request, res: Response, next: NextFunction) {
         let courseId: number = parseInt(req.body.courseId);
         try {
@@ -48,6 +58,25 @@ export class HomeworkRouter {
         }
     }
 
+    public editHomework(req: Request, res: Response, next: NextFunction) {
+        let courseId: number = parseInt(req.body.courseId);
+        let id: number = parseInt(req.body.id);
+        try {
+            let description: string = req.body.description;
+            let maxGrade: number = parseInt(req.body.maxGrade);
+            let startDate: string = req.body.startDate;
+            let endDate: string = req.body.endDate;
+            let state: boolean = !!req.body.state;
+
+            let homework = new Homework(id, courseId, description, maxGrade, startDate, endDate, state);
+
+            this.controller.editHomework(homework);
+
+        } catch (error) {
+        }
+        res.redirect('/course/' + courseId + '/homework/' + id);
+    }
+
     /**
      * Take each handler, and attach to one of the Express.Router's
      * endpoints.
@@ -56,6 +85,8 @@ export class HomeworkRouter {
      */
     init() {
         this.router.post('/', this.addHomework.bind(this));
+        this.router.delete('/:id', this.deleteHomework.bind(this));
+        this.router.put('/:id', this.editHomework.bind(this));
     }
 
 }

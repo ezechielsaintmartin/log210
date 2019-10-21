@@ -1,0 +1,29 @@
+html
+    head
+        title= title
+        link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css')
+        link(rel='stylesheet' href='/css/style.css')
+        script()
+    body
+        div.container
+            h1 Êtes-vous sûr de vouloir supprimer ce devoir de votre liste?
+
+            h3 ID : #{homework._id}
+                h3 Description: #{homework._description}
+                h3 MaxGrade : #{homework._maxGrade}
+                h3 StartDate : #{homework._startDate}
+                h3 EndDate : #{homework._endDate}
+                h3 State : #{homework._state}
+
+
+            form(action="/api/v1/homework/"+homework._id+"?_method=DELETE" method="POST")
+                input(type="hidden" name="_method" value="DELETE")
+                button.btn.btn-danger(type='submit') Confirmer la suppression
+            br
+            a.btn.btn-outline-primary(href="/") Retour à l'index
+
+
+    <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/lib/main.js"></script>
+

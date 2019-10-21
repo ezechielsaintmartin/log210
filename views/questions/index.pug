@@ -18,11 +18,12 @@ html
                     each question, i in questions
                         tr
                         td= question.name
-                        td 
+                        td
                             a.btn.btn-info(href="/question/"+question.id, style='margin-bottom: 10px; margin-right: 10px') Voir
                             a.btn.btn-warning(href='question/' + question.id +"/edit", style='margin-bottom: 10px; margin-right: 10px') Modifier
                             a.btn.btn-danger(href='/question/' + question.id + "/delete", style='margin-bottom: 10px; margin-right: 10px') Supprimer
-
+            br
+            a.btn.btn-outline-primary(href="/") Retour à l'index
 
     <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
     <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>

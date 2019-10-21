@@ -8,12 +8,28 @@ html
         div.container
             h1 Listes des devoirs
 
-            each homework in homeworks
-
-                h3 Description: #{homework._description} Actif: #{homework._active}
+            if (homeworks.length > 0)
+                table.table.table-hover.table-striped#dataTables(width='100%')
+                        thead
+                        tr
+                            th Nom du devoir
+                            th Nombre de voir actif
+                            th Actions
+                        tbody
+                        each homework in homeworks
+                            tr
+                            td= homework._description 
+                            td= homeworks.length
+                            td
+                                a.btn.btn-info(href="/course/"+course.id+"/homework/"+homework.id, style='margin-bottom: 10px; margin-right: 10px') Sélectionner               
+                                a.btn.btn-warning(href="/homework/"+homework.id+"/edit", style='margin-bottom: 10px; margin-right: 10px') Modifier
+                                a.btn.btn-danger(href="/homework/"+homework.id+"/delete", style='margin-bottom: 10px; margin-right: 10px') Supprimer devoir
+            else
+                p
+                | Aucun devoir associé à ce cours
             br
-
-            a.btn.btn-primary(href="/course/"+course.id+"/homeworks/add") Ajouter un devoir
+            a.btn.btn-primary(href="/course/"+course.id+"/homeworks/add", style='margin-bottom: 10px; margin-right: 10px') Ajouter un devoir
+            br
             a.btn.btn-outline-primary(href="/") retour à l'index
 
 

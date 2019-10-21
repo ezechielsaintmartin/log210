@@ -14,7 +14,7 @@ export class ProxySGB extends SGB {
         super();
         this.courses = [];
         this.studentsByCourse = {};
-        this.tokenPromise = this.refreshToken();
+        this.refreshToken();
     }
 
     async getCourses(): Promise<Course[]> {
@@ -74,11 +74,6 @@ export class ProxySGB extends SGB {
     }
 
     private async validateToken() : Promise<boolean>{
-        await this.tokenPromise;
-        if (this.token)
-            return true;
-        this.tokenPromise = this.refreshToken();
-        await this.tokenPromise;
         return !!this.token;
     }
 

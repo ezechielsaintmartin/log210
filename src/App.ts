@@ -8,6 +8,8 @@ import {CourseRouter} from "./routes/CourseRouter";
 import {quizRoutes} from "./routes/QuizRouter";
 import {ProxySGB} from "./third-party/ProxySGB";
 import {homeworkRoutes} from "./routes/HomeworkRouter";
+import {Homework} from "./models/Homework";
+import {Course} from "./models/Course";
 var methodOverride = require('method-override')
 
 // Creates and configures an ExpressJS web server.
@@ -47,10 +49,13 @@ class App {
 
     // placeholder route handler
     router.get('/', (req, res, next) => {
-        res.render('index', { title: 'Itération 1'});
+        res.render('index', { title: 'Itération 2'});
     });
 
-      router.get('/course/homework', this.courseRoutes.getCourses.bind(this.courseRoutes), homeworkRoutes.getHomeworkCountByCourse.bind(homeworkRoutes), (req, res, next) => {
+      /**
+       * HOMEWORK
+       */
+      router.get('/course/homework', this.courseRoutes.getCoursesByTeacher.bind(this.courseRoutes), homeworkRoutes.getHomeworkCountByCourse.bind(homeworkRoutes), (req, res, next) => {
           res.render('homeworks/listToAdd', {title: 'Liste des cours pour les devoirs', courses: req['courses'], homeworkCountByCourse: req['homeworkCountByCourse']});
       });
 
@@ -61,6 +66,36 @@ class App {
       router.get('/course/:id/homeworks/add', this.courseRoutes.getCourse.bind(this.courseRoutes), (req, res, next) => {
           res.render('homeworks/add', {title: 'Liste des devoirs du cours', course: req['course'], error: req.query.error});
       });
+
+      router.get('/course/:id/homework/:homeWorkID', this.courseRoutes.getCourse.bind(this.courseRoutes), homeworkRoutes.getHomeworkById.bind(homeworkRoutes), (req, res, next) => {
+         // res.render('homeworks/homeworkdetails', {title: 'Le devoir du cours', homework: req['homework'], homeworks: req['homeworks']});
+          let homeWork: Homework = req['homework'];
+
+          res.render('homeworks/homeworkdetails', {title: 'Le devoir'+homeWork.id +'du cours',  homework: homeWork});
+
+      });
+
+      //GET de la vue delete de l'objet HomeWork
+      router.get('/homework/:homeWorkID/delete', homeworkRoutes.getHomeworkById.bind(homeworkRoutes), (req, res, next) => {
+          let homework: Homework = req['homework'];
+          res.render('homeworks/confirmDelete', {
+              title: 'Suppression du devoir' + homework.description,
+              homework: homework,
+          })
+      });
+
+      //GET de la vue edit de l'objet HomeWork
+      router.get('/homework/:homeWorkID/edit', homeworkRoutes.getHomeworkById.bind(homeworkRoutes), (req, res, next) => {
+          let homeWork: Homework = req['homework'];
+          res.render('homeworks/edit', {
+              title: 'Modification du devoir' + homeWork.description,
+              homework: homeWork
+          })
+      });
+
+
+
+
 
     /**
      * COURSES
@@ -96,7 +131,7 @@ class App {
       /**
        * QUESTIONS
        */
-    router.get('/addQuestion', this.courseRoutes.getCourses.bind(this.courseRoutes), (req, res, next) => {
+    router.get('/addQuestion', this.courseRoutes.getCoursesByTeacher.bind(this.courseRoutes), (req, res, next) => {
         res.render('questions/createQuestionCourseList', {title: 'Itération 1', courses: req['courses']});
     });
 
@@ -150,7 +185,7 @@ class App {
        * QUIZZES
        */
 
-      router.get('/course/quiz', this.courseRoutes.getCourses.bind(this.courseRoutes), quizRoutes.getQuizCountByCourse.bind(quizRoutes), (req, res, next) => {
+      router.get('/course/quiz', this.courseRoutes.getCoursesByTeacher.bind(this.courseRoutes), quizRoutes.getQuizCountByCourse.bind(quizRoutes), (req, res, next) => {
           res.render('quizzes/courses', {title: 'Liste des cours pour les questionnaires', courses: req['courses'], quizCountByCourse: req['quizCountByCourse']});
       });
 
@@ -167,11 +202,10 @@ class App {
       });
 
       router.get('/course/:courseId/quiz/:quizId/:tag', questionRoutes.getQuestionsByTag.bind(questionRoutes), quizRoutes.getQuizCountByQuestion.bind(quizRoutes), (req, res, next) => {
-          console.log(req['quizCountByQuestion']);
           res.render('quizzes/questions', {title: 'Ajouter des questions', courseId: req.params.courseId, questions: req['questions'], quizId: req.params.quizId, quizCountByQuestion: req['quizCountByQuestion']});
       });
 
-      router.get('/quizzes', this.courseRoutes.getCourses.bind(this.courseRoutes), quizRoutes.getQuizCountByCourse.bind(quizRoutes), (req, res, next) => {
+      router.get('/quizzes', this.courseRoutes.getCoursesByTeacher.bind(this.courseRoutes), quizRoutes.getQuizCountByCourse.bind(quizRoutes), (req, res, next) => {
           res.render('quizzes/courseList', {title: 'Liste des cours pour les questionnaires', courses: req['courses'], quizCountByCourse: req['quizCountByCourse']});
       });
 

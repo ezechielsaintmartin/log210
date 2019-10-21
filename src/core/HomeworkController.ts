@@ -1,15 +1,24 @@
 import {Homework} from "../models/Homework";
 import {Quiz} from "../models/Quiz";
+import {Course} from "../models/Course";
+import {Student} from "../models/Student";
+import {SGB} from "../third-party/SGB";
+import {Strings} from "../strings";
 
 export class HomeworkController {
     // GRASP controller class
 
     maxId: number;
-    homeworks: { [id: number]: Homework };
+    //homeworks: { [id: number]: Homework };
+    students : {[id:number]:Student};
+    // GRASP controller class
+    sgb: SGB;
+
+    homeworks : Homework[];
 
     constructor() {
         this.maxId = 0;
-        this.homeworks = {};
+        this.homeworks = [];
     }
 
     /**
@@ -30,19 +39,60 @@ export class HomeworkController {
     }
 
     public getHomeworksByCourseId(courseId: number): Homework[]{
-        let homeworks: Homework[] = [];
+
+        //On crée un tableau de devoir
+        let homeworks= [];
+        //Pour chaque devoir dans le tableau
         for(let key in this.homeworks){
-            let homework = this.homeworks[key];
+            //On crée une variable  devoir et on récupère le prochain devoir
+           let homework = this.homeworks[key];
+           //Si l'id du cours est le même entre la varianle de devoir et l'id de la fonction
             if (homework.courseId == courseId){
+                    console.log("id du homework"+homework.courseId+"id du paramètre"+courseId)
+                //On pousse le devoir dans le tableau de devoir
                 homeworks.push(homework);
             }
         }
         return homeworks;
+
+        //const sourceCourses = await this.getCoursesFromSource();
+        //let courses = [];
+       // for(let key in sourceCourses){
+       //     courses.push(sourceCourses[key]);
+      //  }
+      //  return courses;
     }
+
+    public async getHomeworkById(homeworkId:number):Promise<Homework>{
+
+        for(let key in this.homeworks){
+            let homework = this.homeworks[key];
+            if(homework.id == homeworkId) {
+                return homework;
+            }
+        }
+    }
+    public deleteHomework(homeworkId: number) {
+        let homework = this.homeworks[homeworkId];
+        delete this.homeworks[homeworkId];
+        return homework.courseId;
+    }
+
 
     public addHomework(homework: Homework){
         ++this.maxId;
         homework.id = this.maxId;
         this.homeworks[homework.id] = homework;
+    }
+
+    public editHomework(homework: Homework){
+        this.homeworks[homework.id] = homework;
+    }
+
+   public async getHomeworkCourseId(homeworkId: number) {
+       let homework = this.homeworks[homeworkId];
+
+        return homework.courseId;
+
     }
 }

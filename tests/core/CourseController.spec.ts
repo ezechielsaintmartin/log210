@@ -21,8 +21,8 @@ describe('CourseController', () => {
     describe('getCourses()', async () => {
         it('returns all courses returned from the SGB', async () => {
             const courses = [
-                new Course(1, 'LOG210', 35, '03', 'Something', '2019-01-01', '2020-01-01'),
-                new Course(2, 'LOG320', 35, '03', 'Something', '2019-01-01', '2020-01-01')
+                new Course(1, 1, 'LOG210', 35, '03', 'Something', '2019-01-01', '2020-01-01'),
+                new Course(2, 1, 'LOG320', 35, '03', 'Something', '2019-01-01', '2020-01-01')
             ];
             when(sgbMock.getCourses()).thenResolve(courses);
 
@@ -36,8 +36,8 @@ describe('CourseController', () => {
     describe('getCourseById()', async () => {
         it('returns a given course', async () => {
             const courses = [
-                new Course(1, 'LOG210', 35, '03', 'Something', '2019-01-01', '2020-01-01'),
-                new Course(2, 'LOG320', 35, '03', 'Something', '2019-01-01', '2020-01-01')
+                new Course(1, 1, 'LOG210', 35, '03', 'Something', '2019-01-01', '2020-01-01'),
+                new Course(2, 1, 'LOG320', 35, '03', 'Something', '2019-01-01', '2020-01-01')
             ];
             when(sgbMock.getCourses()).thenResolve(courses);
 
@@ -49,8 +49,8 @@ describe('CourseController', () => {
 
         it("returns null when the course doesn't exist", async () => {
             const courses = [
-                new Course(1, 'LOG210', 35, '03', 'Something', '2019-01-01', '2020-01-01'),
-                new Course(2, 'LOG320', 35, '03', 'Something', '2019-01-01', '2020-01-01')
+                new Course(1, 1, 'LOG210', 35, '03', 'Something', '2019-01-01', '2020-01-01'),
+                new Course(2, 1, 'LOG320', 35, '03', 'Something', '2019-01-01', '2020-01-01')
             ];
             when(sgbMock.getCourses()).thenResolve(courses);
 
