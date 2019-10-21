@@ -55,7 +55,7 @@ class App {
       /**
        * HOMEWORK
        */
-      router.get('/course/homework', this.courseRoutes.getCourses.bind(this.courseRoutes), homeworkRoutes.getHomeworkCountByCourse.bind(homeworkRoutes), (req, res, next) => {
+      router.get('/course/homework', this.courseRoutes.getCoursesByTeacher.bind(this.courseRoutes), homeworkRoutes.getHomeworkCountByCourse.bind(homeworkRoutes), (req, res, next) => {
           res.render('homeworks/listToAdd', {title: 'Liste des cours pour les devoirs', courses: req['courses'], homeworkCountByCourse: req['homeworkCountByCourse']});
       });
 
@@ -75,24 +75,21 @@ class App {
 
       });
 
-      //GET de la vue view de l'objet HomeWork
+      //GET de la vue delete de l'objet HomeWork
       router.get('/homework/:homeWorkID/delete', homeworkRoutes.getHomeworkById.bind(homeworkRoutes), (req, res, next) => {
           let homework: Homework = req['homework'];
-          console.log("on est ici")
           res.render('homeworks/confirmDelete', {
-
-              title: 'Supprimation du cours' + homework.description,
+              title: 'Suppression du devoir' + homework.description,
               homework: homework,
           })
       });
 
-      //GET de la vue view de l'objet HomeWork
-      router.get('course/:id/homework/:homeWorkID/edit', homeworkRoutes.getHomeworkById.bind(homeworkRoutes), (req, res, next) => {
+      //GET de la vue edit de l'objet HomeWork
+      router.get('/homework/:homeWorkID/edit', homeworkRoutes.getHomeworkById.bind(homeworkRoutes), (req, res, next) => {
           let homeWork: Homework = req['homework'];
           res.render('homeworks/edit', {
-              title: 'Modification du devoir' + homeWork.id,
-              homework: homeWork,
-              error: !!req.query.error
+              title: 'Modification du devoir' + homeWork.description,
+              homework: homeWork
           })
       });
 

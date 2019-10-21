@@ -85,6 +85,9 @@ export class HomeworkController {
         this.homeworks[homework.id] = homework;
     }
 
+    public editHomework(homework: Homework){
+        this.homeworks[homework.id] = homework;
+    }
 
    public async getHomeworkCourseId(homeworkId: number) {
        let homework = this.homeworks[homeworkId];
