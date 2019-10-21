@@ -185,7 +185,7 @@ class App {
        * QUIZZES
        */
 
-      router.get('/course/quiz', this.courseRoutes.getCourses.bind(this.courseRoutes), quizRoutes.getQuizCountByCourse.bind(quizRoutes), (req, res, next) => {
+      router.get('/course/quiz', this.courseRoutes.getCoursesByTeacher.bind(this.courseRoutes), quizRoutes.getQuizCountByCourse.bind(quizRoutes), (req, res, next) => {
           res.render('quizzes/courses', {title: 'Liste des cours pour les questionnaires', courses: req['courses'], quizCountByCourse: req['quizCountByCourse']});
       });
 
@@ -202,7 +202,6 @@ class App {
       });
 
       router.get('/course/:courseId/quiz/:quizId/:tag', questionRoutes.getQuestionsByTag.bind(questionRoutes), quizRoutes.getQuizCountByQuestion.bind(quizRoutes), (req, res, next) => {
-          console.log(req['quizCountByQuestion']);
           res.render('quizzes/questions', {title: 'Ajouter des questions', courseId: req.params.courseId, questions: req['questions'], quizId: req.params.quizId, quizCountByQuestion: req['quizCountByQuestion']});
       });
 
