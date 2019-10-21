@@ -67,7 +67,11 @@ class App {
       });
 
       router.get('/course/:id/homework/:homeWorkID', this.courseRoutes.getCourse.bind(this.courseRoutes), homeworkRoutes.getHomeworkById.bind(homeworkRoutes), (req, res, next) => {
-          res.render('homeworks/homeworkdetails', {title: 'Le devoir du cours', homework: req['homework'], course: req['course']});
+         // res.render('homeworks/homeworkdetails', {title: 'Le devoir du cours', homework: req['homework'], homeworks: req['homeworks']});
+          let homeWork: Homework = req['homework'];
+
+          res.render('homeworks/homeworkdetails', {title: 'Le devoir'+homeWork.id +'du cours',  homework: homeWork});
+
       });
 
       //GET de la vue view de l'objet HomeWork

@@ -8,15 +8,7 @@ html
         div.container
             h1 Informations du devoir et liste d'étudiants
 
-            //this._id = id;
-                //        this._courseId = courseId;
-                //        this._description = description;
-                //        this._maxGrade = maxGrade;
-                //        this._startDate = startDate;
-                //        this._endDate = endDate;
-                //        this._state = state;
-
-            h3 Nom du devoir : #{homework._description}
+    h3 Nom du devoir : #{homework._description}
             h3 Note maximale : #{homework._maxGrade}
             h3 Date début du devoir : #{homework._startDate}
             h3 Date de fin du devoir : #{homework._endDate}
@@ -34,7 +26,7 @@ html
                         td
             else
                 p Aucun étudiant
-            a.btn.btn-danger(href='/course/' + course._id + "/delete", style='margin-bottom: 10px; margin-right: 10px') Supprimer
+            a.btn.btn-danger(href='/course/' + homework._id + "/delete", style='margin-bottom: 10px; margin-right: 10px') Supprimer
             br
             a.btn.btn-outline-primary(href="/") Retour à l'index
 

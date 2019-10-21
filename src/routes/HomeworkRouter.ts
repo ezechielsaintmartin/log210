@@ -28,8 +28,9 @@ export class HomeworkRouter {
 
     }
 
-    public getHomeworkById(req:Request, res:Response, next: NextFunction){
-        req['homework'] = this.controller.getHomeworkById(parseInt(req.params.homeWorkID));
+    public async getHomeworkById(req:Request, res:Response, next: NextFunction){
+        req['homework'] = await this.controller.getHomeworkById(parseInt(req.params.homeWorkID));
+        next();
     }
 
 
@@ -70,7 +71,6 @@ export class HomeworkRouter {
        // this.router.delete('/:id', this.deleteCourse.bind(this));
         //this.router.get('/:id/infos', this.getCourseInfos.bind(this));
         //this.router.get('/course/:id/homeworks', this.getHomeworksByCourseId.bind(this));
-        this.router.get('/homeworks/:id/homeworkdetails', this.getHomeworksByCourseId.bind(this));
 
     }
 
