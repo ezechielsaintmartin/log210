@@ -23,13 +23,26 @@ export class HomeworkRouter {
 
     public getHomeworksByCourseId(req: Request, res: Response, next: NextFunction) {
         req['homeworks'] = this.controller.getHomeworksByCourseId(parseInt(req.params.id));
+
         next();
         console.log("Where are here");
 
     }
 
+    public async getHomeworkInfos(req: Request, res: Response, next: NextFunction) {
+        req['homework'] = await this.controller.getHomeworkById(parseInt(req.params.homeWorkID));
+        req['cours'] = await this.controller.getHomeworkCourseId(parseInt(req.params.id));
+        next();
+    }
+
+    public deleteHomework(req: Request, res: Response, next: NextFunction) {
+        let id = parseInt(req.params.id);
+        let courseId = this.controller.deleteHomework(id);
+        res.redirect('/course/' + courseId + '/homeworks');
+    }
     public async getHomeworkById(req:Request, res:Response, next: NextFunction){
         req['homework'] = await this.controller.getHomeworkById(parseInt(req.params.homeWorkID));
+
         next();
     }
 
@@ -66,7 +79,10 @@ export class HomeworkRouter {
      */
     init() {
         this.router.post('/', this.addHomework.bind(this));
-       // this.router.post('/:id', this.addCourse.bind(this));
+        this.router.delete('/:id', this.deleteHomework.bind(this));
+        //course/:id/homework/:homeWorkID/delete
+
+        // this.router.post('/:id', this.addCourse.bind(this));
        // this.router.get('/:id', this.getCourses.bind(this));
        // this.router.delete('/:id', this.deleteCourse.bind(this));
         //this.router.get('/:id/infos', this.getCourseInfos.bind(this));

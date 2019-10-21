@@ -3,6 +3,7 @@ import {Quiz} from "../models/Quiz";
 import {Course} from "../models/Course";
 import {Student} from "../models/Student";
 import {SGB} from "../third-party/SGB";
+import {Strings} from "../strings";
 
 export class HomeworkController {
     // GRASP controller class
@@ -71,6 +72,12 @@ export class HomeworkController {
             }
         }
     }
+    public deleteHomework(homeworkId: number) {
+        let homework = this.homeworks[homeworkId];
+        delete this.homeworks[homeworkId];
+        return homework.courseId;
+    }
+
 
     public addHomework(homework: Homework){
         ++this.maxId;
@@ -79,4 +86,10 @@ export class HomeworkController {
     }
 
 
+   public async getHomeworkCourseId(homeworkId: number) {
+       let homework = this.homeworks[homeworkId];
+
+        return homework.courseId;
+
+    }
 }

@@ -15,9 +15,9 @@ html
             h3 EndDate : #{homework._endDate}
             h3 State : #{homework._state}
 
-            a.btn.btn-danger(href='/homework/' + homework.id + "/delete", style='margin-bottom: 10px; margin-right: 10px') Supprimer Question
+            a.btn.btn-danger(href="/course/"+course._id+"/homework/"+homework._id + "/delete", style='margin-bottom: 10px; margin-right: 10px') Supprimer devoir
             br
-            a.btn.btn-warning(href="/homework/" + question.id + "/edit") Modifier
+            a.btn.btn-warning(href="/course/"+course._id+"/homework/"+homework._id + "/edit") Modifier
             br
             a(href="/homework") Retour a la liste
 

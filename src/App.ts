@@ -9,6 +9,7 @@ import {quizRoutes} from "./routes/QuizRouter";
 import {ProxySGB} from "./third-party/ProxySGB";
 import {homeworkRoutes} from "./routes/HomeworkRouter";
 import {Homework} from "./models/Homework";
+import {Course} from "./models/Course";
 var methodOverride = require('method-override')
 
 // Creates and configures an ExpressJS web server.
@@ -75,7 +76,18 @@ class App {
       });
 
       //GET de la vue view de l'objet HomeWork
-      router.get('/homework/:id/edit', homeworkRoutes.getHomeworkById.bind(homeworkRoutes), (req, res, next) => {
+      router.get('/homework/:homeWorkID/delete', homeworkRoutes.getHomeworkById.bind(homeworkRoutes), (req, res, next) => {
+          let homework: Homework = req['homework'];
+          console.log("on est ici")
+          res.render('homeworks/confirmDelete', {
+
+              title: 'Supprimation du cours' + homework.description,
+              homework: homework,
+          })
+      });
+
+      //GET de la vue view de l'objet HomeWork
+      router.get('course/:id/homework/:homeWorkID/edit', homeworkRoutes.getHomeworkById.bind(homeworkRoutes), (req, res, next) => {
           let homeWork: Homework = req['homework'];
           res.render('homeworks/edit', {
               title: 'Modification du devoir' + homeWork.id,
