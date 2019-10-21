@@ -1,5 +1,4 @@
-import {Quiz} from "../models/Quiz"
-import {Strings} from "../strings";
+import {Quiz} from "../models/Quiz";
 
 export class QuizController {
     // GRASP controller class
