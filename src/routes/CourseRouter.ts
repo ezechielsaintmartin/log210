@@ -38,7 +38,7 @@ export class CourseRouter {
         next();
     }
 
-    
+
     public async getCourseInfos(req: Request, res: Response, next: NextFunction) {
         req['course'] = await this.controller.getCourse(parseInt(req.params.id));
         req['students'] = await this.controller.getStudentsFromCourse(parseInt(req.params.id));
@@ -48,7 +48,7 @@ export class CourseRouter {
     public async addCourse(req: Request, res: Response, next: NextFunction) : Promise<void>{
         try{
             await this.controller.addCourse(parseInt(req.params.id));
-            res.redirect('/course/' + req.params.id + '/students');
+            return res.redirect('/course/' + req.params.id + '/students');
         } catch(error) {
 
         }
