@@ -47,7 +47,7 @@ export class CourseController {
         }
         return course;
     }
-    
+
 
     public getCoursesByTeacher(teacherId: number): Course[] {
         let courses = [];
@@ -61,7 +61,7 @@ export class CourseController {
     public deleteCourse(courseId: number) {
         for (var i = 0; i < this.courses.length; i++ ) {
             if (this.courses[i].id == courseId) {
-                delete this.courses[i];
+                this.courses.splice(i, 1);
             }
         }
     }
