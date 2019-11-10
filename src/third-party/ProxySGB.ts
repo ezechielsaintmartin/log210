@@ -16,6 +16,7 @@ export class ProxySGB extends SGB {
     private studentToken: string;
     private studentTokenPromise: Promise<string>;
     private jobs: Job[];
+    private readonly studentId = 2;
 
     constructor(){
         super();
@@ -96,7 +97,7 @@ export class ProxySGB extends SGB {
         return this.coursesByStudent[studentId];
     }
 
-    async addGradeForQuiz(studentId: number, quizId: number, courseId: number, grade: number): Promise<void> {
+    async addGradeForQuiz(quizId: number, courseId: number, grade: number): Promise<void> {
         try {
             const host = this.getHost();
             const url = host + '/api/v1/student/note?course=' + courseId + '&type=quiz&type_id=' + quizId + '&note=' + grade;
@@ -106,11 +107,11 @@ export class ProxySGB extends SGB {
         }
     }
 
-    async getGrades(studentId: number): Promise<{[quizId: number]: number}> {
+    async getGrades(): Promise<{[quizId: number]: number}> {
         try {
             if (!await this.validateStudentToken()){
-                if (this.gradesByStudent[studentId])
-                    return this.gradesByStudent[studentId];
+                if (this.gradesByStudent[this.studentId])
+                    return this.gradesByStudent[this.studentId];
                 else
                     return {};
             }
@@ -118,15 +119,15 @@ export class ProxySGB extends SGB {
             const url = host + '/api/v1/student/notes';
             const response = await fetch(url, {headers: {token: this.teacherToken}});
             const json = await response.json();
-            this.gradesByStudent[studentId] = json.data.reduce((map, grade) => {
+            this.gradesByStudent[this.studentId] = json.data.reduce((map, grade) => {
                 map[grade.type_id] = grade.note;
             }, {});
-            return this.gradesByStudent[studentId];
+            return this.gradesByStudent[this.studentId];
         } catch (error) {
             console.error('Error while reading from SGB : ' + error);
         }
-        if (this.gradesByStudent[studentId])
-            return this.gradesByStudent[studentId];
+        if (this.gradesByStudent[this.studentId])
+            return this.gradesByStudent[this.studentId];
         else
             return {};
     }
