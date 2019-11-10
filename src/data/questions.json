@@ -26,5 +26,20 @@
     "truth": true,
     "successText": "Super ! ",
     "failureText": "Incorrect ! "
+  },
+  {
+    "id": 3,
+    "teacherId": 1,
+    "courseId": 3,
+    "tags": [
+      "Pratique",
+      "Facile",
+      "Théorie"
+    ],
+    "name": "Question 3",
+    "statement": "Qu'est ce qu'un DSS ?",
+    "truth": true,
+    "successText": "Super ! ",
+    "failureText": "Incorrect ! "
   }
 ]

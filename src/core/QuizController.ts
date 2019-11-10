@@ -104,29 +104,25 @@ export class QuizController {
         return courseId;
     }
 
-    public async getQuizByCourse(courseId: number, studentId: number): 
+    public async getQuizByCourse(courseId: number, studentId: number):
      Promise<{quizzes: Quiz[], grades: {[id: number]: number}}> {
         let quizIDs = Object.keys(this.quizzes);
         let outQuizzes = [];
         let outGrades : {[id: number]: number} = {};
         let tuple: {quizzes: Quiz[], grades: {[id: number]: number}} = {quizzes: outQuizzes, grades : outGrades};
-        
-        for(let quizIDKey in quizIDs) {
-            let quizID = parseInt(quizIDKey);
-            const quiz = this.quizzes[quizID];
-            console.log(this.quizzes);
-            console.log(this.quizzes[1]);
-            console.log("quiz id: " + quizID);
-            console.log("quiz key: " + quizIDKey);
-            const idCoursQuiz = this.quizzes[quizID].courseId;
+
+        for(let i = 0; i < quizIDs.length; ++i) {
+            let quizId = quizIDs[i];
+            const quiz = this.quizzes[quizId];
+            const idCoursQuiz = quiz.courseId;
             console.log("after");
 
             if (idCoursQuiz == courseId) {
                 outQuizzes.push(quiz);
 
                 let grades = await this.sgb.getGrades();
-                if(grades[quizID] != null) {
-                    outGrades[quizID] = grades[quizID];
+                if(grades[quizId] != null) {
+                    outGrades[quizId] = grades[quizId];
                 }
             }
         }
@@ -158,7 +154,7 @@ export class QuizController {
         const questionController = QuestionController.getInstance();
         const question = questionController.getQuestion(questionId);
         this.addAnswer(question, studentId, value);
-        
+
         return quiz.createEvaluation(studentId);
     }
 
