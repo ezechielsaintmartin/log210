@@ -10,7 +10,7 @@ export class QuestionRouter {
    * Initialize the Router
    */
   constructor() {
-    this.controller = new QuestionController();  // init GRASP controller
+    this.controller = QuestionController.getInstance();  // init GRASP controller
     this.router = Router();
     this.init();
   }

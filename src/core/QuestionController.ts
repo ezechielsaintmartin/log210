@@ -3,11 +3,11 @@ import {Strings} from "../strings";
 
 export class QuestionController {
     // GRASP controller class
-
+    private static instance : QuestionController
     maxId: number;
     questions: {[id:number]: Question};
 
-    constructor() {
+    private constructor() {
         this.maxId = 0;
         let questionArray: Question[] = require("../data/questions.json").map(obj => new Question(
             obj.id,
@@ -27,6 +27,13 @@ export class QuestionController {
             map[obj.id] = obj;
             return map;
         },{});
+    }
+
+    public static getInstance() {
+        if (QuestionController.instance == null) {
+            QuestionController.instance = new QuestionController();
+        }
+        return QuestionController.instance;
     }
 
     /**

@@ -1,4 +1,6 @@
 import {Quiz} from "../models/Quiz";
+import { Question } from "../models/Question";
+import { QuestionController } from "./QuestionController";
 
 export class QuizController {
     // GRASP controller class
@@ -98,4 +100,56 @@ export class QuizController {
         delete this.quizzes[quizId];
         return courseId;
     }
+
+    public getQuizByCourse(courseId: number, studentId: number): {quizzes: Quiz[], grades: {[id: number]: number}} {
+        let quizIDs = Object.keys(this.quizzes);
+        let outQuizzes = [];
+        let outGrades : {[id: number]: number} = {};
+        let tuple: {quizzes: Quiz[], grades: {[id: number]: number}} = {quizzes: outQuizzes, grades : outGrades};
+        
+        for(let quizID in quizIDs) {
+            const quiz = this.quizzes[quizID];
+            const idCoursQuiz = this.quizzes[quizID].courseId;
+
+            if (idCoursQuiz == courseId) {
+                outQuizzes.push(quiz);
+
+                const evaluation = this.quizzes[quizID].getEvaluationByStudentId(studentId);
+                if (evaluation) {
+                    outGrades[quizID] = evaluation.grade;
+                }
+            }
+        }
+        return tuple;
+    }
+
+    public getQuestionByQuiz(quizId: number, studentId: number): Question {
+        const quiz = this.quizzes[quizId];
+        const question = quiz.getFirstUnansweredQuestion(studentId);
+
+        return question;
+    }
+
+    public addAnswer(question: Question, studentId: number, value: boolean): void {
+        const questionId = question.id;
+        const quiz = this.quizzes[questionId];
+        quiz.addAnswer(question, studentId, value);
+    }
+
+    public answerQuestion(question: Question, studentId: number, value: boolean) : Question {
+        this.addAnswer(question, studentId, value);
+        const questionId = question.id;
+
+        return this.quizzes[questionId].getFirstUnansweredQuestion(studentId);
+    }
+
+    public finishQuiz(quizId: number, questionId, value: boolean, studentId: number) : number {
+        const quiz = this.getQuiz(quizId);
+        const questionController = QuestionController.getInstance();
+        const question = questionController.getQuestion(questionId);
+        this.addAnswer(question, studentId, value);
+        
+        return quiz.createEvaluation(studentId);
+    }
+
 }

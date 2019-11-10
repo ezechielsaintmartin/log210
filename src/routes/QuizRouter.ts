@@ -22,7 +22,7 @@ export class QuizRouter {
             let description: string = req.body.description;
             let active: boolean = !!req.body.active;
 
-            let quiz = new Quiz(-1, description,active, courseId, []);
+            let quiz = new Quiz(-1, description,active, courseId, [], [], []);
 
             this.controller.createQuiz(quiz);
 
