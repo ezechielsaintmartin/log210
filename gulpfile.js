@@ -1,4 +1,5 @@
 const gulp = require('gulp');
+const sourcemaps = require('gulp-sourcemaps');
 const ts = require('gulp-typescript');
 const JSON_FILES = ['src/*.json', 'src/**/*.json'];
 const CSS_FILES = ['public/css/*.css'];
@@ -8,9 +9,12 @@ const JS_FILES = ['public/lib/*.js'];
 const tsProject = ts.createProject('tsconfig.json');
 
 gulp.task('scripts', () => {
-  const tsResult = tsProject.src()
-  .pipe(tsProject());
-  return tsResult.js.pipe(gulp.dest('dist'));
+    return tsProject.src()
+        .pipe(sourcemaps.init())
+        .pipe(tsProject())
+        .js
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest('dist'));
 });
 
 gulp.task('watch', function watchSrc() {
