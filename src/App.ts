@@ -198,6 +198,10 @@ class App {
         res.render('PassQuiz/quizWithGrades', {title: 'Liste des questionnaire du cours', quizzes: req['quizzesWithGrades'].quizzes, grades: req['quizzesWithGrades'].grades});
     });
 
+    router.get('/passQuiz/:id', this.quizRoutes.getFirstUnansweredQuestion.bind(this.quizRoutes), (req, res, next) => {
+        res.render('PassQuiz/quizWithGrades', {title: 'Liste des questionnaire du cours', quizzes: req['quizzesWithGrades'].quizzes, grades: req['quizzesWithGrades'].grades});
+    });
+
       /**
        * QUIZZES
        */

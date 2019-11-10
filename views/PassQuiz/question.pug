@@ -1,0 +1,31 @@
+html
+    head
+        title= title
+        link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css')
+        link(rel='stylesheet' href='/css/style.css')
+        script()
+    body
+        div.container
+            h1 Question #{question.name}
+            if(error)
+                h2(style={color:"red"}) This name already exists
+            form(action="/api/v1/question/"+question.id+"?_method=PUT" method="POST")
+                input(type="hidden" name="questionId" id="questionId" value=question.id)
+                input(type="hidden" name="courseId" id="courseId" value=question.courseId)
+                input(type="hidden" name="teacherId" id="teacherId" value=question.teacherId)
+                .form-group
+                    label(for="name" style="display:block") Nom:
+                    input.form-control(type="text" name="name" id="name" placeholder="Name" style="display:block" value=question.name)
+
+                .form-group
+                    label(for="statement" style="display:block") enonce:
+                    textarea.form-control( name="statement" id="statement" style="display:block")=question.statement
+
+                label(for="truth" style="display:block") Verite:
+                input(type="checkbox" name="truth" id="truth" style="display:block")
+
+
+    <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/lib/main.js"></script>
+

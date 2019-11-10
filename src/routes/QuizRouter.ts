@@ -58,6 +58,12 @@ export class QuizRouter {
         next();
     }
 
+    public getFirstUnansweredQuestion(req: Request, res: Response, next: NextFunction) {
+        let quizId: number = parseInt(req.params.id);
+        req['quiz'] = this.controller.getQuestionByQuiz(quizId, this.studentId);
+        next();
+    }
+
     public getQuiz(req: Request, res: Response, next: NextFunction) {
         let quizId: number = parseInt(req.params.id);
         req['quiz'] = this.controller.getQuiz(quizId);
