@@ -3,15 +3,18 @@ import { Router, Request, Response, NextFunction } from 'express';
 import { QuizController } from '../core/QuizController';
 import {Quiz} from "../models/Quiz";
 import {Question} from "../models/Question";
+import { SGB } from '../third-party/SGB';
 export class QuizRouter {
     router: Router;
     controller: QuizController;  // GRASP controller
+    private readonly studentId = 2;
+
 
     /**
      * Initialize the Router
      */
-    constructor() {
-        this.controller = new QuizController();  // init GRASP controller
+    constructor(sgb: SGB) {
+        this.controller = new QuizController(sgb);  // init GRASP controller
         this.router = Router();
         this.init();
     }
@@ -45,6 +48,13 @@ export class QuizRouter {
     public getQuizzesByCourse(req: Request, res: Response, next: NextFunction) {
         let courseId: number = parseInt(req.params.id);
         req['quizzes'] = this.controller.getQuizzesByCourse(courseId);
+        next();
+    }
+
+    
+    public async getGradesForQuiz(req: Request, res: Response, next: NextFunction) {
+        let courseId: number = parseInt(req.params.id);
+        req['quizzesWithGrades'] = await this.controller.getQuizByCourse(courseId, this.studentId);
         next();
     }
 
@@ -96,5 +106,3 @@ export class QuizRouter {
 }
 
 // exporter its configured Express.Router
-export const quizRoutes = new QuizRouter();
-quizRoutes.init();

@@ -38,6 +38,11 @@ export class CourseRouter {
         next();
     }
 
+    public async getCoursesByStudent(req: Request, res: Response, next: NextFunction) {
+        // Hard code le student en attendant des changements du SGB
+        req['courses'] = await this.controller.getCoursesByStudent();
+        next();
+    }
 
     public async getCourseInfos(req: Request, res: Response, next: NextFunction) {
         req['course'] = await this.controller.getCourse(parseInt(req.params.id));

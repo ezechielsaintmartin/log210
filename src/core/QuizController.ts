@@ -1,16 +1,19 @@
 import {Quiz} from "../models/Quiz";
 import { Question } from "../models/Question";
 import { QuestionController } from "./QuestionController";
+import { SGB } from "../third-party/SGB";
 
 export class QuizController {
     // GRASP controller class
 
     maxId: number;
     quizzes: { [id: number]: Quiz };
+    sgb: SGB;
 
-    constructor() {
+    constructor(sgb: SGB) {
         this.maxId = 0;
         this.quizzes = {};
+        this.sgb = sgb;
     }
 
     /**
@@ -101,22 +104,29 @@ export class QuizController {
         return courseId;
     }
 
-    public getQuizByCourse(courseId: number, studentId: number): {quizzes: Quiz[], grades: {[id: number]: number}} {
+    public async getQuizByCourse(courseId: number, studentId: number): 
+     Promise<{quizzes: Quiz[], grades: {[id: number]: number}}> {
         let quizIDs = Object.keys(this.quizzes);
         let outQuizzes = [];
         let outGrades : {[id: number]: number} = {};
         let tuple: {quizzes: Quiz[], grades: {[id: number]: number}} = {quizzes: outQuizzes, grades : outGrades};
         
-        for(let quizID in quizIDs) {
+        for(let quizIDKey in quizIDs) {
+            let quizID = parseInt(quizIDKey);
             const quiz = this.quizzes[quizID];
+            console.log(this.quizzes);
+            console.log(this.quizzes[1]);
+            console.log("quiz id: " + quizID);
+            console.log("quiz key: " + quizIDKey);
             const idCoursQuiz = this.quizzes[quizID].courseId;
+            console.log("after");
 
             if (idCoursQuiz == courseId) {
                 outQuizzes.push(quiz);
 
-                const evaluation = this.quizzes[quizID].getEvaluationByStudentId(studentId);
-                if (evaluation) {
-                    outGrades[quizID] = evaluation.grade;
+                let grades = await this.sgb.getGrades();
+                if(grades[quizID] != null) {
+                    outGrades[quizID] = grades[quizID];
                 }
             }
         }

@@ -58,6 +58,10 @@ export class CourseController {
         return courses;
     }
 
+    public async getCoursesByStudent(): Promise<Course[]> {
+        return await this.sgb.getCoursesByStudent();
+    }
+
     public deleteCourse(courseId: number) {
         for (var i = 0; i < this.courses.length; i++ ) {
             if (this.courses[i].id == courseId) {

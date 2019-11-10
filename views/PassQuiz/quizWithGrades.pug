@@ -6,22 +6,23 @@ html
         script()
     body
         div.container
-            h1 Listes des cours de l'étudiant
-            if (courses)
+            h1 Listes des questionnaires
                 table.table.table-hover.table-striped#dataTables(width='100%')
                     thead
                     tr
-                        th Cours
+                        th Questionnaire
                         th Actions
                     tbody
-                    each course, i in courses
+                    each quiz, i in quizzes
                         tr
-                        td #{course.sigle} , Groupe #{course.group}
+                        td #{quiz.description} , 
+                            if (grades[quiz.id] != null)
+                                Note #{grades[quiz.id]}
                         td
-                            a.btn.btn-info(href="/course/" + course.id +"/quizzes/student", style='margin-bottom: 10px; margin-right: 10px') Sélectionner
-            else
-                p Auncun cours à afficher
-            a.btn.btn-outline-primary(href="/") Retour à l'index
+                            a.btn.btn-info(href="/course/infos", style='margin-bottom: 10px; margin-right: 10px') Sélectionner
+                
+            br
+            a.btn.btn-outline-primary(href="/") retour à l'index
 
 
     <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
