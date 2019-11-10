@@ -93,8 +93,8 @@ export class ProxySGB extends SGB {
             return [];
     }
 
-    async getCoursesByStudent(studentId: number): Promise<Course[]> {
-        return this.coursesByStudent[studentId];
+    async getCoursesByStudent(): Promise<Course[]> {
+        return this.coursesByStudent[this.studentId];
     }
 
     async addGradeForQuiz(quizId: number, courseId: number, grade: number): Promise<void> {

@@ -4,7 +4,7 @@ import {Student} from "../models/Student";
 export abstract class SGB {
     abstract getCourses(): Promise<Course[]>;
     abstract getStudentsByCourse(courseId: number): Promise<Student[]>;
-    abstract getCoursesByStudent(studentId: number): Promise<Course[]>;
-    abstract addGradeForQuiz(studentId: number, quizId: number, courseId: number, grade: number): Promise<void>;
-    abstract getGrades(studentId: number): Promise<{[quizId: number]: number}>;
+    abstract getCoursesByStudent(): Promise<Course[]>;
+    abstract addGradeForQuiz(quizId: number, courseId: number, grade: number): Promise<void>;
+    abstract getGrades(): Promise<{[quizId: number]: number}>;
 }
