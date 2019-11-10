@@ -7,14 +7,17 @@ const fetch = require('node-fetch');
 export class ProxySGB extends SGB {
     private courses: Course[];
     private readonly studentsByCourse: {[id: number]: Student[]};
-    private token: string;
-    private tokenPromise: Promise<string>;
+    private readonly coursesByStudent: {[id: number]: Course[]}
+    private teacherToken: string;
+    private teacherTokenPromise: Promise<string>;
 
     constructor(){
         super();
         this.courses = [];
         this.studentsByCourse = {};
-        this.refreshToken();
+        this.coursesByStudent = {};
+
+        this.teacherTokenPromise = this.refreshToken();
     }
 
     async getCourses(): Promise<Course[]> {
@@ -23,7 +26,7 @@ export class ProxySGB extends SGB {
                 return this.courses;
             const host = this.getHost();
             const url = host + '/api/v1/courses';
-            const response = await fetch(url, {headers: {token: this.token}});
+            const response = await fetch(url, {headers: {token: this.teacherToken}});
             const json = await response.json();
             // Pour l'instant j'ai (Minh) mis le teacher id à 1
             this.courses = json.data.map((course) => new Course(course.id, 1, course.sigle,
@@ -45,7 +48,7 @@ export class ProxySGB extends SGB {
             }
             const host = this.getHost();
             const url = host + '/api/v1/course/' + courseId + '/students';
-            const response = await fetch(url, {headers: {token: this.token}});
+            const response = await fetch(url, {headers: {token: this.teacherToken}});
             const json = await response.json();
             this.studentsByCourse[courseId] = json.data.map((student) => new Student(student.id, student.first_name,
                 student.last_name, student.email, student.permanent_code));
@@ -65,16 +68,22 @@ export class ProxySGB extends SGB {
             const url = host + '/api/v1/login?email=' + SGBConfig.TEACHER_EMAIL + '&password=' + SGBConfig.TEACHER_PASSWORD;
             const response = await fetch(url);
             const json = await response.json();
-            this.token = json.token;
-            return json.token;
+            this.teacherToken = json.token;
+            return this.teacherToken;
         } catch(error) {
             console.error('Error while reading from SGB : ' + error);
         }
         return null;
     }
 
-    private async validateToken() : Promise<boolean>{
-        return !!this.token;
+    private async validateToken(): Promise<string>{
+        if (this.teacherTokenPromise){
+            await this.teacherTokenPromise;
+            if (this.teacherToken)
+                return this.teacherToken;
+        }
+        this.teacherTokenPromise = this.refreshToken();
+        return await this.teacherTokenPromise;
     }
 
     private getHost(): string {
