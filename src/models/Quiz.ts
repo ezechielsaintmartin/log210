@@ -69,27 +69,27 @@ export class Quiz {
     }
 
     public getFirstUnansweredQuestion(studentId: number) : Question {
-        const questionIds = Object.keys(this._answersByQuestionId);
         let question = null;
-        for (let questionId in questionIds) {
-            const answers = this._answersByQuestionId[questionId];
+        for (let i = 0; i < this._questions.length; ++i){
             let answered = false;
-            answers.forEach((answer) => 
-                {
-                    if (studentId == answer.studentId) {
-                        answered = true;
-
-                    } 
-                }
-            );
-
+            let questionId = this._questions[i];
+            const answers = this._answersByQuestionId[questionId];
+            if (answers){
+                answers.forEach((answer) =>
+                    {
+                        if (studentId == answer.studentId) {
+                            answered = true;
+                        }
+                    }
+                );
+            }
             if (answered == false) {
                 let questionController = QuestionController.getInstance();
-                question = questionController.getQuestion(parseInt(questionId));
-                
+                question = questionController.getQuestion(questionId);
+                return question;
             }
         }
-        return question;
+        return null;
     }
 
     public addAnswer(question: Question, studentId: number, value: boolean) : void {
@@ -104,7 +104,7 @@ export class Quiz {
         let correct = 0;
         for (let questionId in this._questions) {
             const answers = this.getAnswerByQuestionId(parseInt(questionId));
-            answers.forEach((answer) => 
+            answers.forEach((answer) =>
                 {
                     if (studentId == answer.studentId) {
                         total++;
@@ -112,7 +112,7 @@ export class Quiz {
                             correct++;
                         }
 
-                    } 
+                    }
                 }
             );
         }
