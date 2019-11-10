@@ -199,7 +199,7 @@ class App {
     });
 
     router.get('/passQuiz/:id', this.quizRoutes.getFirstUnansweredQuestion.bind(this.quizRoutes), (req, res, next) => {
-        res.render('PassQuiz/question', {title: 'Liste des questionnaire du cours', question: req['question']});
+        res.render('PassQuiz/question', {title: 'Liste des questionnaire du cours', question: req['question'], quizId: req['quizId']});
     });
 
       /**

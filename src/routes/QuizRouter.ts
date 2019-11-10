@@ -4,6 +4,7 @@ import { QuizController } from '../core/QuizController';
 import {Quiz} from "../models/Quiz";
 import {Question} from "../models/Question";
 import { SGB } from '../third-party/SGB';
+import { QuestionController } from '../core/QuestionController';
 export class QuizRouter {
     router: Router;
     controller: QuizController;  // GRASP controller
@@ -61,6 +62,7 @@ export class QuizRouter {
     public getFirstUnansweredQuestion(req: Request, res: Response, next: NextFunction) {
         let quizId: number = parseInt(req.params.id);
         req['question'] = this.controller.getQuestionByQuiz(quizId, this.studentId);
+        req['quizId'] = quizId;
         next();
     }
 
@@ -79,6 +81,20 @@ export class QuizRouter {
     public addQuestions(req: Request, res: Response, next: NextFunction) {
         let quiz: Quiz = this.controller.addQuestions(parseInt(req.params.id), Object.keys(req.body).map(key => parseInt(key)));
         res.redirect('/course/' + quiz.courseId + '/quiz/' + quiz.id + '/tags');
+    }
+
+    public answerQuestion(req: Request, res: Response, next: NextFunction) {
+        let questionController = QuestionController.getInstance();
+
+        let question: Question = this.controller.answerQuestion(parseInt(req.params.id), 
+            questionController.getQuestion(parseInt(req.body.questionId)),
+            this.studentId, !!req.body.truth);
+        if (question) {
+            res.redirect('back');
+
+        } else {
+            res.redirect('/course/'+ question.courseId +'/quizzes/student/');
+        }
     }
 
     public updateQuiz(req: Request, res: Response, next: NextFunction) {
@@ -104,6 +120,7 @@ export class QuizRouter {
      */
     init() {
         this.router.post('/', this.createQuiz.bind(this));
+        this.router.post('/:id/pass', this.answerQuestion.bind(this));
         this.router.post('/:id/questions', this.addQuestions.bind(this));
         this.router.put('/:id', this.updateQuiz.bind(this));
         this.router.delete('/:id', this.deleteQuiz.bind(this));

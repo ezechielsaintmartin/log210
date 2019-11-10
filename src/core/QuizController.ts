@@ -136,25 +136,19 @@ export class QuizController {
         return question;
     }
 
-    public addAnswer(question: Question, studentId: number, value: boolean): void {
-        const questionId = question.id;
-        const quiz = this.quizzes[questionId];
+    public addAnswer(quizId: number, question: Question, studentId: number, value: boolean): void {
+        const quiz = this.quizzes[quizId];
         quiz.addAnswer(question, studentId, value);
     }
 
-    public answerQuestion(question: Question, studentId: number, value: boolean) : Question {
-        this.addAnswer(question, studentId, value);
-        const questionId = question.id;
-
-        return this.quizzes[questionId].getFirstUnansweredQuestion(studentId);
+    public answerQuestion(quizId: number, question: Question, studentId: number, value: boolean) : Question {
+        this.addAnswer(quizId, question, studentId, value);
+        const nextQuestion = this.quizzes[quizId].getFirstUnansweredQuestion(studentId);
+        return nextQuestion;
     }
 
-    public finishQuiz(quizId: number, questionId, value: boolean, studentId: number) : number {
+    public finishQuiz(quizId: number, studentId: number) : number {
         const quiz = this.getQuiz(quizId);
-        const questionController = QuestionController.getInstance();
-        const question = questionController.getQuestion(questionId);
-        this.addAnswer(question, studentId, value);
-
         return quiz.createEvaluation(studentId);
     }
 
