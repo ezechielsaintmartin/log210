@@ -58,7 +58,7 @@ export class ProxySGB extends SGB {
                 return this.courses;
             const host = this.getHost();
             const url = host + '/api/v1/courses';
-            const response = await fetch(url, {headers: {token: this.teacherToken}});
+            const response = await this.fetchWithTimeout(url, {headers: {token: this.teacherToken}}, 5000);
             const json = await response.json();
             // Pour l'instant j'ai (Minh) mis le teacher id à 1
             this.courses = json.data.map((course) => new Course(course.id, 1, course.sigle,
@@ -80,7 +80,7 @@ export class ProxySGB extends SGB {
             }
             const host = this.getHost();
             const url = host + '/api/v1/course/' + courseId + '/students';
-            const response = await fetch(url, {headers: {token: this.teacherToken}});
+            const response = await this.fetchWithTimeout(url, {headers: {token: this.teacherToken}}, 5000);
             const json = await response.json();
             this.studentsByCourse[courseId] = json.data.map((student) => new Student(student.id, student.first_name,
                 student.last_name, student.email, student.permanent_code));
@@ -119,7 +119,7 @@ export class ProxySGB extends SGB {
             }
             const host = this.getHost();
             const url = host + '/api/v1/student/notes';
-            const response = await fetch(url, {headers: {token: this.teacherToken}});
+            const response = await this.fetchWithTimeout(url, {headers: {token: this.studentToken}}, 5000);
             const json = await response.json();
             this.gradesByStudent[this.studentId] = json.data.reduce((map, grade) => {
                 map[grade.type_id] = grade.note;
@@ -162,7 +162,7 @@ export class ProxySGB extends SGB {
         try {
             const host = this.getHost();
             const url = host + '/api/v1/login?email=' + SGBConfig.STUDENT_EMAIL + '&password=' + SGBConfig.STUDENT_PASSWORD;
-            const response = await fetch(url);
+            const response = await this.fetchWithTimeout(url, null, 5000);;
             const json = await response.json();
             this.studentToken = json.token;
             return this.studentToken;
@@ -199,6 +199,19 @@ export class ProxySGB extends SGB {
             this.gradesByStudent[this.studentId] = {};
         }
         this.gradesByStudent[this.studentId][quizId] = grade;
+    }
+
+    private fetchWithTimeout(url, options, timeout): Promise<Response>{
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                reject();
+            }, timeout);
+            fetch(url, options).then((data) => {
+                resolve(data);
+            }).catch((error) => {
+                reject(error);
+            });
+        })
     }
 
 }
