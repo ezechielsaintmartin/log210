@@ -20,6 +20,18 @@ html
                 form(action="/api/v1/quiz/" + quiz.id + "?_method=DELETE" method="POST")
                     input(type="hidden" name="_method" value="DELETE")
                     button.btn.btn-danger(type='submit') Supprimer
+            else
+                table.table.table-hover.table-striped#dataTables(width='100%')
+                    thead
+                    tr
+                        th Nom
+                        th Note
+                    tbody
+                    each grade in grades
+                        tr
+                        td #{grade.student.firstName}  #{grade.student.lastName}
+                        td #{grade.grade}
+
             br
             a.btn.btn-outline-primary(href="/course/"+quiz._courseId+"/quizList", style='margin-bottom: 10px; margin-right: 10px') Retour à la liste de questionnaires
             br
