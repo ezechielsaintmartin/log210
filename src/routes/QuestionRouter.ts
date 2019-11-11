@@ -67,8 +67,7 @@ export class QuestionRouter {
 
           res.redirect('/question/'+question.id);
       } catch (error) {
-          console.log("ERROE catch")
-          //res.redirect('/question/'+req.body.questionId+'/edit?error=true');
+          res.redirect('/question/'+req.body.questionId+'/edit?error=true');
       }
   }
 
