@@ -79,14 +79,27 @@ export class QuizRouter {
     }
 
     public addQuestions(req: Request, res: Response, next: NextFunction) {
-        let quiz: Quiz = this.controller.addQuestions(parseInt(req.params.id), Object.keys(req.body).map(key => parseInt(key)));
+        let quiz: Quiz = this.controller.addQuestions(parseInt(req.params.id), this.getQuestionsFromBody(req.body));
         res.redirect('/course/' + quiz.courseId + '/quiz/' + quiz.id + '/tags');
+    }
+
+    private getQuestionsFromBody(body: any){
+        let keys = Object.keys(body);
+        let questions = [];
+        for(let i = 0; i < keys.length; ++i){
+            if (isFinite(parseInt(keys[i]))){
+                if (body[keys[i]] == 'on'){
+                    questions.push(parseInt(keys[i]));
+                }
+            }
+        }
+        return questions;
     }
 
     public answerQuestion(req: Request, res: Response, next: NextFunction) {
         let questionController = QuestionController.getInstance();
 
-        let question: Question = this.controller.answerQuestion(parseInt(req.params.id), 
+        let question: Question = this.controller.answerQuestion(parseInt(req.params.id),
             questionController.getQuestion(parseInt(req.body.questionId)),
             this.studentId, !!req.body.truth);
         if (question) {
