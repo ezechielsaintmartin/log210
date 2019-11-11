@@ -49,6 +49,7 @@ export class QuizRouter {
     public async getQuizzesByCourse(req: Request, res: Response, next: NextFunction) {
         let courseId: number = parseInt(req.params.id);
         req['quizzes'] = this.controller.getQuizzesByCourse(courseId);
+        req['grades'] = await this.controller.getGrades(courseId);
         next();
     }
 
@@ -68,9 +69,9 @@ export class QuizRouter {
 
     public async getQuiz(req: Request, res: Response, next: NextFunction) {
         let quizId: number = parseInt(req.params.id);
-        let quiz = this.controller.getQuiz(quizId)
+        let quiz = this.controller.getQuiz(quizId);
         req['quiz'] = quiz;
-        req['grades'] = await this.controller.getGradesByCourse(quiz.courseId);
+        req['grades'] = await this.controller.getGradesByCourse(quizId);
         next();
     }
 

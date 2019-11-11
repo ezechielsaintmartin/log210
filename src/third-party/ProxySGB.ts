@@ -26,6 +26,7 @@ export class ProxySGB extends SGB {
         this.studentsByCourse = {};
         this.coursesByStudent = {};
         this.gradesByStudent = {};
+        this.gradesByCourse = {};
 
         this.teacherTokenPromise = this.refreshTeacherToken();
         this.studentTokenPromise = this.refreshStudentToken();
@@ -124,6 +125,7 @@ export class ProxySGB extends SGB {
             const json = await response.json();
             this.gradesByStudent[this.studentId] = json.data.reduce((map, grade) => {
                 map[grade.type_id] = grade.note;
+                return map;
             }, {});
             return this.gradesByStudent[this.studentId];
         } catch (error) {
@@ -150,7 +152,8 @@ export class ProxySGB extends SGB {
             this.gradesByCourse[courseId] = json.data.reduce((map, grade) => {
                 if (map[grade.student] == null)
                     map[grade.student] = {};
-                map[grade.student][grade.type_id] = grade;
+                map[grade.student][grade.type_id] = grade.note;
+                return map;
             }, {});
             return this.gradesByCourse[courseId];
         } catch (error) {
@@ -166,7 +169,7 @@ export class ProxySGB extends SGB {
         try {
             const host = this.getHost();
             const url = host + '/api/v1/login?email=' + SGBConfig.TEACHER_EMAIL + '&password=' + SGBConfig.TEACHER_PASSWORD;
-            const response = await fetch(url);
+            const response = await this.fetchWithTimeout(url, null, 5000);
             const json = await response.json();
             this.teacherToken = json.token;
             return this.teacherToken;
@@ -190,7 +193,7 @@ export class ProxySGB extends SGB {
         try {
             const host = this.getHost();
             const url = host + '/api/v1/login?email=' + SGBConfig.STUDENT_EMAIL + '&password=' + SGBConfig.STUDENT_PASSWORD;
-            const response = await this.fetchWithTimeout(url, null, 5000);;
+            const response = await this.fetchWithTimeout(url, null, 5000);
             const json = await response.json();
             this.studentToken = json.token;
             return this.studentToken;
@@ -234,11 +237,19 @@ export class ProxySGB extends SGB {
             setTimeout(() => {
                 reject();
             }, timeout);
-            fetch(url, options).then((data) => {
-                resolve(data);
-            }).catch((error) => {
-                reject(error);
-            });
+            if (options){
+                fetch(url, options).then((data) => {
+                    resolve(data);
+                }).catch((error) => {
+                    reject(error);
+                });
+            } else {
+                fetch(url).then((data) => {
+                    resolve(data);
+                }).catch((error) => {
+                    reject(error);
+                });
+            }
         })
     }
 

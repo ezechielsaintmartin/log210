@@ -17,12 +17,13 @@ html
                     each quiz, i in quizzes
                         tr
                         td= quiz.description
-                        td 
+                        td
                             a.btn.btn-info(href="/quiz/"+quiz.id, style='margin-bottom: 10px; margin-right: 10px') Voir
                             a.btn.btn-warning(href="/quiz/"+quiz.id+"/edit", style='margin-bottom: 10px; margin-right: 10px') Modifier
-                            form(action="/api/v1/quiz/" + quiz.id + "?_method=DELETE" method="POST")
-                                input(type="hidden" name="_method" value="DELETE")
-                                button.btn.btn-danger(type='submit') Supprimer
+                            if (!grades[quiz.id] || grades[quiz.id].length == 0)
+                                form(action="/api/v1/quiz/" + quiz.id + "?_method=DELETE" method="POST")
+                                    input(type="hidden" name="_method" value="DELETE")
+                                    button.btn.btn-danger(type='submit') Supprimer
                 br
             else
              p  Aucun questionnaire disponible pour ce cours

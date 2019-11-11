@@ -125,7 +125,7 @@ class App {
     router.get('/course/:id/delete', this.courseRoutes.getCourseInfos.bind(this.courseRoutes), (req, res, next) => {
         let course: Question = req['course'];
         res.render('courses/confirmDelete', {
-            title: 'Supprimation du cours' + course.name,
+            title: 'Suppression du cours' + course.name,
             course: course
         })
     });
@@ -231,7 +231,7 @@ class App {
       });
 
       router.get('/course/:id/quizList', this.quizRoutes.getQuizzesByCourse.bind(this.quizRoutes), (req, res, next) => {
-          res.render('quizzes/viewQuizzesForCourse', {title: 'Liste des questionnaires', quizzes: req['quizzes']});
+          res.render('quizzes/viewQuizzesForCourse', {title: 'Liste des questionnaires', quizzes: req['quizzes'], grades: req['grades']});
       });
 
       router.get('/quiz/:id', this.quizRoutes.getQuiz.bind(this.quizRoutes), questionRoutes.getQuestionsByQuiz.bind(questionRoutes),(req, res, next) => {

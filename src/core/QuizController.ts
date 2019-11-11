@@ -170,8 +170,29 @@ export class QuizController {
         for(let i = 0; i < students.length; ++i){
             let student = students[i];
             let quizzesByStudent = grades[student.id];
-            if (quizzesByStudent[quizId] != null){
+            if (quizzesByStudent && quizzesByStudent[quizId] != null){
                 outGrades.push({student: student, grade: quizzesByStudent[quizId]});
+            }
+        }
+        return outGrades;
+    }
+
+    public async getGrades(courseId: number): Promise<{[quizId: number]: {student: Student, grade: number}[]}>{
+        let grades = await this.sgb.getGrades(courseId);
+        let students = await CourseController.getInstance().getStudentsFromCourse(courseId);
+        let outGrades: {[quizId: number]: {student: Student, grade: number}[]} = {};
+        for(let i = 0; i < students.length; ++i){
+            let student = students[i];
+            let quizzesByStudent = grades[student.id];
+            if (quizzesByStudent){
+                let quizzes = Object.keys(quizzesByStudent);
+                for (let j = 0; j < quizzes.length; ++j){
+                    let quiz = quizzes[j];
+                    if (!outGrades[quiz]){
+                        outGrades[quiz] = [];
+                    }
+                    outGrades[quiz].push({student: student, grade: quizzesByStudent[quiz]});
+                }
             }
         }
         return outGrades;
