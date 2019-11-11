@@ -90,6 +90,7 @@ export class QuestionController {
     }
 
     public getQuestion(questionId: number): Question {
+        console.log(this.questions)
         if (this.questions[questionId]){
             return this.questions[questionId];
         } else {
