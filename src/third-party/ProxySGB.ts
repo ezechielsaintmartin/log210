@@ -12,6 +12,7 @@ export class ProxySGB extends SGB {
     private readonly studentsByCourse: {[id: number]: Student[]};
     private readonly coursesByStudent: {[id: number]: Course[]};
     private readonly gradesByStudent: {[idStudent: number]: {[idQuiz: number]: number}};
+    private readonly gradesByCourse: {[idCourse: number]: {[studentId: number]: {[quizId: number]: number}}}
     private teacherToken: string;
     private teacherTokenPromise: Promise<string>;
     private studentToken: string;
@@ -109,7 +110,7 @@ export class ProxySGB extends SGB {
         }
     }
 
-    async getGrades(): Promise<{[quizId: number]: number}> {
+    async getGradesForStudent(): Promise<{[quizId: number]: number}> {
         try {
             if (!await this.validateStudentToken()){
                 if (this.gradesByStudent[this.studentId])
@@ -130,6 +131,33 @@ export class ProxySGB extends SGB {
         }
         if (this.gradesByStudent[this.studentId])
             return this.gradesByStudent[this.studentId];
+        else
+            return {};
+    }
+
+    async getGrades(courseId: number): Promise<{[studentId: number]: {[quizId: number]: number}}> {
+        try {
+            if (!await this.validateTeacherToken()){
+                if (this.gradesByCourse[courseId])
+                    return this.gradesByCourse[courseId];
+                else
+                    return {};
+            }
+            const host = this.getHost();
+            const url = host + '/api/v1/course/' + courseId + '/notes';
+            const response = await this.fetchWithTimeout(url, {headers: {token: this.teacherToken}}, 5000);
+            const json = await response.json();
+            this.gradesByCourse[courseId] = json.data.reduce((map, grade) => {
+                if (map[grade.student] == null)
+                    map[grade.student] = {};
+                map[grade.student][grade.type_id] = grade;
+            }, {});
+            return this.gradesByCourse[courseId];
+        } catch (error) {
+            console.error('Error while reading from SGB : ' + error);
+        }
+        if (this.gradesByCourse[courseId])
+            return this.gradesByCourse[courseId];
         else
             return {};
     }

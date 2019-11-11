@@ -12,7 +12,8 @@ export class CourseRouter {
      */
     constructor(sgb: SGB) {
         this.sgb = sgb;
-        this.controller = new CourseController(sgb);  // init GRASP controller
+        this.controller = CourseController.getInstance();  // init GRASP controller
+        this.controller.setSGB(sgb);
         this.router = Router();
         this.init();
     }

@@ -2,6 +2,8 @@ import {Quiz} from "../models/Quiz";
 import { Question } from "../models/Question";
 import { QuestionController } from "./QuestionController";
 import { SGB } from "../third-party/SGB";
+import {CourseController} from "./CourseController";
+import {Student} from "../models/Student";
 
 export class QuizController {
     // GRASP controller class
@@ -120,7 +122,7 @@ export class QuizController {
             if (idCoursQuiz == courseId) {
                 outQuizzes.push(quiz);
 
-                let grades = await this.sgb.getGrades();
+                let grades = await this.sgb.getGradesForStudent();
                 if(grades[quizId] != null) {
                     outGrades[quizId] = grades[quizId];
                 }
@@ -157,6 +159,22 @@ export class QuizController {
         await this.sgb.addGradeForQuiz(quizId, quiz.courseId, grade);
 
         return grade;
+    }
+
+    public async getGradesByCourse(quizId: number): Promise<{student: Student, grade: number}[]>{
+        const quiz: Quiz = this.getQuiz(quizId);
+        const courseId: number = quiz.courseId;
+        let grades = await this.sgb.getGrades(courseId);
+        let students = await CourseController.getInstance().getStudentsFromCourse(courseId);
+        let outGrades: {student: Student, grade: number}[] = [];
+        for(let i = 0; i < students.length; ++i){
+            let student = students[i];
+            let quizzesByStudent = grades[student.id];
+            if (quizzesByStudent[quizId] != null){
+                outGrades.push({student: student, grade: quizzesByStudent[quizId]});
+            }
+        }
+        return outGrades;
     }
 
 }

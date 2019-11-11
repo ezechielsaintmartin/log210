@@ -6,5 +6,6 @@ export abstract class SGB {
     abstract getStudentsByCourse(courseId: number): Promise<Student[]>;
     abstract getCoursesByStudent(): Promise<Course[]>;
     abstract addGradeForQuiz(quizId: number, courseId: number, grade: number): Promise<void>;
-    abstract getGrades(): Promise<{[quizId: number]: number}>;
+    abstract getGradesForStudent(): Promise<{[quizId: number]: number}>;
+    abstract getGrades(courseId: number): Promise<{[studentId: number]: {[quizId: number]: number}}>
 }

@@ -189,7 +189,7 @@ class App {
       /**
        * Passer questionnaire
        */
-      
+
       router.get('/course/quiz/student', this.courseRoutes.getCoursesByStudent.bind(this.courseRoutes), this.quizRoutes.getQuizCountByCourse.bind(this.quizRoutes), (req, res, next) => {
         res.render('PassQuiz/courseListForStudent', {title: 'Liste des cours pour les questionnaires', courses: req['courses'], quizCountByCourse: req['quizCountByCourse']});
     });
@@ -236,7 +236,7 @@ class App {
 
       router.get('/quiz/:id', this.quizRoutes.getQuiz.bind(this.quizRoutes), questionRoutes.getQuestionsByQuiz.bind(questionRoutes),(req, res, next) => {
           console.log(req);
-          res.render('quizzes/view', {title: 'Questionnaire', quiz: req['quiz'], result: req['result']});
+          res.render('quizzes/view', {title: 'Questionnaire', quiz: req['quiz'], result: req['result'], grades: req['grades']});
           console.log(req);
       });
 

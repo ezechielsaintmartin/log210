@@ -6,12 +6,23 @@ export class CourseController {
     // GRASP controller class
     sgb: SGB;
     courses: Course[];
+    private static instance: CourseController;
     //courses: {[id:number]: Course};
 
 
-    constructor(sgb: SGB) {
-        this.sgb = sgb;
+    private constructor() {
         this.courses = [];
+    }
+
+    public static getInstance(){
+        if (CourseController.instance == null){
+            CourseController.instance = new CourseController();
+        }
+        return CourseController.instance;
+    }
+
+    public setSGB(sgb: SGB){
+        this.sgb = sgb;
     }
 
     /**
