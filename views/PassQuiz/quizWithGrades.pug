@@ -1,0 +1,31 @@
+html
+    head
+        title= title
+        link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css')
+        link(rel='stylesheet' href='/css/style.css')
+        script()
+    body
+        div.container
+            h1 Listes des questionnaires
+                table.table.table-hover.table-striped#dataTables(width='100%')
+                    thead
+                    tr
+                        th Questionnaire
+                        th Note
+                        th Actions
+                    tbody
+                    each quiz, i in quizzes
+                        tr
+                        td #{quiz.description}
+                        td #{grades[quiz.id]}
+                        td
+                            if (grades[quiz.id] == null)
+                             a.btn.btn-info(href="/passQuiz/" + quiz.id, style='margin-bottom: 10px; margin-right: 10px') Sélectionner
+                
+            br
+            a.btn.btn-outline-primary(href="/") retour à l'index
+
+
+    <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/lib/main.js"></script>

@@ -17,6 +17,8 @@ html
             a.nav-link(data-toggle='tab', href='#cours') Cours
           li.nav-item
             a.nav-link(data-toggle='tab', href='#devoir') Devoir
+          li.nav-item
+            a.nav-link(data-toggle='tab', href='#DoQuiz') Passer questionnaire
         #myTabContent.tab-content
           #question.tab-pane.fade.active.show
             br
@@ -43,6 +45,9 @@ html
             br
             a.btn.btn-outline-primary(href="/course/homework") Afficher la liste de(s) devoir(s)
             br
+          #DoQuiz.tab-pane.fade
+            br
+            a.btn.btn-outline-primary(href="/course/quiz/student") Passer questionnaire
 
   <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
   <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>

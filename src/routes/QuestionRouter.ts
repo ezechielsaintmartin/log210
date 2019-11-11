@@ -10,7 +10,7 @@ export class QuestionRouter {
    * Initialize the Router
    */
   constructor() {
-    this.controller = new QuestionController();  // init GRASP controller
+    this.controller = QuestionController.getInstance();  // init GRASP controller
     this.router = Router();
     this.init();
   }
@@ -67,8 +67,7 @@ export class QuestionRouter {
 
           res.redirect('/question/'+question.id);
       } catch (error) {
-          console.log("ERROE catch")
-          //res.redirect('/question/'+req.body.questionId+'/edit?error=true');
+          res.redirect('/question/'+req.body.questionId+'/edit?error=true');
       }
   }
 

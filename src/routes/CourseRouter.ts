@@ -12,7 +12,8 @@ export class CourseRouter {
      */
     constructor(sgb: SGB) {
         this.sgb = sgb;
-        this.controller = new CourseController(sgb);  // init GRASP controller
+        this.controller = CourseController.getInstance();  // init GRASP controller
+        this.controller.setSGB(sgb);
         this.router = Router();
         this.init();
     }
@@ -38,6 +39,11 @@ export class CourseRouter {
         next();
     }
 
+    public async getCoursesByStudent(req: Request, res: Response, next: NextFunction) {
+        // Hard code le student en attendant des changements du SGB
+        req['courses'] = await this.controller.getCoursesByStudent();
+        next();
+    }
 
     public async getCourseInfos(req: Request, res: Response, next: NextFunction) {
         req['course'] = await this.controller.getCourse(parseInt(req.params.id));
