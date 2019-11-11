@@ -98,15 +98,18 @@ export class QuizRouter {
 
     public answerQuestion(req: Request, res: Response, next: NextFunction) {
         let questionController = QuestionController.getInstance();
+        let answeredQuestion = questionController.getQuestion(parseInt(req.body.questionId))
 
-        let question: Question = this.controller.answerQuestion(parseInt(req.params.id),
-            questionController.getQuestion(parseInt(req.body.questionId)),
+
+        let question: Question = this.controller.answerQuestion(parseInt(req.params.id), 
+            answeredQuestion,
             this.studentId, !!req.body.truth);
         if (question) {
             res.redirect('back');
 
         } else {
-            res.redirect('/course/'+ question.courseId +'/quizzes/student/');
+            let courseId = answeredQuestion.courseId;
+            res.redirect('/course/'+ courseId +'/quizzes/student/');
         }
     }
 

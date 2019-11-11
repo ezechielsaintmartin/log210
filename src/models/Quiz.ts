@@ -70,6 +70,7 @@ export class Quiz {
 
     public getFirstUnansweredQuestion(studentId: number) : Question {
         let question = null;
+        console.log(this.questions);
         for (let i = 0; i < this._questions.length; ++i){
             let answered = false;
             let questionId = this._questions[i];
@@ -95,6 +96,11 @@ export class Quiz {
     public addAnswer(question: Question, studentId: number, value: boolean) : void {
         let answer = new Answer(this.id, studentId, question, value);
         const questionId = question.id;
+
+        if ((this._answersByQuestionId[questionId]) == null) {
+            this._answersByQuestionId[questionId] = []; 
+        }
+
         this.getAnswerByQuestionId(questionId).push(answer);
 
     }
