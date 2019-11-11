@@ -152,7 +152,7 @@ export class QuizController {
 
     public async finishQuiz(quizId: number, studentId: number) : Promise<number> {
         const quiz = this.getQuiz(quizId);
-        const grade =  quiz.createEvaluation(studentId);
+        const grade =  quiz.calculateGradeForStudent(studentId);
 
         await this.sgb.addGradeForQuiz(quizId, quiz.courseId, grade);
 

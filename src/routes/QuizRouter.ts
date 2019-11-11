@@ -55,7 +55,7 @@ export class QuizRouter {
 
     public async getGradesForQuiz(req: Request, res: Response, next: NextFunction) {
         let courseId: number = parseInt(req.params.id);
-        req['quizzesWithGrades'] = await this.controller.getQuizByCourse(courseId, this.studentId);
+        req['quizzesWithGrades'] = await this.controller.getQuizByCourse(courseId, this.studentId)
         next();
     }
 

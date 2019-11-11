@@ -105,7 +105,7 @@ export class Quiz {
 
     }
 
-    public createEvaluation(studentId: number): number{
+    public calculateGradeForStudent(studentId: number): number{
         let total = 0;
         let correct = 0;
         for (let i = 0; i < this._questions.length; ++i) {
@@ -123,8 +123,6 @@ export class Quiz {
             );
         }
         let grade = (correct / total) * 100;
-        const evaluation = new Evaluation(this.id, studentId, grade);
-        this._evaluationByStudentId[studentId] = evaluation;
 
         return grade;
 
