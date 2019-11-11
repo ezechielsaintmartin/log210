@@ -1,4 +1,6 @@
-class Job {
+const fetch = require('node-fetch');
+
+export class Job {
     private readonly _url: string;
     private _fulfilled: boolean;
     private _promise: Promise<Response>;

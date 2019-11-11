@@ -96,12 +96,12 @@ export class QuizRouter {
         return questions;
     }
 
-    public answerQuestion(req: Request, res: Response, next: NextFunction) {
+    public async answerQuestion(req: Request, res: Response, next: NextFunction) {
         let questionController = QuestionController.getInstance();
         let answeredQuestion = questionController.getQuestion(parseInt(req.body.questionId))
 
 
-        let question: Question = this.controller.answerQuestion(parseInt(req.params.id), 
+        let question: Question = await this.controller.answerQuestion(parseInt(req.params.id),
             answeredQuestion,
             this.studentId, !!req.body.truth);
         if (question) {

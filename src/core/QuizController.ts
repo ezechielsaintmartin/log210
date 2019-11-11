@@ -141,15 +141,22 @@ export class QuizController {
         quiz.addAnswer(question, studentId, value);
     }
 
-    public answerQuestion(quizId: number, question: Question, studentId: number, value: boolean) : Question {
+    public async answerQuestion(quizId: number, question: Question, studentId: number, value: boolean) : Promise<Question> {
         this.addAnswer(quizId, question, studentId, value);
         const nextQuestion = this.quizzes[quizId].getFirstUnansweredQuestion(studentId);
+        if (!nextQuestion){
+            await this.finishQuiz(quizId, studentId);
+        }
         return nextQuestion;
     }
 
-    public finishQuiz(quizId: number, studentId: number) : number {
+    public async finishQuiz(quizId: number, studentId: number) : Promise<number> {
         const quiz = this.getQuiz(quizId);
-        return quiz.createEvaluation(studentId);
+        const grade =  quiz.createEvaluation(studentId);
+
+        await this.sgb.addGradeForQuiz(quizId, quiz.courseId, grade);
+
+        return grade;
     }
 
 }

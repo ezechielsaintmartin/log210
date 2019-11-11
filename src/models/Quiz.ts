@@ -98,7 +98,7 @@ export class Quiz {
         const questionId = question.id;
 
         if ((this._answersByQuestionId[questionId]) == null) {
-            this._answersByQuestionId[questionId] = []; 
+            this._answersByQuestionId[questionId] = [];
         }
 
         this.getAnswerByQuestionId(questionId).push(answer);
@@ -108,8 +108,8 @@ export class Quiz {
     public createEvaluation(studentId: number): number{
         let total = 0;
         let correct = 0;
-        for (let questionId in this._questions) {
-            const answers = this.getAnswerByQuestionId(parseInt(questionId));
+        for (let i = 0; i < this._questions.length; ++i) {
+            const answers = this.getAnswerByQuestionId(this._questions[i]);
             answers.forEach((answer) =>
                 {
                     if (studentId == answer.studentId) {

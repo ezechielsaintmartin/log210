@@ -3,6 +3,7 @@ import {Course} from "../models/Course";
 import {SGBConfig} from "./SGB.config";
 import {Student} from "../models/Student";
 import {Question} from "../models/Question";
+import {Job} from "./Job";
 const fetch = require('node-fetch');
 const cron = require('node-cron');
 
@@ -98,9 +99,10 @@ export class ProxySGB extends SGB {
     }
 
     async addGradeForQuiz(quizId: number, courseId: number, grade: number): Promise<void> {
+        this.addGradeToCache(quizId, grade);
         try {
             const host = this.getHost();
-            const url = host + '/api/v1/student/note?course=' + courseId + '&type=quiz&type_id=' + quizId + '&note=' + grade;
+            const url = host + '/api/v1/student/note?course=' + courseId + '&type=Questionnaire&type_id=' + quizId + '&note=' + grade;
             await this.tryAndFetch(url);
         } catch (error) {
             console.error('Error while writing to SGB : ' + error);
@@ -190,6 +192,13 @@ export class ProxySGB extends SGB {
             await job.execute(this.studentToken);
         }
         this.jobs.push(job);
+    }
+
+    private addGradeToCache(quizId: number, grade: number){
+        if (!this.gradesByStudent[this.studentId]){
+            this.gradesByStudent[this.studentId] = {};
+        }
+        this.gradesByStudent[this.studentId][quizId] = grade;
     }
 
 }
