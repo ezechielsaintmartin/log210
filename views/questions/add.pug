@@ -20,7 +20,7 @@ html
                     input.form-control(type="text" name="name" id="name" style="display:block")
 
                 .form-group
-                    label(for="statement" style="display:block") enonce:
+                    label(for="statement" style="display:block") Énoncé:
                     textarea.form-control( name="statement" id="statement" style="display:block")
 
                 .form-group
@@ -40,19 +40,19 @@ html
 
                 div#truthFalseAnswer(style="display:none;")
                     label(for="truth-checkbox" style="display:block") Verite:
-                    input.form-control(type="checkbox" name="truth-checkbox")
+                    input.form-control(type="checkbox" name="truth")
 
                 div#numericAnswer(style="display:none;")
                     label(for="truth" style="display:block") Réponse numérique:
-                    input.form-control(type="text" name="numeric" style="display:block")
+                    input.form-control(type="number" name="numeric" min="0" step="1" style="display:block")
 
                 div#shortAnswer(style="display:none;")
                     label(for="truth" style="display:block") Réponse courte:
-                    input.form-control(type="text" name="short" style="display:block")
+                    input.form-control(type="text" name="shortAnswer" style="display:block")
 
                 div#essayAnswer(style="display:none;")
                     label(for="truth" style="display:block") Réponse essais:
-                    textarea.form-control(name="essay" style="display:block")
+                    textarea.form-control(name="essayAnswer" style="display:block")
 
                 //.form-group
                     label(for="truth" style="display:block") Verite:

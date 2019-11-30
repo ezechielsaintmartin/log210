@@ -38,11 +38,11 @@ export class Answer {
         this._success = value;
     }
 
-    constructor(quizId: number, studentId: number, question: Question, value: boolean) {
+    constructor(quizId: number, studentId: number, question: Question, value: any) {
         this._quizId = quizId;
         this._studentId = studentId;
         this._question = question;
-        const expectedValue = question.truth;
+        const expectedValue = question.expectedAnswer;
 
         this._success = expectedValue == value;
     }

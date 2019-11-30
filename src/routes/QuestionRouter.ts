@@ -2,6 +2,7 @@ import { Router, Request, Response, NextFunction } from 'express';
 
 import { QuestionController } from '../core/QuestionController';
 import {Question} from "../models/Question";
+import {TruthFalseExpectedAnswer} from "../AnswerFactory/TruthFalseExpectedAnswer";
 export class QuestionRouter {
   router: Router;
   controller: QuestionController;  // GRASP controller
@@ -33,13 +34,31 @@ export class QuestionRouter {
       let name: string = req.body.name;
       let tags: string[] = req.body.tags.split(',').map(str => str.trim());
       let statement: string = req.body.statement;
+      let type: string = req.body.type;
       let truth: boolean = !!req.body.truth;
+      let numeric: number = req.body.numeric;
+      let shortAnswer: string = req.body.shortAnswer;
+      let essayAnswer: string = req.body.essayAnswer;
       let successText: string = req.body.successText;
       let failureText: string = req.body.failureText;
+      let value: any;
 
-      let question = new Question(-1, teacherId, courseId, name, tags, statement, truth, successText, failureText);
+        if (type == "truth-radio") {
+            value = truth;
+        }
+        if (type == "numeric-radio") {
+            value = numeric;
+        }
+        if (type == "short-radio") {
+            value = shortAnswer;
+        }
+        if (type == "essay-radio") {
+            value = essayAnswer;
+        }
 
-      this.controller.createQuestion(question);
+      let question = new Question(-1, teacherId, courseId, name, tags, statement, type, value, successText, failureText);
+
+      this.controller.createQuestion(question, value);
 
       res.redirect('/course/' + question.courseId + '/question');
     } catch (error) {
@@ -56,11 +75,29 @@ export class QuestionRouter {
           let name: string = req.body.name;
           let tags: string[] = req.body.tags.split(',').map(str => str.trim());
           let statement: string = req.body.statement;
+          let type: string = req.body.type;
           let truth: boolean = !!req.body.truth;
+          let numeric: number = req.body.numeric;
+          let shortAnswer: string = req.body.shortAnswer;
+          let essayAnswer: string = req.body.essayAnswer;
           let successText: string = req.body.successText;
           let failureText: string = req.body.failureText;
+          let value: any;
 
-          let question = new Question(id, teacherId, courseId, name, tags, statement, truth, successText, failureText);
+          if (type == "truth-radio") {
+              value = truth;
+          }
+          if (type == "numeric-radio") {
+              value = numeric;
+          }
+          if (type == "short-radio") {
+              value = shortAnswer;
+          }
+          if (type == "essay-radio") {
+              value = essayAnswer;
+          }
+          console.log("router updater: " + value);
+          let question = new Question(id, teacherId, courseId, name, tags, statement, type, value, successText, failureText);
 
           this.controller.updateQuestion(question);
           //res.send(200);
