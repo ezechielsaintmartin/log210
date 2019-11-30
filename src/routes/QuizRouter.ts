@@ -101,12 +101,31 @@ export class QuizRouter {
 
     public async answerQuestion(req: Request, res: Response, next: NextFunction) {
         let questionController = QuestionController.getInstance();
-        let answeredQuestion = questionController.getQuestion(parseInt(req.body.questionId))
+        let answeredQuestion = questionController.getQuestion(parseInt(req.body.questionId));
+        let type: string = req.body.type;
+        let truth: boolean = !!req.body.truth;
+        let numeric: number = req.body.numeric;
+        let shortAnswer: string = req.body.shortAnswer;
+        let essayAnswer: string = req.body.essayAnswer;
 
+        let value: any;
+
+        if (type == "truth-radio") {
+            value = truth;
+        }
+        if (type == "numeric-radio") {
+            value = numeric;
+        }
+        if (type == "short-radio") {
+            value = shortAnswer;
+        }
+        if (type == "essay-radio") {
+            value = essayAnswer;
+        }
 
         let question: Question = await this.controller.answerQuestion(parseInt(req.params.id),
             answeredQuestion,
-            this.studentId, !!req.body.truth);
+            this.studentId, value);
         if (question) {
             res.redirect('back');
 

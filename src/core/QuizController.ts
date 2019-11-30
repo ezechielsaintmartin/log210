@@ -143,7 +143,7 @@ export class QuizController {
         quiz.addAnswer(question, studentId, value);
     }
 
-    public async answerQuestion(quizId: number, question: Question, studentId: number, value: boolean) : Promise<Question> {
+    public async answerQuestion(quizId: number, question: Question, studentId: number, value: any) : Promise<Question> {
         this.addAnswer(quizId, question, studentId, value);
         const nextQuestion = this.quizzes[quizId].getFirstUnansweredQuestion(studentId);
         if (!nextQuestion){
