@@ -24,11 +24,51 @@ html
                     input.form-control(type="text" name="name" id="name" placeholder="Name" style="display:block" value=question.name)
 
                 .form-group
-                    label(for="statement" style="display:block") enonce:
+                    label(for="statement" style="display:block") Énoncé:
                     textarea.form-control( name="statement" id="statement" style="display:block")=question.statement
 
-                label(for="truth" style="display:block") Verite:
-                input(type="checkbox" name="truth" id="truth" style="display:block" checked=question.truth)
+                .form-group
+                    label(style="margin-right:10px;") Type de réponse:
+                    label.radio-inline(style="margin-right:25px;")
+                        if (#question.type == 'truth-radio')
+                            input#truth-radio(type="radio", name="type", value="truth-radio" onClick="showAppropriateAnswer()" checked="true")
+                        else
+                            input#truth-radio(type="radio", name="type", value="truth-radio" onClick="showAppropriateAnswer()" checked="false")
+                        | Vrai ou Faux
+                    label.radio-inline(style="margin-right:25px;")
+                        if (question.type == "numeric-radio")
+                            input#numeric-radio(type="radio", name="type", value="numeric-radio" onClick="showAppropriateAnswer()" checked="true")
+                        else
+                            input#numeric-radio(type="radio", name="type", value="numeric-radio" onClick="showAppropriateAnswer()" checked="false")
+                        | Valeur numérique
+                    label.radio-inline(style="margin-right:25px;")
+                        if (question.type == 'short-radio')
+                            input#short-radio(type="radio", name="type", value="short-radio" onClick="showAppropriateAnswer()" checked="true")
+                        else
+                            input#short-radio(type="radio", name="type", value="short-radio" onClick="showAppropriateAnswer()" checked="false")
+                        | Réponse courte
+                    label.radio-inline(style="margin-right:25px;")
+                        if (question.type == 'essay-radio')
+                            input#essay-radio(type="radio", name="type", value="essay-radio" onClick="showAppropriateAnswer()" checked="true")
+                        else
+                            input#essay-radio(type="radio", name="type", value="essay-radio" onClick="showAppropriateAnswer()" checked="false")
+                        | Réponse essais
+
+                div#truthFalseAnswer(style="display:none;")
+                    label(for="truth-checkbox" style="display:block") Verite:
+                    input.form-control(type="checkbox" name="truth")
+
+                div#numericAnswer(style="display:none;")
+                    label(for="truth" style="display:block") Réponse numérique:
+                    input.form-control(type="number" name="numeric" min="0" step="1" style="display:block")
+
+                div#shortAnswer(style="display:none;")
+                    label(for="truth" style="display:block") Réponse courte:
+                    input.form-control(type="text" name="shortAnswer" style="display:block")
+
+                div#essayAnswer(style="display:none;")
+                    label(for="truth" style="display:block") Réponse essais:
+                    textarea.form-control(name="essayAnswer" style="display:block")
 
                 .form-group
                     label(for="successText" style="display:block") TexteBonneReponse:
