@@ -117,13 +117,11 @@ export class Quiz {
                         if (answer.success) {
                             correct++;
                         }
-
                     }
                 }
             );
         }
         let grade = (correct / total) * 100;
-        console.log("Une note a été calculé");
 
         return grade;
 

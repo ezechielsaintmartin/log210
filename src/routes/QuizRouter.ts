@@ -56,7 +56,7 @@ export class QuizRouter {
 
     public async getGradesForQuiz(req: Request, res: Response, next: NextFunction) {
         let courseId: number = parseInt(req.params.id);
-        req['quizzesWithGrades'] = await this.controller.getQuizByCourse(courseId, this.studentId)
+        req['quizzesWithGrades'] = await this.controller.getQuizByCourse(courseId, this.studentId);
         next();
     }
 
@@ -102,11 +102,11 @@ export class QuizRouter {
     public async answerQuestion(req: Request, res: Response, next: NextFunction) {
         let questionController = QuestionController.getInstance();
         let answeredQuestion = questionController.getQuestion(parseInt(req.body.questionId));
-        let type: string = req.body.type;
-        let truth: boolean = !!req.body.truth;
-        let numeric: number = req.body.numeric;
-        let shortAnswer: string = req.body.shortAnswer;
-        let essayAnswer: string = req.body.essayAnswer;
+        let type = req.body.type;
+        let truth = !!req.body.truth;
+        let numeric = req.body.numeric;
+        let shortAnswer = req.body.shortAnswer;
+        let essayAnswer = req.body.essayAnswer;
 
         let value: any;
 
@@ -140,7 +140,6 @@ export class QuizRouter {
         let active = !!req.body.active;
         let id = parseInt(req.body.quizId);
         this.controller.updateQuiz(id, description, active, req.body);
-        console.log("Quiz updated");
         res.redirect('/quiz/' + id);
     }
 

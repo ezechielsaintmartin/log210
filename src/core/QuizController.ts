@@ -117,7 +117,6 @@ export class QuizController {
             let quizId = quizIDs[i];
             const quiz = this.quizzes[quizId];
             const idCoursQuiz = quiz.courseId;
-            console.log("after");
 
             if (idCoursQuiz == courseId) {
                 outQuizzes.push(quiz);
@@ -138,7 +137,7 @@ export class QuizController {
         return question;
     }
 
-    public addAnswer(quizId: number, question: Question, studentId: number, value: boolean): void {
+    public addAnswer(quizId: number, question: Question, studentId: number, value: any): void {
         const quiz = this.quizzes[quizId];
         quiz.addAnswer(question, studentId, value);
     }
@@ -155,7 +154,6 @@ export class QuizController {
     public async finishQuiz(quizId: number, studentId: number) : Promise<number> {
         const quiz = this.getQuiz(quizId);
         const grade =  quiz.calculateGradeForStudent(studentId);
-
         await this.sgb.addGradeForQuiz(quizId, quiz.courseId, grade);
 
         return grade;

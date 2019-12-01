@@ -13,6 +13,8 @@ html
                 input(type="hidden" name="questionId" id="questionId" value=question.id)
                 input(type="hidden" name="courseId" id="courseId" value=question.courseId)
                 input(type="hidden" name="teacherId" id="teacherId" value=question.teacherId)
+                input(type="hidden" name="type" id="type" value=question.type)
+
                 .form-group
                     label(for="name" style="display:block") Nom:
                     input.form-control(type="text" name="name" id="name" placeholder="Name" style="display:block" readonly value=question.name)
