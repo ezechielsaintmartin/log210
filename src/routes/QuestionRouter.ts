@@ -99,7 +99,8 @@ export class QuestionRouter {
           console.log("router updater: " + value);
           let question = new Question(id, teacherId, courseId, name, tags, statement, type, value, successText, failureText);
 
-          this.controller.updateQuestion(question);
+          // Le parametre Value sert a gerer les types de question
+          this.controller.updateQuestion(question, value);
           //res.send(200);
 
           res.redirect('/question/'+question.id);

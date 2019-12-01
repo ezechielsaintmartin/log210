@@ -29,46 +29,101 @@ html
 
                 .form-group
                     label(style="margin-right:10px;") Type de réponse:
-                    label.radio-inline(style="margin-right:25px;")
-                        if (#question.type == 'truth-radio')
-                            input#truth-radio(type="radio", name="type", value="truth-radio" onClick="showAppropriateAnswer()" checked="true")
-                        else
-                            input#truth-radio(type="radio", name="type", value="truth-radio" onClick="showAppropriateAnswer()" checked="false")
-                        | Vrai ou Faux
-                    label.radio-inline(style="margin-right:25px;")
-                        if (question.type == "numeric-radio")
-                            input#numeric-radio(type="radio", name="type", value="numeric-radio" onClick="showAppropriateAnswer()" checked="true")
-                        else
-                            input#numeric-radio(type="radio", name="type", value="numeric-radio" onClick="showAppropriateAnswer()" checked="false")
-                        | Valeur numérique
-                    label.radio-inline(style="margin-right:25px;")
-                        if (question.type == 'short-radio')
-                            input#short-radio(type="radio", name="type", value="short-radio" onClick="showAppropriateAnswer()" checked="true")
-                        else
-                            input#short-radio(type="radio", name="type", value="short-radio" onClick="showAppropriateAnswer()" checked="false")
-                        | Réponse courte
-                    label.radio-inline(style="margin-right:25px;")
-                        if (question.type == 'essay-radio')
-                            input#essay-radio(type="radio", name="type", value="essay-radio" onClick="showAppropriateAnswer()" checked="true")
-                        else
-                            input#essay-radio(type="radio", name="type", value="essay-radio" onClick="showAppropriateAnswer()" checked="false")
-                        | Réponse essais
 
-                div#truthFalseAnswer(style="display:none;")
-                    label(for="truth-checkbox" style="display:block") Verite:
-                    input.form-control(type="checkbox" name="truth")
+                    // Truth Radio
+                    label.radio-inline(style="margin-right:25px;")
+                    if (question.type === 'truth-radio')
+                        input#truth-radio(type="radio", name="type", value="truth-radio" onClick="showAppropriateAnswer()" checked=true)
+                    else
+                        input#truth-radio(type="radio", name="type", value="truth-radio" onClick="showAppropriateAnswer()" checked=false)
+                    | Vrai ou Faux
 
-                div#numericAnswer(style="display:none;")
-                    label(for="truth" style="display:block") Réponse numérique:
-                    input.form-control(type="number" name="numeric" min="0" step="1" style="display:block")
+                    // Numeric-radio
+                    label.radio-inline(style="margin-right:25px;")
+                    if (question.type === 'numeric-radio')
+                        input#numeric-radio(type="radio", name="type", value="numeric-radio" onClick="showAppropriateAnswer()" checked=true)
+                    else
+                        input#numeric-radio(type="radio", name="type", value="numeric-radio" onClick="showAppropriateAnswer()" checked=false)
+                    | Valeur numérique
 
-                div#shortAnswer(style="display:none;")
-                    label(for="truth" style="display:block") Réponse courte:
-                    input.form-control(type="text" name="shortAnswer" style="display:block")
+                    // Short-radio
+                    label.radio-inline(style="margin-right:25px;")
+                    if (question.type === 'short-radio')
+                        input#short-radio(type="radio", name="type", value="short-radio" onClick="showAppropriateAnswer()" checked=true)
 
-                div#essayAnswer(style="display:none;")
-                    label(for="truth" style="display:block") Réponse essais:
-                    textarea.form-control(name="essayAnswer" style="display:block")
+                    else
+                        input#short-radio(type="radio", name="type", value="short-radio" onClick="showAppropriateAnswer()" checked=false)
+                    | Réponse courte
+
+                    //Essay-radio
+                    label.radio-inline(style="margin-right:25px;")
+                    if (question.type === 'essay-radio')
+                        input#essay-radio(type="radio", name="type", value="essay-radio" onClick="showAppropriateAnswer()" checked=true)
+                    else
+                        input#essay-radio(type="radio", name="type", value="essay-radio" onClick="showAppropriateAnswer()" checked=false)
+                    | Réponse essais
+
+                if (question.type === 'truth-radio')
+                    div#truthFalseAnswer(style="display:block;")
+                        label(for="truth" style="display:block") Verite:
+                        input.form-control(type="checkbox" name="truth" checked=question.expectedAnswer.value)
+                    div#numericAnswer(style="display:none;")
+                        label(for="numeric" style="display:block") Réponse numérique:
+                        input.form-control(type="number" name="numeric" min="0" step="1" style="display:block")
+
+                    div#shortAnswer(style="display:none;")
+                        label(for="shortAnswer" style="display:block") Réponse courte:
+                        input.form-control(type="text" name="shortAnswer" style="display:block")
+
+                    div#essayAnswer(style="display:none;")
+                        label(for="essayAnswer" style="display:block") Réponse essais:
+                        textarea.form-control(name="essayAnswer" style="display:block")
+
+                if (question.type === 'numeric-radio')
+                    div#numericAnswer(style="display:block;")
+                        label(for="numeric" style="display:block") Réponse numérique:
+                        input.form-control(type="number" name="numeric" min="0" step="1" style="display:block" value=question.expectedAnswer.value)
+                    div#truthFalseAnswer(style="display:none;")
+                        label(for="truth-checkbox" style="display:block") Verite:
+                        input.form-control(type="checkbox" name="truth")
+
+                    div#shortAnswer(style="display:none;")
+                        label(for="shortAnswer" style="display:block") Réponse courte:
+                        input.form-control(type="text" name="shortAnswer" style="display:block")
+
+                    div#essayAnswer(style="display:none;")
+                        label(for="essayAnswer" style="display:block") Réponse essais:
+                        textarea.form-control(name="essayAnswer" style="display:block")
+
+                if (question.type === 'short-radio')
+                    div#shortAnswer(style="display:block;")
+                        label(for="shortAnswer" style="display:block") Réponse courte:
+                        input.form-control(type="text" name="shortAnswer" style="display:block" value=question.expectedAnswer.value)
+                    div#truthFalseAnswer(style="display:none;")
+                        label(for="truth-checkbox" style="display:block") Verite:
+                        input.form-control(type="checkbox" name="truth")
+
+                    div#numericAnswer(style="display:none;")
+                        label(for="numeric" style="display:block") Réponse numérique:
+                        input.form-control(type="number" name="numeric" min="0" step="1" style="display:block")
+                    div#essayAnswer(style="display:none;")
+                        label(for="essayAnswer" style="display:block") Réponse essais:
+                        textarea.form-control(name="essayAnswer" style="display:block")
+
+                if (question.type === 'essay-radio')
+                    div#essayAnswer(style="display:block;")
+                        label(for="essayAnswer" style="display:block") Réponse essais:
+                        textarea.form-control(name="essayAnswer" style="display:block")=value=question.expectedAnswer.value
+                    div#truthFalseAnswer(style="display:none;")
+                        label(for="truth-checkbox" style="display:block") Verite:
+                        input.form-control(type="checkbox" name="truth")
+
+                    div#numericAnswer(style="display:none;")
+                        label(for="numeric" style="display:block") Réponse numérique:
+                        input.form-control(type="number" name="numeric" min="0" step="1" style="display:block")
+                    div#shortAnswer(style="display:none;")
+                        label(for="shortAnswer" style="display:block") Réponse courte:
+                        input.form-control(type="text" name="shortAnswer" style="display:block")
 
                 .form-group
                     label(for="successText" style="display:block") TexteBonneReponse:
@@ -83,4 +138,22 @@ html
     <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
     <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/lib/main.js"></script>
+    block scripts
+        script(type='text/javascript').
+            function showAppropriateAnswer() {
+                document.getElementById('truthFalseAnswer').style.display = 'none';
+                document.getElementById('numericAnswer').style.display = 'none';
+                document.getElementById('shortAnswer').style.display = 'none';
+                document.getElementById('essayAnswer').style.display = 'none';
+
+                if (document.getElementById('truth-radio').checked) {
+                    document.getElementById('truthFalseAnswer').style.display = 'block';
+                } else if (document.getElementById('numeric-radio').checked) {
+                    document.getElementById('numericAnswer').style.display = 'block';
+                } else if (document.getElementById('short-radio').checked) {
+                    document.getElementById('shortAnswer').style.display = 'block';
+                } else if (document.getElementById('essay-radio').checked) {
+                    document.getElementById('essayAnswer').style.display = 'block';
+                }
+            }
 

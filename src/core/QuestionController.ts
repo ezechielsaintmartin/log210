@@ -61,11 +61,12 @@ export class QuestionController {
         }
     }
 
-    public updateQuestion(question: Question) {
+    public updateQuestion(question: Question, value:any) {
         let questionWithName: Question = this.getQuestionByName(question.name);
         if (this.questions[question.id]){
             if (questionWithName == null || questionWithName.id == question.id){
                 this.questions[question.id] = question;
+                question.expectedAnswer = ExpectedAnswerFactory.createExpectedAnswer(question, value);
                 console.log("update value: " + question.expectedAnswer.value);
             } else {
                 throw Error(Strings.QUESTION_ALREADY_EXISTS);
