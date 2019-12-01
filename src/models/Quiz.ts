@@ -1,5 +1,4 @@
 import { Answer } from "./Answer";
-import { Evaluation } from "./Evaluation";
 import { Question } from "./Question";
 import { QuestionController } from "../core/QuestionController";
 
@@ -10,7 +9,6 @@ export class Quiz {
     private _courseId: number;
     private _questions: number[];
     private _answersByQuestionId : {[id: number]: Answer[]} = {};
-    private _evaluationByStudentId: {[id: number]: Evaluation} = {};
 
     get id(): number {
         return this._id;
@@ -58,14 +56,6 @@ export class Quiz {
 
     set answers(value: {[id: number]: Answer[]}) {
         this._answersByQuestionId = value;
-    }
-
-    set evaluationByStudentId(value: {[id: number]: Evaluation}) {
-        this._evaluationByStudentId = value;
-    }
-
-    public getEvaluationByStudentId(studentId: number) : Evaluation {
-        return this._evaluationByStudentId[studentId];
     }
 
     public getFirstUnansweredQuestion(studentId: number) : Question {
@@ -129,14 +119,12 @@ export class Quiz {
     }
 
     constructor(id: number, description: string, active: boolean, courseId: number, questions: number[],
-         answerByQuestionId: {[id: number]: Answer[]},
-         evaluationByStudentId: {[id:number]: Evaluation}) {
+         answerByQuestionId: {[id: number]: Answer[]}) {
         this._id = id;
         this._description = description;
         this._active = active;
         this._courseId = courseId;
         this._questions = questions;
         this._answersByQuestionId = answerByQuestionId;
-        this._evaluationByStudentId = evaluationByStudentId;
     }
 }

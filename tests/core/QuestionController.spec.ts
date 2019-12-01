@@ -7,7 +7,7 @@ const expect = chai.expect;
 let controller: QuestionController;
 
 function setup(){
-    controller = new QuestionController();
+    controller = QuestionController.getInstance();
 }
 
 describe('QuestionController', () => {
