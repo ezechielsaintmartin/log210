@@ -20,4 +20,7 @@ describe('CourseRouter', () => {
     beforeEach(() => {
         setup();
     });
+    it('addCourse', () => {
+        
+    });
 });

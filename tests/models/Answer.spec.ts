@@ -18,4 +18,19 @@ describe('Answer', () => {
     beforeEach(() => {
         setup();
     });
+    it('get set quizId', () => {
+        const quizId = 10;
+        answer.quizId = quizId;
+        expect(answer.quizId).to.eql(quizId);
+    });
+    it('get set studentId', () => {
+        const studentId = 10;
+        answer.studentId = studentId;
+        expect(answer.studentId).to.eql(studentId);
+    });
+    it('get set question', () => {
+        const thisQuestion = question;
+        answer.question = thisQuestion;
+        expect(answer.question).to.eql(thisQuestion);
+    });
 });
