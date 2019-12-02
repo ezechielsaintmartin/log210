@@ -5,7 +5,7 @@
     ".ts"
   ],
   "include": [
-    "**/*.ts"
+    "src/**/*.ts"
   ],
   "exclude": [
     "gulpfile.js",

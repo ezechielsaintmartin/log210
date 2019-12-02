@@ -11,7 +11,8 @@ let controller: CourseController;
 
 function setup(){
     sgbMock = mock<SGB>();
-    controller = new CourseController(instance(sgbMock));
+    controller = CourseController.getInstance();
+    controller.setSGB(instance(sgbMock));
 }
 
 describe('CourseController', () => {

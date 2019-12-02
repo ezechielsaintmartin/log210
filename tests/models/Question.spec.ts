@@ -1,5 +1,7 @@
 import * as chai from 'chai';
 import {Question} from "../../src/models/Question";
+import {ExpectedAnswer} from "../../src/AnswerFactory/ExpectedAnswer";
+import {ExpectedAnswerFactory} from "../../src/AnswerFactory/ExpectedAnswerFactory";
 
 const expect = chai.expect;
 
@@ -7,7 +9,7 @@ let question: Question;
 
 function setup(){
     question = new Question(1,1,1,"Question 1",
-        ["Facile","Théorique"],"Statement",false,
+        ["Facile","Théorique"],"Statement", 'truth-radio', false,
         "Success","Failure");
 }
 
@@ -42,9 +44,9 @@ describe('Question', () => {
         expect(question.statement).to.eql(statement);
     });
     it('get set truth', () => {
-        const truth = false;
-        question.truth = truth;
-        expect(question.truth).to.eql(truth);
+        const expectedAnswer: ExpectedAnswer = ExpectedAnswerFactory.createExpectedAnswer(question, true);
+        question.expectedAnswer = expectedAnswer;
+        expect(question.expectedAnswer).to.eql(expectedAnswer);
     });
     it('get set success', () => {
         const successText = "Success";
