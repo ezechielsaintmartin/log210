@@ -38,6 +38,10 @@ export class QuestionController {
         return QuestionController.instance;
     }
 
+    public static resetInstance() {
+        delete QuestionController.instance;
+    }
+
     /**
      *  system operations
      */

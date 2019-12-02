@@ -9,7 +9,7 @@ let answer: Answer;
 
 function setup(){
     question = new Question(1,1,1,"Question 1",
-        ["Facile","Théorique"],"Statement",false,
+        ["Facile","Théorique"],"Statement", 'truth-radio', false,
         "Success","Failure");
     answer = new Answer(0, 0, question, false);
 }
