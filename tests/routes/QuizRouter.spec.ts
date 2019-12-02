@@ -6,6 +6,8 @@ import * as express from "express";
 import request = require("supertest");
 import bodyParser = require("body-parser");
 import {CourseController} from "../../src/core/CourseController";
+import {Student} from "../../src/models/Student";
+import {Quiz} from "../../src/models/Quiz";
 
 const expect = chai.expect;
 
@@ -49,6 +51,8 @@ describe('QuizRouter', () => {
             res.sendStatus(200);
         });
 
+        quizRouter.controller.createQuiz(new Quiz(0, '', true, 1, [], {}));
+
         await request(router).get('/');
         expect(value).to.not.be.an('undefined');
     });
@@ -70,8 +74,11 @@ describe('QuizRouter', () => {
             res.sendStatus(200);
         });
 
-        when(sgbMock.getGrades(30)).thenResolve({});
-        when(sgbMock.getStudentsByCourse(30)).thenResolve([]);
+        let students: Student[] = [new Student(1, 'a', 'b', 'c', 'd')];
+        let gradesByQuizByStudent: {[studentId: number]: {[quizId: number]: number}} = {1: {1: 100}};
+
+        when(sgbMock.getGrades(30)).thenResolve(gradesByQuizByStudent);
+        when(sgbMock.getStudentsByCourse(30)).thenResolve(students);
 
         await request(router).get('/30');
         expect(quizzes).to.not.be.an('undefined');
@@ -99,5 +106,28 @@ describe('QuizRouter', () => {
         await request(router).get('/1');
         expect(question).to.not.be.an('undefined');
         expect(quizId).to.not.be.an('undefined');
+    });
+    it('getQuiz', async () => {
+        let quiz, grades;
+        router.get('/:id', quizRouter.getQuiz.bind(quizRouter), (req, res, next) => {
+            quiz = req['quiz'];
+            grades = req['grades'];
+            res.sendStatus(200);
+        });
+
+        let students: Student[] = [new Student(1, 'a', 'b', 'c', 'd')];
+        let gradesByQuizByStudent: {[studentId: number]: {[quizId: number]: number}} = {1: {1: 100}};
+
+        when(sgbMock.getGrades(1)).thenResolve(gradesByQuizByStudent);
+        when(sgbMock.getStudentsByCourse(1)).thenResolve(students);
+
+        quizRouter.controller.createQuiz(new Quiz(0, '', true, 1, [], {}));
+
+        await request(router)
+            .get('/1')
+            .expect(200);
+
+        expect(quiz).to.not.be.an('undefined');
+        expect(grades).to.not.be.an('undefined');
     });
 });
