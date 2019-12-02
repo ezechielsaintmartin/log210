@@ -83,7 +83,7 @@ export class Quiz {
         return null;
     }
 
-    public addAnswer(question: Question, studentId: number, value: boolean) : void {
+    public addAnswer(question: Question, studentId: number, value: any) : void {
         let answer = new Answer(this.id, studentId, question, value);
         const questionId = question.id;
 
@@ -107,7 +107,6 @@ export class Quiz {
                         if (answer.success) {
                             correct++;
                         }
-
                     }
                 }
             );

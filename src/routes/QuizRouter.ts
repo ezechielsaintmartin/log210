@@ -56,7 +56,7 @@ export class QuizRouter {
 
     public async getGradesForQuiz(req: Request, res: Response, next: NextFunction) {
         let courseId: number = parseInt(req.params.id);
-        req['quizzesWithGrades'] = await this.controller.getQuizByCourse(courseId, this.studentId)
+        req['quizzesWithGrades'] = await this.controller.getQuizByCourse(courseId, this.studentId);
         next();
     }
 
@@ -101,12 +101,31 @@ export class QuizRouter {
 
     public async answerQuestion(req: Request, res: Response, next: NextFunction) {
         let questionController = QuestionController.getInstance();
-        let answeredQuestion = questionController.getQuestion(parseInt(req.body.questionId))
+        let answeredQuestion = questionController.getQuestion(parseInt(req.body.questionId));
+        let type = req.body.type;
+        let truth = !!req.body.truth;
+        let numeric = req.body.numeric;
+        let shortAnswer = req.body.shortAnswer;
+        let essayAnswer = req.body.essayAnswer;
 
+        let value: any;
+
+        if (type == "truth-radio") {
+            value = truth;
+        }
+        if (type == "numeric-radio") {
+            value = numeric;
+        }
+        if (type == "short-radio") {
+            value = shortAnswer;
+        }
+        if (type == "essay-radio") {
+            value = essayAnswer;
+        }
 
         let question: Question = await this.controller.answerQuestion(parseInt(req.params.id),
             answeredQuestion,
-            this.studentId, !!req.body.truth);
+            this.studentId, value);
         if (question) {
             res.redirect('back');
 
@@ -121,7 +140,6 @@ export class QuizRouter {
         let active = !!req.body.active;
         let id = parseInt(req.body.quizId);
         this.controller.updateQuiz(id, description, active, req.body);
-        console.log("Quiz updated");
         res.redirect('/quiz/' + id);
     }
 

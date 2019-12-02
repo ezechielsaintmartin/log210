@@ -14,7 +14,7 @@ html
             h3 Type de question : Vrai/Faux
             h3 Catégories : #{question._tags.join(',')}
             h3 Enonce : #{question._statement}
-            h3 Bonne reponse : #{question._truth}
+            h3 Bonne reponse : #{question._expectedAnswer.value}
             h3 Message bonne reponse : #{question._successText}
             h3 Message mausaise reponse : #{question._failureText}
 

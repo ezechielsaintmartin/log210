@@ -1,5 +1,6 @@
 import {Question} from "../models/Question"
 import {Strings} from "../strings";
+import {ExpectedAnswerFactory} from "../AnswerFactory/ExpectedAnswerFactory";
 
 export class QuestionController {
     // GRASP controller class
@@ -16,7 +17,8 @@ export class QuestionController {
             obj.name,
             obj.tags,
             obj.statement,
-            obj.truth,
+            obj.type,
+            obj.expectedAnswer,
             obj.successText,
             obj.failureText
         ));
@@ -48,21 +50,24 @@ export class QuestionController {
         }
     }
 
-    public createQuestion(question: Question) {
+    public createQuestion(question: Question, value: any) {
         if (this.getQuestionByName(question.name) != null){
             throw Error(Strings.QUESTION_ALREADY_EXISTS);
         } else {
+            question.expectedAnswer = ExpectedAnswerFactory.createExpectedAnswer(question, value);
             ++this.maxId;
             question.id = this.maxId;
             this.questions[question.id] = question;
         }
     }
 
-    public updateQuestion(question: Question) {
+    public updateQuestion(question: Question, value:any) {
         let questionWithName: Question = this.getQuestionByName(question.name);
         if (this.questions[question.id]){
             if (questionWithName == null || questionWithName.id == question.id){
                 this.questions[question.id] = question;
+                question.expectedAnswer = ExpectedAnswerFactory.createExpectedAnswer(question, value);
+                console.log("update value: " + question.expectedAnswer.value);
             } else {
                 throw Error(Strings.QUESTION_ALREADY_EXISTS);
             }
