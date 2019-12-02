@@ -16,7 +16,7 @@ html
                     tbody
                     each course, i in courses
                         tr
-                        td #{course.sigle} , Groupe #{course.group}
+                        td #{course.sigle} , Groupe #{course.groupe}
                         td
                             a.btn.btn-info(href="/course/" + course.id +"/quizzes/student", style='margin-bottom: 10px; margin-right: 10px') Sélectionner
             else

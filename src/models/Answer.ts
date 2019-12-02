@@ -1,4 +1,5 @@
 import { Question } from "./Question";
+import {ExpectedAnswer} from "../AnswerFactory/ExpectedAnswer";
 
 export class Answer {
     private _quizId: number;
@@ -38,11 +39,11 @@ export class Answer {
         this._success = value;
     }
 
-    constructor(quizId: number, studentId: number, question: Question, value: boolean) {
+    constructor(quizId: number, studentId: number, question: Question, value: any) {
         this._quizId = quizId;
         this._studentId = studentId;
         this._question = question;
-        const expectedValue = question.truth;
+        const expectedValue = question.expectedAnswer.value;
 
         this._success = expectedValue == value;
     }

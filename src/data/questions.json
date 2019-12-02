@@ -9,7 +9,10 @@
     ],
     "name": "Question 1",
     "statement": "Qu'est ce qu'un MDD ?",
-    "truth": false,
+    "type": "truth-radio",
+    "expectedAnswer": {
+      "value": true
+    },
     "successText": "Super ! ",
     "failureText": "Incorrect ! "
   },
@@ -23,7 +26,10 @@
     ],
     "name": "Question 2",
     "statement": "Qu'est ce qu'un DSS ?",
-    "truth": true,
+    "type": "truth-radio",
+    "expectedAnswer": {
+      "value": true
+    },
     "successText": "Super ! ",
     "failureText": "Incorrect ! "
   },
@@ -38,7 +44,10 @@
     ],
     "name": "Question 3",
     "statement": "Qu'est ce qu'un DSS ?",
-    "truth": true,
+    "type": "truth-radio",
+    "expectedAnswer": {
+      "value": true
+    },
     "successText": "Super ! ",
     "failureText": "Incorrect ! "
   }

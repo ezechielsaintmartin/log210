@@ -1,3 +1,5 @@
+import {ExpectedAnswer} from "../AnswerFactory/ExpectedAnswer";
+
 export class Question{
     private _id: number;
     private readonly _teacherId: number;
@@ -5,7 +7,8 @@ export class Question{
     private _name: string;
     private _tags: string[];
     private _statement: string;
-    private _truth: boolean;
+    private _type: string;
+    private _expectedAnswer: ExpectedAnswer;
     private _successText: string;
     private _failureText: string;
 
@@ -49,12 +52,12 @@ export class Question{
         this._statement = value;
     }
 
-    get truth(): boolean {
-        return this._truth;
+    get type(): string {
+        return this._type;
     }
 
-    set truth(value: boolean) {
-        this._truth = value;
+    set type(value: string) {
+        this._type = value;
     }
 
     get successText(): string {
@@ -73,14 +76,23 @@ export class Question{
         this._failureText = value;
     }
 
-    constructor(id: number, teacherId: number, courseId: number, name: string, tags: string[], statement: string, truth: boolean, successText: string, failureText: string) {
+    get expectedAnswer(): ExpectedAnswer {
+        return this._expectedAnswer;
+    }
+
+    set expectedAnswer(value: ExpectedAnswer) {
+        this._expectedAnswer = value;
+    }
+
+    constructor(id: number, teacherId: number, courseId: number, name: string, tags: string[], statement: string, type: string, expectedAnswer: any, successText: string, failureText: string) {
         this._id = id;
         this._teacherId = teacherId;
         this._courseId = courseId;
         this._name = name;
         this._tags = tags;
         this._statement = statement;
-        this._truth = truth;
+        this._type = type;
+        this._expectedAnswer = expectedAnswer;
         this._successText = successText;
         this._failureText = failureText;
     }
